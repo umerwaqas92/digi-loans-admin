@@ -133,6 +133,7 @@ def all_applications():
 
         # Convert the JSON string to a Python object
     for index, application in enumerate(applications):
+        
         applications[index] = (
             application[0],  # Keep other tuple elements unchanged
              application[1],  # Keep other tuple elements unchanged
@@ -145,12 +146,13 @@ def all_applications():
             
         )
         product_form_info = get_product_form(application[2])
+        print(application[2])
         print("product_form_info>>>>>>> ",product_form_info)
         if product_form_info is not None:
             applications[index] += (product_form_info[2],)
         else:
             # Handle the case when product_form_info is None
-            applications[index] += (None,)  # Or any
+            applications[index] += (product_form_info,)  # Or any
     # print(product_form_info)
 
    
@@ -391,7 +393,7 @@ def show_form(form_id):
                   pass 
 
           
-            create_loan_application(1,1,1,form_values,"pending")
+            create_loan_application(1,form_id,form_id,form_values,"pending")
 
             # print(form_values)
             
