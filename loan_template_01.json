@@ -1,0 +1,56 @@
+{
+    "form_id": 1,
+    "form_title": "Loan Application Form",
+    "form_fields": [
+      {
+        "field_id": 1,
+        "field_label": "Full Name",
+        "field_type": "text",
+        "required": true
+      },
+      {
+        "field_id": 2,
+        "field_label": "Date of Birth",
+        "field_type": "date",
+        "required": true
+      },
+      {
+        "field_id": 3,
+        "field_label": "Address",
+        "field_type": "textarea",
+        "required": true
+      },
+      {
+        "field_id": 4,
+        "field_label": "Phone Number",
+        "field_type": "tel",
+        "required": true
+      },
+      {
+        "field_id": 5,
+        "field_label": "Email",
+        "field_type": "email",
+        "required": true
+      },
+      {
+        "field_id": 6,
+        "field_label": "Loan Amount",
+        "field_type": "number",
+        "required": true
+      },
+      {
+        "field_id": 7,
+        "field_label": "Loan Purpose",
+        "field_type": "select",
+        "options": ["Personal", "Business", "Education"],
+        "required": true
+      },
+      {
+        "field_id": 8,
+        "field_label": "Upload Documents",
+        "field_type": "file",
+        "required": true
+      }
+    ]
+  }
+  

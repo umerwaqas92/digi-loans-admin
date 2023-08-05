@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+
+
+{% block title %}Users - {{ super() }}{% endblock %}
+
+
+{% block content %}
+
+<div class="page-wrapper">
+	<div class="page-content">
+<div class="card-body">
+    <div class="d-flex align-items-center">
+        <div>
+            <h5 class="mb-0">Users</h5>
+        </div>
+        <div class="font-22 ms-auto"><i class="bx bx-dots-horizontal-rounded"></i>
+        </div>
+    </div>
+    <hr>
+    <div class="table-responsive">
+        <table class="table align-middle mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th>id</th>
+                    <th>Name</th>
+                    <th>Email</th>
+
+                    <th>date</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {%for user in users %}
+                <tr>
+                    <td>{{ user[0] }}</td>
+                    
+                    <td>{{ user[4]}}</td>
+                    <td>{{ user[1]}}</td>
+                    <td>{{ user[7]}}</td>
+
+
+                 
+                  
+                    
+                    <td>
+                        <button type="button" class="btn btn-primary btn-sm radius-30 px-4" data-bs-toggle="modal" data-bs-target="#exampleScrollableModal_{{ user[0] }}">View Details</button>
+                        
+                        <div class="modal fade" id="exampleScrollableModal_{{ user[0] }}" tabindex="-1" style="display: none;" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-scrollable">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Modal title</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                      
+    <div class="modal-body">
+        <p>Id: {{ user[0] }}</p>
+        <p>Email: {{ user[1] }}</p>
+        <p>Password: {{ user[2] }}</p>
+        <p>Another Id: {{ user[3] }}</p>
+        <p>Name: {{ user[4] }}</p>
+        <p>Birth Date: {{ user[5] }}</p>
+        <p>Address: {{ user[6] }}</p>
+        <p>Phone: {{ user[7] }}</p>
+        <p>Created At: {{ user[8] }}</p>
+        <p>Updated At: {{ user[9] }}</p>
+        <p>Additional Info: {{ user[10] }}</p>
+    </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            
+
+                {% endfor %}
+                
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
+</div>
+
+
+{% endblock %}

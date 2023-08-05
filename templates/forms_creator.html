@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Form Creator</title>
+</head>
+<body>
+    <h1>Create a Form</h1>
+    <form id="form" action="/create_form_data" method="POST" enctype="multipart/form-data">
+        <label for="form_name">Form Name:</label>
+        <input type="text" id="form_name" name="form_name" required><br>
+
+        <label for="form_image">Form Image:</label>
+        <input type="file" id="form_image" name="form_image" accept="image/*" required><br>
+        
+        <label for="productsCategories">From category</label>
+        <select id="productsCategories" name="productsCategories" required>
+            {% for category in productsCategories %}
+                <option value="{{ category[0] }}">{{ category[1] }}</option>
+            {% endfor %}
+
+        </select><br>
+
+
+        <label for="zone">Zone:</label>
+        <select id="zone" name="zone" required>
+            <option value="3">North</option>
+            <option value="4">West</option>
+            <option value="5">South</option>
+            <option value="6">East</option>
+            <!-- Add more options as needed -->
+        </select><br>
+        <label for="form_link">Form Link:</label>
+        <input type="url" id="form_link" name="form_link">
+
+
+        <h2>Fields</h2>
+        <div id="fields">
+            <!-- The existing field will remain unchanged -->
+            <div id="field_1">
+                <label for="field_label_1">Field Label:</label>
+                <input type="text" id="field_label_1" name="field_label[]" required>
+                <label for="field_type_1">Field Type:</label>
+                <select id="field_type_1" name="field_type[]" onchange="showOptions(this)">
+                    <option value="text">Text</option>
+                    <option value="date">Date</option>
+                    <option value="textarea">Textarea</option>
+                    <option value="tel">Phone Number</option>
+                    <option value="email">Email</option>
+                    <option value="number">Number</option>
+                    <option value="select">Select</option>
+                    <option value="file">File</option>
+                    <option value="checkbox">Checkbox</option>
+                    <option value="radio">Radio Buttons</option>
+                    <option value="heading">Heading</option>
+                    <option value="paragraph">Paragraph</option>
+                </select>
+                <div id="options_1" style="display: none;">
+                    <label for="field_options_1">Options:</label>
+                    <input type="text" id="field_options_1" name="field_options[]">
+                </div>
+                <label for="field_required_1">Required:</label>
+                <input type="checkbox" id="field_required_1" name="field_required[]" value="true" checked>
+                <button type="button" onclick="removeField(1)">Remove Field</button>
+            </div>
+        </div>
+        <br>
+        <input type="submit" value="Create Form">
+        <button type="button" onclick="addField()">Add Field</button>
+    </form>
+
+    <script>
+        let fieldCounter = 1;
+
+        function addField() {
+            fieldCounter++;
+            let newFieldDiv = document.createElement("div");
+            newFieldDiv.id = "field_" + fieldCounter;
+            newFieldDiv.innerHTML = `
+                <label for="field_label_${fieldCounter}">Field Label:</label>
+                <input type="text" id="field_label_${fieldCounter}" name="field_label[]" required>
+                <label for="field_type_${fieldCounter}">Field Type:</label>
+                <select id="field_type_${fieldCounter}" name="field_type[]" onchange="showOptions(this)">
+                    <option value="text">Text</option>
+                    <option value="date">Date</option>
+                    <option value="textarea">Textarea</option>
+                    <option value="tel">Phone Number</option>
+                    <option value="email">Email</option>
+                    <option value="number">Number</option>
+                    <option value="select">Select</option>
+                    <option value="file">File</option>
+                    <option value="checkbox">Checkbox</option>
+                    <option value="radio">Radio Buttons</option>
+                    <option value="heading">Heading</option>
+                    <option value="paragraph">Paragraph</option>
+                </select>
+                <div id="options_${fieldCounter}" style="display: none;">
+                    <label for="field_options_${fieldCounter}">Options:</label>
+                    <input type="text" id="field_options_${fieldCounter}" name="field_options[]">
+                </div>
+                <label for="field_required_${fieldCounter}">Required:</label>
+                <input type="checkbox" id="field_required_${fieldCounter}" name="field_required[]" value="true" checked>
+                <button type="button" onclick="removeField(${fieldCounter})">Remove Field</button>
+            `;
+            document.getElementById("fields").appendChild(newFieldDiv);
+        }
+
+        function removeField(fieldId) {
+            const fieldDiv = document.getElementById("field_" + fieldId);
+            fieldDiv.remove();
+        }
+
+        function showOptions(fieldTypeSelect) {
+            const fieldOptionsDiv = fieldTypeSelect.nextElementSibling;
+            const selectedOption = fieldTypeSelect.value;
+            if (selectedOption === 'select' || selectedOption === 'radio') {
+                fieldOptionsDiv.style.display = 'block';
+                const optionsInput = fieldOptionsDiv.querySelector('input');
+                optionsInput.required = true;
+            } else {
+                fieldOptionsDiv.style.display = 'none';
+                const optionsInput = fieldOptionsDiv.querySelector('input');
+                optionsInput.required = false;
+            }
+        }
+
+        // Add an event listener to the form to handle form submission
+        document.getElementById("form").addEventListener("submit", function (event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            collectFormData(); // Call the function to process form data
+            
+        });
+
+        function collectFormData() {
+            
+            const form = document.getElementById("form");
+            const formData = new FormData(form);
+        
+            // Convert the form data to an array of objects
+            const formFields = [];
+            let currentField = null;
+        
+            formData.forEach((value, key) => {
+                const fieldNumberMatches = key.match(/^field_label_(\d+)$/);
+                if (fieldNumberMatches) {
+                    // ... (existing code for other fields)
+            
+                    console.log("fieldOptions:", fieldOptions);
+            
+                    if (fieldType === "select" && fieldOptions) {
+                        const options = fieldOptions.split(",").map(option => option.trim());
+                        currentField.options = options;
+                    } else if (fieldType === "radio") {
+                        // Collect all radio options with the same field number
+                        const radioOptions = [];
+                        for (let i = 1; i <= fieldCounter; i++) {
+                            const radioOption = formData.get(`field_options_${i}`);
+                            if (radioOption !== null) {
+                                radioOptions.push(radioOption);
+                            }
+                        }
+                        currentField.options = radioOptions;
+                    }
+            
+                    console.log("currentField:", currentField);
+                }
+            });
+        
+            // Push the last field object into the formFields array
+            if (currentField) {
+                formFields.push(currentField);
+            }
+        
+            console.log("formFields:", formFields);
+            // You can now submit the form to the server if needed
+            form.submit();
+        }
+        
+        
+    </script>
+</body>
+</html>

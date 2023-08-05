@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Internet Speed Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+    #startButton, #result {
+      margin: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Internet Speed Test</h1>
+  <button id="startButton">Start Test</button>
+  <div id="result"></div>
+
+  <script>
+    document.getElementById('startButton').addEventListener('click', function() {
+      document.getElementById('startButton').disabled = true;
+      document.getElementById('result').innerText = 'Testing...';
+
+      // API endpoint for the speedtest.net API
+      var apiUrl = 'https://www.speedtest.net/api/api.php';
+
+      // Make an AJAX request to the speedtest.net API
+      fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+          // Extract download and upload speeds from the API response
+          var downloadSpeed = data.download / 1024 / 1024; // Convert to Mbps
+          var uploadSpeed = data.upload / 1024 / 1024; // Convert to Mbps
+
+          // Display the results
+          document.getElementById('result').innerText = 'Your internet speed is: ' + downloadSpeed.toFixed(2) + ' Mbps (download) / ' + uploadSpeed.toFixed(2) + ' Mbps (upload)';
+          document.getElementById('startButton').disabled = false;
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+          document.getElementById('result').innerText = 'Error fetching data. Please try again later.';
+          document.getElementById('startButton').disabled = false;
+        });
+    });
+  </script>
+</body>
+</html>

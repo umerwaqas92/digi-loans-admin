@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+
+
+{% block title %}All Applications - {{ super() }}{% endblock %}
+
+
+{% block content %}
+
+<div class="page-wrapper">
+	<div class="page-content">
+<div class="card-body">
+    {% if msg %}
+    <div class="alert alert-primary border-0 bg-primary alert-dismissible fade show">
+        <div class="text-white">{{ msg }}</div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{% endif %}
+
+    <div class="d-flex align-items-center">
+        <div>
+            <h5 class="mb-0">Loan Applications</h5>
+        </div>
+        <div class="font-22 ms-auto"><i class="bx bx-dots-horizontal-rounded"></i>
+        </div>
+    </div>
+    <hr>
+    <div class="table-responsive">
+        <table class="table align-middle mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th>Application id</th>
+                    <th>Loan name</th>
+                    <th>Date</th>
+                
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {%for application in applications %}
+                <tr>
+                    <td>{{ application[0] }}</td>
+                    <td>
+                        {{ application[8] }}          
+                    </td>
+                
+                    <td>{{ application[6] }}</td>
+                  
+                    <td>
+                        {{ application[5] }}
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-primary btn-sm radius-30 px-4" data-bs-toggle="modal" data-bs-target="#exampleScrollableModal_{{ application[0] }}">View Details</button>
+                        
+                        <div class="modal fade" id="exampleScrollableModal_{{ application[0] }}" tabindex="-1" style="display: none;" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-scrollable">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Application #{{application[0]}}</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        {% for field in application[4] %}
+                                        {% if field.field_type == 'file' %}
+                                            <p><strong>{{ field.field_label }}:</strong></p>
+                                            <img src="{{ field.value }}" alt="{{ field.field_label }}" width='300px'>
+                                        {% else %}
+                                            <p><strong>{{ field.field_label }}:</strong> {{ field.value }}</p>
+                                        {% endif %}
+                                    {% endfor %}
+                                       
+                                 
+                                                            <p><strong>CHange Status</strong></p>
+                                                            <form method="POST" action="{{ url_for('update_loan_status') }}">
+                                                                <input type="hidden" name="application_id" value="{{ application[0] }}">
+                                                            
+                                                                <div>
+                                                                    <select id="rmAssignedDropdown" name="rmAssignedDropdown">
+                                                                        <option value="" disabled>Select an option</option>
+                                                                        <option value="file_pre_login_pending" {% if application[5] == 'file_pre_login_pending' %}selected{% endif %}>File Pre Login Pending</option>
+                                                                        <option value="file_logged_in" {% if application[5] == 'file_logged_in' %}selected{% endif %}>File logged in</option>
+                                                                        <option value="credit_team" {% if application[5] == 'credit_team' %}selected{% endif %}>Credit Team</option>
+                                                                        <option value="file_post_logged_in_pending" {% if application[5] == 'file_post_logged_in_pending' %}selected{% endif %}>File post logged in Pending</option>
+                                                                        <option value="file_sanctioned" {% if application[5] == 'file_sanctioned' %}selected{% endif %}>File sanctioned</option>
+                                                                        <option value="file_reject" {% if application[5] == 'file_reject' %}selected{% endif %}>File Reject</option>
+                                                                        <option value="file_disbursement" {% if application[5] == 'file_disbursement' %}selected{% endif %}>File Disbursement</option>
+                                                                    </select>
+                                                                </div>
+                                                            
+                                                                <br>
+                                                                <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Update status</button>
+                                                              
+                                                            </form>
+                                                            
+                                    </div>
+                                    <div class="modal-footer">
+                                       
+
+
+
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                       
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            
+
+                {% endfor %}
+                
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
+</div>
+
+
+{% endblock %}
