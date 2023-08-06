@@ -24,6 +24,13 @@ def home():
 # user-profile
 
 
+@app.route('/adduser')
+def adduser():
+    if not ( 'logged_in' in session and session['logged_in']):
+        return redirect(url_for('login'))
+
+    return render_template("add_user.html")
+
 @app.route('/create_form_data', methods=['POST'])
 def create_form_data():
     form_name = request.form['form_name']

@@ -2,3 +2,12 @@ pip install flask-cors
 
 
 jogogad319.pythonanywhere.com
+
+
+git pull origin master
+sudo systemctl stop my_flask_app
+sudo systemctl start my_flask_app
+ sudo systemctl restart my_flask_app
+
+ ssh root@31.220.17.183
+ Pak_eagle11
