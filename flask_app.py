@@ -199,9 +199,9 @@ def all_applications():
             applications[index] += (product_form_info,)  # Or any
     # print(product_form_info)
 
-    user=session['user']
+    
 
-    return render_template("vertical/all-applocations.html",applications=applications,msg=msg,user=user)
+    return render_template("vertical/all-applocations.html",applications=applications,msg=msg,)
 
 # Function to fix the JSON data in the input string and convert it to a dictionary
 def fix_json_data(input_str):
