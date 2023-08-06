@@ -29,6 +29,8 @@
                 <tr>
                     <th>id</th>
                     <th>Name</th>
+                    <th>Role</th>
+
                     <th>Email</th>
 
                     <th>date</th>
@@ -41,7 +43,10 @@
                     <td>{{ user[0] }}</td>
                     
                     <td>{{ user[4]}}</td>
+                    <td>{{ user[11]}}</td>
+
                     <td>{{ user[1]}}</td>
+                    
                     <td>{{ user[7]}}</td>
 
 
@@ -55,7 +60,7 @@
                             <div class="modal-dialog modal-dialog-scrollable">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title">Modal title</h5>
+                                        <h5 class="modal-title">{{ user[4] }}</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
@@ -63,15 +68,15 @@
     <div class="modal-body">
         <p>Id: {{ user[0] }}</p>
         <p>Email: {{ user[1] }}</p>
-        <p>Password: {{ user[2] }}</p>
+      
         <p>Another Id: {{ user[3] }}</p>
         <p>Name: {{ user[4] }}</p>
         <p>Birth Date: {{ user[5] }}</p>
         <p>Address: {{ user[6] }}</p>
         <p>Phone: {{ user[7] }}</p>
         <p>Created At: {{ user[8] }}</p>
-        <p>Updated At: {{ user[9] }}</p>
-        <p>Additional Info: {{ user[10] }}</p>
+      
+        <p>Role: {{ user[11] }}</p>
     </div>
                                     </div>
                                     <div class="modal-footer">

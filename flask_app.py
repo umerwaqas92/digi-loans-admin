@@ -3,6 +3,8 @@ import json
 from databse.db_service import *
 import os
 from flask_cors import CORS
+from werkzeug.security import generate_password_hash, check_password_hash
+
 
 
 
@@ -24,12 +26,33 @@ def home():
 # user-profile
 
 
-@app.route('/adduser')
+@app.route('/adduser',methods=['GET', 'POST'])
 def adduser():
     if not ( 'logged_in' in session and session['logged_in']):
         return redirect(url_for('login'))
+    roles = get_roles()
+    roles = roles[session["role"][0]:6]
 
-    return render_template("add_user.html")
+   
+    if request.method == 'POST':
+        # This block will only be executed if the request is a POST request.
+        full_name = request.form.get('full_name')
+        phone_number = request.form.get('phone_num')
+        email_address = request.form.get('email_address')
+        address = request.form.get('address')
+        password = request.form.get('password')
+        role = request.form.get('chose_role')
+        date_of_birth=request.form.get('date_of_birth')
+        password_has= generate_password_hash(password, method='sha256')
+        msg=signup_user(full_name=full_name,email=email_address,password=password_has,role_id=role,date_of_birth=date_of_birth,address=address,phone_number=phone_number)
+
+        return render_template("add_user.html", roles=roles,error=msg)
+
+
+    else:
+       
+
+        return render_template("add_user.html", roles=roles,)
 
 @app.route('/create_form_data', methods=['POST'])
 def create_form_data():
@@ -97,13 +120,27 @@ def login():
         email = request.form['inputEmailAddress']
         password = request.form['inputChoosePassword']
         remember_me = request.form.get('remember_me')  # Get the value of the "Remember Me" checkbox (if exists)
+        # hashed_password = generate_password_hash(password, method='sha256')
+
 
         print(email)
         print(password)
-        if email == 'admin@demo.com' and password == '123456':
+        user=login_user(email=email,password=password)
+        if(user==None):
+            return render_template("vertical/auth-basic-signin.html",error="Invalid credentials")
+            
+        check_pass=check_password_hash(user[2], password)
+        print(check_pass)
+
+        
+        if user!=None and check_pass:
             # flash("You are logged in as {}".format(email))
             session['logged_in'] = True
             session['user_email'] = email
+            session['role'] = get_role(user[3])
+            session['user'] = user
+
+            
 
             return redirect("/loan_applications")
         
@@ -162,10 +199,9 @@ def all_applications():
             applications[index] += (product_form_info,)  # Or any
     # print(product_form_info)
 
-   
+    user=session['user']
 
-
-    return render_template("vertical/all-applocations.html",applications=applications,msg=msg)
+    return render_template("vertical/all-applocations.html",applications=applications,msg=msg,user=user)
 
 # Function to fix the JSON data in the input string and convert it to a dictionary
 def fix_json_data(input_str):
@@ -194,9 +230,15 @@ def logout():
 
 @app.route('/users')
 def admin_users():
-    users=get_users()
+    users = get_users()
+    final_users = [tuple(user) + (get_role(user[3])[1],) for user in users]
+    
+    
+    print(final_users)
 
-    return render_template("users_list.html",users=users)
+
+
+    return render_template("users_list.html",users=final_users)
 
 @app.route('/forms')
 def admin_forms():

@@ -100,6 +100,20 @@ def get_role(role_id):
         print("Error getting role:", e)
         conn.close()
         return None
+    
+def get_roles():
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute('SELECT * FROM Roles',)
+        roles = cursor.fetchall()
+        conn.close()
+        return roles
+    except sqlite3.Error as e:
+        print("Error getting role:", e)
+        conn.close()
+        return None
 
 def update_role(role_id, role_name):
     conn = connect_db()
@@ -535,9 +549,10 @@ def login_user(email, password):
     cursor = conn.cursor()
 
     try:
-        cursor.execute('SELECT * FROM Users WHERE email = ? AND password = ?', (email, password))
+        cursor.execute('SELECT * FROM Users WHERE email = ?', (email,))
         user = cursor.fetchone()
         conn.close()
+        print("got user data ",user)
 
         if user:
             return user
@@ -632,7 +647,7 @@ def signup_user(email, password, role_id, full_name, date_of_birth, address, pho
 
         if existing_user:
             conn.close()
-            return False
+            return "This email is already used by another user!"
 
         cursor.execute('''
             INSERT INTO Users (email, password, role_id, full_name, date_of_birth, address, phone_number)
@@ -640,9 +655,9 @@ def signup_user(email, password, role_id, full_name, date_of_birth, address, pho
         ''', (email, password, role_id, full_name, date_of_birth, address, phone_number))
         conn.commit()
         conn.close()
-        return True
+        return "User has been created !!"
     except sqlite3.Error as e:
         print("Error during signup:", e)
         conn.rollback()
         conn.close()
-        return False
+        return "Something went wrong try again!"
