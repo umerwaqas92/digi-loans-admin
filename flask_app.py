@@ -31,7 +31,7 @@ def adduser():
     if not ( 'logged_in' in session and session['logged_in']):
         return redirect(url_for('login'))
     roles = get_roles()
-    roles = roles[session["role"][0]:6]
+    roles = roles[session["role"][0]:4]
 
    
     if request.method == 'POST':
@@ -44,15 +44,24 @@ def adduser():
         role = request.form.get('chose_role')
         date_of_birth=request.form.get('date_of_birth')
         password_has= generate_password_hash(password, method='sha256')
-        msg=signup_user(full_name=full_name,email=email_address,password=password_has,role_id=role,date_of_birth=date_of_birth,address=address,phone_number=phone_number)
+        createdBy=session["user"][0]
+        print(session["role"])
+
+        if(session["role"][0])==3:#bracnh
+            branchBy=session["user"][0]
+        else:
+            branchBy=request.form.get('chose_branch')
+
+
+        msg=create_user(full_name=full_name,email=email_address,password=password_has,role_id=role,date_of_birth=date_of_birth,address=address,phone_number=phone_number,createdBy=createdBy,branchBy=branchBy)
 
         return render_template("add_user.html", roles=roles,error=msg)
 
 
     else:
        
-
-        return render_template("add_user.html", roles=roles,)
+        branches=get_branch_user()
+        return render_template("add_user.html", roles=roles,branches=branches)
 
 @app.route('/create_form_data', methods=['POST'])
 def create_form_data():
@@ -230,7 +239,18 @@ def logout():
 
 @app.route('/users')
 def admin_users():
-    users = get_users()
+    user_id=session["user"][0]
+    role_id=session["role"][0]
+
+  
+    if(role_id==1):
+        users = get_users_super_admin()
+    elif (role_id==2):
+        users=get_users_sub_admin()
+    elif (role_id==3):
+        users=get_branch_users_branchdBy(user_id)
+
+
     final_users = [tuple(user) + (get_role(user[3])[1],) for user in users]
     
     

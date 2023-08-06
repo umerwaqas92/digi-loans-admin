@@ -5,7 +5,7 @@ def connect_db():
     return sqlite3.connect('databse/digi_loans.db')
 
 # Users Table CRUD operations
-def create_user(email, password, role_id, full_name, date_of_birth, address, phone_number):
+def create_user_(email, password, role_id, full_name, date_of_birth, address, phone_number):
     conn = connect_db()
     cursor = conn.cursor()
 
@@ -441,13 +441,67 @@ def update_application_status(application_id,new_status):
 
 
 
-def get_users():
+def get_users_super_admin():
     conn = connect_db()
     cursor = conn.cursor()
 
     try:
         cursor.execute('''
             SELECT * FROM Users
+        ''')
+        users = cursor.fetchall()
+        conn.close()
+        # print(loan_applications)
+
+        return users
+    except sqlite3.Error as e:
+        print("Error getting loan application:", e)
+        conn.close()
+        return None
+    
+def get_users_sub_admin():
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute('''
+            SELECT * FROM Users where role_id >2
+        ''')
+        users = cursor.fetchall()
+        conn.close()
+        # print(loan_applications)
+
+        return users
+    except sqlite3.Error as e:
+        print("Error getting loan application:", e)
+        conn.close()
+        return None
+
+def get_branch_users_branchdBy(branch_id):
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute('''
+            SELECT * FROM Users WHERE role_id > 2 AND branchBy = ?
+        ''', (branch_id,))  
+        users = cursor.fetchall()
+        conn.close()
+        # print(loan_applications)
+
+        return users
+    except sqlite3.Error as e:
+        print("Error get_branch_users_branchdBy :", e)
+        conn.close()
+        return None
+        
+def get_branch_user():
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute('''
+            SELECT * FROM Users where role_id=3
         ''')
         users = cursor.fetchall()
         conn.close()
@@ -653,6 +707,33 @@ def signup_user(email, password, role_id, full_name, date_of_birth, address, pho
             INSERT INTO Users (email, password, role_id, full_name, date_of_birth, address, phone_number)
             VALUES (?, ?, ?, ?, ?, ?, ?)
         ''', (email, password, role_id, full_name, date_of_birth, address, phone_number))
+        conn.commit()
+        conn.close()
+        return "User has been created !!"
+    except sqlite3.Error as e:
+        print("Error during signup:", e)
+        conn.rollback()
+        conn.close()
+        return "Something went wrong try again!"
+    
+
+
+def create_user(email, password, role_id, full_name, date_of_birth, address, phone_number,createdBy,branchBy):
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute('SELECT * FROM Users WHERE email = ?', (email,))
+        existing_user = cursor.fetchone()
+
+        if existing_user:
+            conn.close()
+            return "This email is already used by another user!"
+
+        cursor.execute('''
+            INSERT INTO Users (email, password, role_id, full_name, date_of_birth, address, phone_number,createdBy,branchBy)
+            VALUES (?, ?, ?, ?, ?, ?, ?,?,?)
+        ''', (email, password, role_id, full_name, date_of_birth, address, phone_number,createdBy,branchBy))
         conn.commit()
         conn.close()
         return "User has been created !!"

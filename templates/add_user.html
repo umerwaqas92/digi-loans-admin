@@ -95,8 +95,10 @@
                                           </div>
                                     </div>
                                 </div>
+                                
                                 <div class="row mb-3">
                                     <label for="input53" class="col-sm-3 col-form-label">Select role</label>
+                                    
                                     <div class="col-sm-9">
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="bx bx-flag"></i></span>
@@ -106,6 +108,23 @@
                                               
                                                 <option value="{{role[0]}}">{{role[1]}}</option>
                 {% endfor %}
+
+                                              </select>
+                                          </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3" id="branch_div">
+                                    <label for="input53" class="col-sm-3 col-form-label">Select Branch</label>
+                                    
+                                    <div class="col-sm-9">
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="bx bx-flag"></i></span>
+                                            <select class="form-select" id="chose_branch" name="chose_branch" >
+                                            {%for branh in branches %}
+
+                                              
+                                                <option value="{{branh[0]}}">{{branh[4]}}</option>
+                                                {% endfor %}
 
                                               </select>
                                           </div>
@@ -154,6 +173,31 @@
 </div>
 </div>
 </div>
+<!-- Your HTML code goes here -->
+
+<script>
+    // Get references to the select elements and the target div
+    const choseRoleSelect = document.getElementById('chose_role');
+    const choseBranchDiv = document.getElementById('branch_div');
+    choseBranchDiv.style.display = 'none';
+    
+    // Add event listener to the choseRoleSelect
+    choseRoleSelect.addEventListener('change', function () {
+      // Get the selected value
+      const selectedValue = choseRoleSelect.value;
+      // Get the session role value (assuming it's stored in the variable sessionRole)
+      const sessionRole = {{ session["role"][0] }};
+      
+      // Check if the selected value is '4' and session role value is less than 3
+      if (selectedValue === '4' && sessionRole < 3) {
+        // If both conditions are true, show the choseBranchDiv
+        choseBranchDiv.style.display = 'block';
+      } else {
+        // If either condition is false, hide the choseBranchDiv
+        choseBranchDiv.style.display = 'none';
+      }
+    });
+  </script>
 
 
 {% endblock %}
