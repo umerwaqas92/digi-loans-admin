@@ -569,33 +569,67 @@ def show_form(form_id):
 
 #     return jsonify(form_json)
 
+# @app.route('/api/get_forms_List', methods=['GET'])
+# def get_forms_list_api():
+#     categories = getCategories()
+
+    
+#     form_json = []
+#     for i in [7,4,1,6,0,2,3,4,5]:
+#         category=categories[i]
+#         forms_list = get_forms_by_category(category[0])
+#         _form_list = []
+#         for form in forms_list:
+#             _form_list.append({
+#                 "title": form[2],
+#                 "image": "static/" + form[7],
+#                 "link": "form/" + str(form[0]),
+#             })
+        
+#         if category[0] != 1 and category[0] != 8:
+#             sub_category_json = {
+#                 "image": "static/" + category[2],
+#                 "link": "form/" + str(category[0]),
+#                 "title": category[1],
+#                 "services_sub": _form_list
+#             }
+#             form_json.append(sub_category_json)
+#         else:
+#             form_json.extend(_form_list)
+
+#     return jsonify(form_json)
+
 @app.route('/api/get_forms_List', methods=['GET'])
 def get_forms_list_api():
     categories = getCategories()
-
     
     form_json = []
-    for i in [7,4,1,6,0,2,3,4,5]:
-        category=categories[i]
-        forms_list = get_forms_by_category(category[0])
-        _form_list = []
-        for form in forms_list:
-            _form_list.append({
-                "title": form[2],
-                "image": "static/" + form[7],
-                "link": "form/" + str(form[0]),
-            })
-        
-        if category[0] != 1 and category[0] != 8:
-            sub_category_json = {
-                "image": "static/" + category[2],
-                "link": "form/" + str(category[0]),
-                "title": category[1],
-                "services_sub": _form_list
-            }
-            form_json.append(sub_category_json)
-        else:
-            form_json.extend(_form_list)
+    processed_categories = set()  # Keep track of processed categories
+    
+    for i in [7, 4, 1, 6, 0, 2, 3, 4, 5]:
+        category = categories[i]
+        if category[0] not in processed_categories:  # Check if category is not processed
+            forms_list = get_forms_by_category(category[0])
+            _form_list = []
+            for form in forms_list:
+                _form_list.append({
+                    "title": form[2],
+                    "image": "static/" + form[7],
+                    "link": "form/" + str(form[0]),
+                })
+
+            if category[0] != 1 and category[0] != 8:
+                sub_category_json = {
+                    "image": "static/" + category[2],
+                    "link": "form/" + str(category[0]),
+                    "title": category[1],
+                    "services_sub": _form_list
+                }
+                form_json.append(sub_category_json)
+            else:
+                form_json.extend(_form_list)
+
+            processed_categories.add(category[0])  # Mark category as processed
 
     return jsonify(form_json)
 
