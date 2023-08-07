@@ -54,6 +54,15 @@
                   
                     
                     <td>
+                        {% if  session["user"][0]==user[0]  %}
+                        <a type="button" class="btn btn-warning btn-sm radius-30 px-4" href="{{ url_for('user_profile') }}">Edit</a>
+
+                        {% endif %}
+
+                        {% if session["role"][0]==1 and session["user"][0]!=user[0]  %}
+
+                        <a type="button" class="btn btn-warning btn-sm radius-30 px-4" href="{{ url_for('user_edit', user_id=user[0]) }}">Edit</a>
+                        {% endif %}
                         <button type="button" class="btn btn-primary btn-sm radius-30 px-4" data-bs-toggle="modal" data-bs-target="#exampleScrollableModal_{{ user[0] }}">View Details</button>
                         
                         <div class="modal fade" id="exampleScrollableModal_{{ user[0] }}" tabindex="-1" style="display: none;" aria-hidden="true">

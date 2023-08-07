@@ -278,6 +278,51 @@ def user_profile():
     
     return render_template("vertical/user_profile.html")
 
+
+@app.route('/user_edit/<int:user_id>', methods=['GET', 'POST'])
+def user_edit(user_id):
+    if(session['logged_in']==False):
+        return redirect(url_for('login'))
+    if(request.method=="POST"):
+        full_name=request.form['full_name']
+        # email=request.form['email_address']
+        phone=request.form['phone']
+        address=request.form['address']
+        date_of_birth=request.form['date_of_birth']
+        user_profile_image=request.files['profile_photo']
+        role=request.form['chose_role']
+        
+        if(user_profile_image):
+            filename = user_profile_image.filename
+            #random file name
+            
+            file_name=time.strftime("%Y%m%d-%H%M%S")+"."+filename.split(".")[-1]
+            file_path = os.path.join("static/uploads/user_profile", file_name)
+            user_profile_image.save(file_path)
+            update_user_image(user_id,file_path.replace("static/",""))
+           
+            print("file has been save!! ",file_path)
+
+
+        update_user(session['user'][0],full_name=full_name,phone_number=phone,address=address,date_of_birth=date_of_birth)
+        update_role(user_id,role)
+        
+      
+
+        user=get_user(user_id)
+        role=get_role(user[3])
+        image=get_user_image(user_id)
+        roles=get_roles()
+
+
+        return render_template("vertical/user_profile_edit.html",user=user,role=role,image=image,roles=roles,user_id=user_id)
+        
+    user=get_user(user_id)
+    role=get_role(user[3])
+    image=get_user_image(user_id)
+    roles=get_roles()
+    return render_template("vertical/user_profile_edit.html",user=user,role=role,image=image,roles=roles,user_id=user_id)
+
 @app.route('/logout')
 def logout():
     session['logged_in'] = False

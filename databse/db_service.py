@@ -55,6 +55,8 @@ def update_user(user_id, full_name, date_of_birth, address, phone_number):
         conn.rollback()
         conn.close()
         return False
+    
+
 
 def delete_user(user_id):
     conn = connect_db()
@@ -436,7 +438,7 @@ def update_user_image(user_id, user_image):
 
     try:
         cursor.execute('UPDATE UserProfile SET image = ? WHERE user_id = ?', (user_image, user_id))
-        
+
         conn.commit()
         conn.close()
         return True
