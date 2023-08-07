@@ -394,6 +394,57 @@ def delete_product_form(form_id):
         conn.rollback()
         conn.close()
         return False
+    
+
+def get_user_image(user_id):
+
+    try:
+        conn = connect_db()
+        cursor = conn.cursor()
+
+        cursor.execute('SELECT * FROM UserProfile WHERE user_id = ?', (user_id,))
+        result = cursor.fetchone()  # Fetch one row, assuming you want to retrieve a single user's image data
+
+        conn.commit()
+        print("got image result for ",user_id," : ",result)
+        return result  # Return the fetched result
+    except sqlite3.Error as e:
+        print("Error get_user_image:", e)
+        if conn:
+            conn.rollback()
+        return None  # Return None to indicate an error
+
+
+def add_user_image(user_id, user_image):
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute('Insert INTO UserProfile (user_id, image) VALUES (?, ?)', (user_id,user_image))
+        conn.commit()
+        conn.close()
+        return True
+    except sqlite3.Error as e:
+        print("Error add_user_image :", e)
+        conn.rollback()
+        conn.close()
+        return False
+    
+def update_user_image(user_id, user_image):
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute('UPDATE UserProfile SET image = ? WHERE user_id = ?', (user_image, user_id))
+        
+        conn.commit()
+        conn.close()
+        return True
+    except sqlite3.Error as e:
+        print("Error add_user_image :", e)
+        conn.rollback()
+        conn.close()
+        return False
 
 # LoanApplications Table CRUD operations
 def create_loan_application(user_id, product_id, form_id, application_data, status):
@@ -728,17 +779,18 @@ def create_user(email, password, role_id, full_name, date_of_birth, address, pho
 
         if existing_user:
             conn.close()
-            return "This email is already used by another user!"
+            return None
 
         cursor.execute('''
             INSERT INTO Users (email, password, role_id, full_name, date_of_birth, address, phone_number,createdBy,branchBy)
             VALUES (?, ?, ?, ?, ?, ?, ?,?,?)
         ''', (email, password, role_id, full_name, date_of_birth, address, phone_number,createdBy,branchBy))
+    
         conn.commit()
         conn.close()
-        return "User has been created !!"
+        return cursor.lastrowid
     except sqlite3.Error as e:
         print("Error during signup:", e)
         conn.rollback()
         conn.close()
-        return "Something went wrong try again!"
+        return None

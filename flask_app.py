@@ -4,6 +4,7 @@ from databse.db_service import *
 import os
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
+import time
 
 
 
@@ -45,6 +46,10 @@ def adduser():
         date_of_birth=request.form.get('date_of_birth')
         password_has= generate_password_hash(password, method='sha256')
         createdBy=session["user"][0]
+
+
+            
+
         print(session["role"])
 
         if(session["role"][0])==3:#bracnh
@@ -53,9 +58,21 @@ def adduser():
             branchBy=request.form.get('chose_branch')
 
 
-        msg=create_user(full_name=full_name,email=email_address,password=password_has,role_id=role,date_of_birth=date_of_birth,address=address,phone_number=phone_number,createdBy=createdBy,branchBy=branchBy)
+        user_id=create_user(full_name=full_name,email=email_address,password=password_has,role_id=role,date_of_birth=date_of_birth,address=address,phone_number=phone_number,createdBy=createdBy,branchBy=branchBy)
+        
+        file = request.files['user_photo']
+        if(file != None and user_id!=None):
+            filename = file.filename
+            #random file name
+            file_name=time.strftime("%Y%m%d-%H%M%S")+"."+filename.split(".")[-1]
+            file_path = os.path.join("static/uploads/user_profile", file_name)
+            file.save(file_path)
+            add_user_image(user_id,file_path.replace("static/",""))
+            print("file has been save!! ",file_path)
+        else:
+            render_template("add_user.html", roles=roles,error="User not created")
 
-        return render_template("add_user.html", roles=roles,error=msg)
+        return render_template("add_user.html", roles=roles,error="User created successfully")
 
 
     else:
@@ -148,6 +165,8 @@ def login():
             session['user_email'] = email
             session['role'] = get_role(user[3])
             session['user'] = user
+            session['image'] = get_user_image(user[0])
+
 
             
 
@@ -226,8 +245,37 @@ def fix_json_data(input_str):
 def user_chat():
     return render_template("vertical/app-chat-box.html")
 
-@app.route('/user_profile')
+@app.route('/user_profile', methods=['GET', 'POST'])
 def user_profile():
+    if(session['logged_in']==False):
+        return redirect(url_for('login'))
+    if(request.method=="POST"):
+        full_name=request.form['full_name']
+        # email=request.form['email_address']
+        phone=request.form['phone']
+        address=request.form['address']
+        date_of_birth=request.form['date_of_birth']
+        user_profile_image=request.files['profile_photo']
+        
+        if(user_profile_image):
+            filename = user_profile_image.filename
+            #random file name
+            user_id=session['user'][0]
+            file_name=time.strftime("%Y%m%d-%H%M%S")+"."+filename.split(".")[-1]
+            file_path = os.path.join("static/uploads/user_profile", file_name)
+            user_profile_image.save(file_path)
+            update_user_image(user_id,file_path.replace("static/",""))
+            session['image']=get_user_image(user_id)
+            print("file has been save!! ",file_path)
+
+
+        update_user(session['user'][0],full_name=full_name,phone_number=phone,address=address,date_of_birth=date_of_birth)
+        
+        session['user']=get_user(session['user'][0])
+
+        return redirect(url_for('user_profile'))
+        
+    
     return render_template("vertical/user_profile.html")
 
 @app.route('/logout')
@@ -251,7 +299,7 @@ def admin_users():
         users=get_branch_users_branchdBy(user_id)
 
 
-    final_users = [tuple(user) + (get_role(user[3])[1],) for user in users]
+    final_users = [tuple(user) + (get_role(user[3])[1],get_user_image(user[0])) for user in users]
     
     
     print(final_users)
