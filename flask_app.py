@@ -330,6 +330,17 @@ def logout():
     return redirect(url_for('login'))
 
 
+@app.route('/download_application_data/<int:application_id>', methods=['GET'])
+def get_application_data(application_id):
+    application = get_loan_application(application_id)
+    # application = get_application(application_id)
+    # data_dict = fix_json_data(application[5])
+    # print(data_dict)
+    # 
+    json_data = json.dumps(application)
+    return jsonify(application)
+
+
 @app.route('/users')
 def admin_users():
     user_id=session["user"][0]
