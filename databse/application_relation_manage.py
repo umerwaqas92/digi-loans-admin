@@ -65,6 +65,8 @@ def delete_ap_relation(id):
     finally:
         connection.close()
 
+
+
 # Read all ap_relation records by user ID
 def read_all_ap_relations_by_user(user_id):
     connection = db.connect_db()
