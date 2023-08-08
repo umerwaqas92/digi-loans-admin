@@ -242,7 +242,7 @@ def all_applications():
     # print(product_form_info)
 
     final_applications = [tuple(_app) + (commentdb.get_ap_comments(_app[0]),) for _app in applications]
-    print("final_applications ",len(final_applications[0]))
+    # print("final_applications ",len(final_applications[0]))
 
     
 
