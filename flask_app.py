@@ -6,6 +6,7 @@ from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
 import time
 import databse.application_relation_manage as ap_relation
+import databse.comnet_manage as commentdb
 
 
 
@@ -240,12 +241,12 @@ def all_applications():
             applications[index] += (product_form_info,)  # Or any
     # print(product_form_info)
 
-    # final_applications = [tuple(_app) + (get_user(_app[1]),) for _app in applications]
-    # print(final_applications)
+    final_applications = [tuple(_app) + (commentdb.get_ap_comments(_app[0]),) for _app in applications]
+    print("final_applications ",len(final_applications[0]))
 
     
 
-    return render_template("vertical/all-applocations.html",applications=applications,msg=msg,)
+    return render_template("vertical/all-applocations.html",applications=final_applications,msg=msg,)
 
 # Function to fix the JSON data in the input string and convert it to a dictionary
 def fix_json_data(input_str):
@@ -395,6 +396,9 @@ def update_loan_status():
     # Get the value selected from the dropdown
     status = request.form.get('rmAssignedDropdown')
     application_id = request.form.get('application_id')
+    comment=request.form.get('comment')
+
+
 
 
 
@@ -405,6 +409,7 @@ def update_loan_status():
 
     
     update_application_status(application_id, status)
+    commentdb.create_ap_comment(app_id=application_id,user_id=session["role"][0],comment=comment,status=status)
 
 
     return redirect("/loan_applications")

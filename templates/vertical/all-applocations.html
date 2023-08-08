@@ -74,6 +74,22 @@
                                                             <p><strong>CHange Status</strong></p>
                                                             <form method="POST" action="{{ url_for('update_loan_status') }}">
                                                                 <input type="hidden" name="application_id" value="{{ application[0] }}">
+                                                                <br>
+                                                                <strong>Comments</strong><br>
+                                                                {% for comment in application[9] %}
+                                                                <strong>{{comment[4]}}</strong> <small>{{ comment[3] }}</small>  <br>
+                                                                <small>{{ comment[5] }}</small> <br>
+                                                                {% endfor %}
+                                                                <br>
+                                                               
+                                                                <input type="text" name="comment" placeholder="Add your comment" value="">
+
+
+                                                                <br>
+                                                                <br>
+
+                                                            
+
                                                             
                                                                 <div>
                                                                     <select id="rmAssignedDropdown" name="rmAssignedDropdown">
