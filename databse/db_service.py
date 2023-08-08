@@ -37,6 +37,34 @@ def get_user(user_id):
         conn.close()
         return None
 
+def dsa_get_branch_id(dsa_id):
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute('SELECT * FROM Users WHERE branchBy = ?', (dsa_id,))
+        user = cursor.fetchone()
+        conn.close()
+        return user
+    except sqlite3.Error as e:
+        print("Error getting user:", e)
+        conn.close()
+        return None
+    
+def get_sub_admin(branch_id):
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute('SELECT * FROM Users WHERE user_id = ?', (branch_id,))
+        user = cursor.fetchone()
+        conn.close()
+        return user
+    except sqlite3.Error as e:
+        print("Error getting user:", e)
+        conn.close()
+        return None
+
 def update_user(user_id, full_name, date_of_birth, address, phone_number):
     conn = connect_db()
     cursor = conn.cursor()
@@ -464,12 +492,12 @@ def create_loan_application(user_id, product_id, form_id, application_data, stat
         conn.close()
         print("created application")
        
-        return True
+        return cursor.lastrowid
     except sqlite3.Error as e:
         print(">>>>>>>>>>>>>Error creating loan application:", e)
         conn.rollback()
         conn.close()
-        return False
+        return None
     
 
 def update_application_status(application_id,new_status):

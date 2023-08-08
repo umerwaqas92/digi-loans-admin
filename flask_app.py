@@ -5,6 +5,7 @@ import os
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
 import time
+import databse.application_relation_manage as ap_relation
 
 
 
@@ -12,6 +13,7 @@ import time
 app = Flask(__name__)
 app.secret_key = 'app'  # Replace 'your_secret_key_here' with a unique and secure string
 CORS(app)  # Add this line to enable CORS support for the entire app
+app.config['MAX_CONTENT_LENGTH'] = 1024
 
 
 
@@ -200,8 +202,18 @@ def all_applications():
         return redirect(url_for('login'))
     
 
-    applications=get_loan_applications(1)
+    applications=[]#get_loan_applications(1)
 
+    apps_relations=ap_relation.read_all_ap_relations_by_user(user_id=session["user"][0])
+    
+    if(session["role"][0]==1):
+        applications=get_loan_applications(1)
+    else:
+        if(apps_relations != None):
+            for app in apps_relations:
+                print(app[1])
+                applcation=get_loan_application(app[1])
+                applications.append(applcation)
 
         # Convert the JSON string to a Python object
     for index, application in enumerate(applications):
@@ -226,6 +238,7 @@ def all_applications():
             # Handle the case when product_form_info is None
             applications[index] += (product_form_info,)  # Or any
     # print(product_form_info)
+
 
     
 
@@ -536,6 +549,7 @@ def show_form(form_id):
             form_fields_json = get_product_form(form_id)[3]  # Assuming form_fields is stored at index 3
             req_value = request.form.to_dict()
             redirectUrl = request.form.get('redirectUrl')
+            dsa_id = request.form.get('dsa_id') #user id
 
             form_values = []
             # print(req_value)
@@ -566,7 +580,23 @@ def show_form(form_id):
                   pass 
 
           
-            create_loan_application(1,form_id,form_id,form_values,"pending")
+            app_id= create_loan_application(1,form_id,form_id,form_values,"pending")
+            
+            dsa_user = get_user(dsa_id)
+            # print(dsa_user)
+            branch_user = get_user(dsa_user[12])
+            # print(branch_user)
+          
+            # print(dsa_user[0],branch_user[11],)
+            # print(dsa_user[0],dsa_user[12],)
+
+            # sub_admin_user = get_sub_admin(branch_user[0])
+
+            if(app_id):
+                # if(branch_user[11]!=None):
+                #     ap_relation.create_ap_relation(dsa_user,branch_user[11])
+                if(dsa_user[12]!=None):
+                    ap_relation.create_ap_relation(dsa_user,dsa_user[12])
 
             # print(form_values)
             

@@ -23,6 +23,11 @@
         <form action="/form/{{ form_id }}" method="post" enctype="multipart/form-data" class="m-4">
           
             <input type="hidden" name="redirectUrl" value="{{redirectUrl}}">
+            <label for="dsa_id">DSA Code</label>
+
+            <input type="text" id="dsa_id" name="dsa_id" class="form-control" required>
+
+
 
 
             {% for field in form_fields %}
