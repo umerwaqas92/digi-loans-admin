@@ -18,8 +18,6 @@ app.config['MAX_CONTENT_LENGTH'] = 30 * 1024 * 1024  # Set maximum request size 
 
 
 
-
-
 msg=""
 # Home route
 @app.route('/')
@@ -36,7 +34,12 @@ def adduser():
     if not ( 'logged_in' in session and session['logged_in']):
         return redirect(url_for('login'))
     roles = get_roles()
-    roles = roles[session["role"][0]:4]
+    
+    
+    if(session["role"][0]==1):
+       roles= roles[session["role"][0]-1:4]
+    else:
+        roles = roles[session["role"][0]:4]
 
    
     if request.method == 'POST':
@@ -308,6 +311,7 @@ def user_edit(user_id):
         date_of_birth=request.form['date_of_birth']
         user_profile_image=request.files['profile_photo']
         role=request.form['chose_role']
+        password=request.form['user_password']
         
         if(user_profile_image):
             filename = user_profile_image.filename
@@ -323,6 +327,10 @@ def user_edit(user_id):
 
         update_user(session['user'][0],full_name=full_name,phone_number=phone,address=address,date_of_birth=date_of_birth)
         update_role(user_id,role)
+
+        if(password!=None):
+            hashed_password = generate_password_hash(password, method='sha256')
+            update_user_password(user_id,hashed_password)
         
       
 

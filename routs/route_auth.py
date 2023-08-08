@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, jsonify
-from app import app
+from flask_app import app  # Import the main Flask app instance
 
-auth_routes = Blueprint('auth_routes', __name__)
+
+api_routes = Blueprint('api_routes', __name__)
