@@ -1,0 +1,324 @@
+@app.route('/form-froala-editor', methods=['GET'])
+def form-froala-editor():
+    return render_template('vertical copy/form-froala-editor.html')
+
+@app.route('/all-applocations', methods=['GET'])
+def all-applocations():
+    return render_template('vertical copy/all-applocations.html')
+
+@app.route('/map-vector-maps', methods=['GET'])
+def map-vector-maps():
+    return render_template('vertical copy/map-vector-maps.html')
+
+@app.route('/table-datatable', methods=['GET'])
+def table-datatable():
+    return render_template('vertical copy/table-datatable.html')
+
+@app.route('/component-list-groups', methods=['GET'])
+def component-list-groups():
+    return render_template('vertical copy/component-list-groups.html')
+
+@app.route('/content-grid-system', methods=['GET'])
+def content-grid-system():
+    return render_template('vertical copy/content-grid-system.html')
+
+@app.route('/icons-feather-icons', methods=['GET'])
+def icons-feather-icons():
+    return render_template('vertical copy/icons-feather-icons.html')
+
+@app.route('/form-validations', methods=['GET'])
+def form-validations():
+    return render_template('vertical copy/form-validations.html')
+
+@app.route('/auth-basic-reset-password', methods=['GET'])
+def auth-basic-reset-password():
+    return render_template('vertical copy/auth-basic-reset-password.html')
+
+@app.route('/index2', methods=['GET'])
+def index2():
+    return render_template('vertical copy/index2.html')
+
+@app.route('/index', methods=['GET'])
+def index():
+    return render_template('vertical copy/index.html')
+
+@app.route('/component-modals', methods=['GET'])
+def component-modals():
+    return render_template('vertical copy/component-modals.html')
+
+@app.route('/auth-header-footer-forgot-password', methods=['GET'])
+def auth-header-footer-forgot-password():
+    return render_template('vertical copy/auth-header-footer-forgot-password.html')
+
+@app.route('/form-repeater', methods=['GET'])
+def form-repeater():
+    return render_template('vertical copy/form-repeater.html')
+
+@app.route('/component-avtars-chips', methods=['GET'])
+def component-avtars-chips():
+    return render_template('vertical copy/component-avtars-chips.html')
+
+@app.route('/charts-chartjs', methods=['GET'])
+def charts-chartjs():
+    return render_template('vertical copy/charts-chartjs.html')
+
+@app.route('/component-popovers-tooltips', methods=['GET'])
+def component-popovers-tooltips():
+    return render_template('vertical copy/component-popovers-tooltips.html')
+
+@app.route('/widgets', methods=['GET'])
+def widgets():
+    return render_template('vertical copy/widgets.html')
+
+@app.route('/errors-500-error', methods=['GET'])
+def errors-500-error():
+    return render_template('vertical copy/errors-500-error.html')
+
+@app.route('/charts-highcharts', methods=['GET'])
+def charts-highcharts():
+    return render_template('vertical copy/charts-highcharts.html')
+
+@app.route('/component-carousels', methods=['GET'])
+def component-carousels():
+    return render_template('vertical copy/component-carousels.html')
+
+@app.route('/content-typography', methods=['GET'])
+def content-typography():
+    return render_template('vertical copy/content-typography.html')
+
+@app.route('/app-fullcalender', methods=['GET'])
+def app-fullcalender():
+    return render_template('vertical copy/app-fullcalender.html')
+
+@app.route('/auth-cover-forgot-password', methods=['GET'])
+def auth-cover-forgot-password():
+    return render_template('vertical copy/auth-cover-forgot-password.html')
+
+@app.route('/user_profile', methods=['GET'])
+def user_profile():
+    return render_template('vertical copy/user_profile.html')
+
+@app.route('/timeline', methods=['GET'])
+def timeline():
+    return render_template('vertical copy/timeline.html')
+
+@app.route('/form-select2', methods=['GET'])
+def form-select2():
+    return render_template('vertical copy/form-select2.html')
+
+@app.route('/component-alerts', methods=['GET'])
+def component-alerts():
+    return render_template('vertical copy/component-alerts.html')
+
+@app.route('/component-navs-tabs', methods=['GET'])
+def component-navs-tabs():
+    return render_template('vertical copy/component-navs-tabs.html')
+
+@app.route('/error-blank-page', methods=['GET'])
+def error-blank-page():
+    return render_template('vertical copy/error-blank-page.html')
+
+@app.route('/user_profile_edit', methods=['GET'])
+def user_profile_edit():
+    return render_template('vertical copy/user_profile_edit.html')
+
+@app.route('/auth-lock-screen', methods=['GET'])
+def auth-lock-screen():
+    return render_template('vertical copy/auth-lock-screen.html')
+
+@app.route('/errors-coming-soon', methods=['GET'])
+def errors-coming-soon():
+    return render_template('vertical copy/errors-coming-soon.html')
+
+@app.route('/component-cards', methods=['GET'])
+def component-cards():
+    return render_template('vertical copy/component-cards.html')
+
+@app.route('/app-emailread', methods=['GET'])
+def app-emailread():
+    return render_template('vertical copy/app-emailread.html')
+
+@app.route('/component-navbar', methods=['GET'])
+def component-navbar():
+    return render_template('vertical copy/component-navbar.html')
+
+@app.route('/table-basic-table', methods=['GET'])
+def table-basic-table():
+    return render_template('vertical copy/table-basic-table.html')
+
+@app.route('/component-paginations', methods=['GET'])
+def component-paginations():
+    return render_template('vertical copy/component-paginations.html')
+
+@app.route('/content-text-utilities', methods=['GET'])
+def content-text-utilities():
+    return render_template('vertical copy/content-text-utilities.html')
+
+@app.route('/component-progress-bars', methods=['GET'])
+def component-progress-bars():
+    return render_template('vertical copy/component-progress-bars.html')
+
+@app.route('/user-profile', methods=['GET'])
+def user-profile():
+    return render_template('vertical copy/user-profile.html')
+
+@app.route('/form-radios-and-checkboxes', methods=['GET'])
+def form-radios-and-checkboxes():
+    return render_template('vertical copy/form-radios-and-checkboxes.html')
+
+@app.route('/ecommerce-add-new-products', methods=['GET'])
+def ecommerce-add-new-products():
+    return render_template('vertical copy/ecommerce-add-new-products.html')
+
+@app.route('/app-file-manager', methods=['GET'])
+def app-file-manager():
+    return render_template('vertical copy/app-file-manager.html')
+
+@app.route('/form-file-upload', methods=['GET'])
+def form-file-upload():
+    return render_template('vertical copy/form-file-upload.html')
+
+@app.route('/app-contact-list', methods=['GET'])
+def app-contact-list():
+    return render_template('vertical copy/app-contact-list.html')
+
+@app.route('/auth-cover-reset-password', methods=['GET'])
+def auth-cover-reset-password():
+    return render_template('vertical copy/auth-cover-reset-password.html')
+
+@app.route('/icons-line-icons', methods=['GET'])
+def icons-line-icons():
+    return render_template('vertical copy/icons-line-icons.html')
+
+@app.route('/component-spinners', methods=['GET'])
+def component-spinners():
+    return render_template('vertical copy/component-spinners.html')
+
+@app.route('/auth-header-footer-signin', methods=['GET'])
+def auth-header-footer-signin():
+    return render_template('vertical copy/auth-header-footer-signin.html')
+
+@app.route('/ecommerce-products', methods=['GET'])
+def ecommerce-products():
+    return render_template('vertical copy/ecommerce-products.html')
+
+@app.route('/auth-basic-forgot-password', methods=['GET'])
+def auth-basic-forgot-password():
+    return render_template('vertical copy/auth-basic-forgot-password.html')
+
+@app.route('/component-badges', methods=['GET'])
+def component-badges():
+    return render_template('vertical copy/component-badges.html')
+
+@app.route('/auth-header-footer-signup', methods=['GET'])
+def auth-header-footer-signup():
+    return render_template('vertical copy/auth-header-footer-signup.html')
+
+@app.route('/form-elements', methods=['GET'])
+def form-elements():
+    return render_template('vertical copy/form-elements.html')
+
+@app.route('/form-input-group', methods=['GET'])
+def form-input-group():
+    return render_template('vertical copy/form-input-group.html')
+
+@app.route('/auth-basic-signup', methods=['GET'])
+def auth-basic-signup():
+    return render_template('vertical copy/auth-basic-signup.html')
+
+@app.route('/component-media-object', methods=['GET'])
+def component-media-object():
+    return render_template('vertical copy/component-media-object.html')
+
+@app.route('/app-to-do', methods=['GET'])
+def app-to-do():
+    return render_template('vertical copy/app-to-do.html')
+
+@app.route('/auth-basic-signin', methods=['GET'])
+def auth-basic-signin():
+    return render_template('vertical copy/auth-basic-signin.html')
+
+@app.route('/app-chat-box', methods=['GET'])
+def app-chat-box():
+    return render_template('vertical copy/app-chat-box.html')
+
+@app.route('/auth-header-footer-reset-password', methods=['GET'])
+def auth-header-footer-reset-password():
+    return render_template('vertical copy/auth-header-footer-reset-password.html')
+
+@app.route('/component-notifications', methods=['GET'])
+def component-notifications():
+    return render_template('vertical copy/component-notifications.html')
+
+@app.route('/form-date-time-pickes', methods=['GET'])
+def form-date-time-pickes():
+    return render_template('vertical copy/form-date-time-pickes.html')
+
+@app.route('/form-layouts', methods=['GET'])
+def form-layouts():
+    return render_template('vertical copy/form-layouts.html')
+
+@app.route('/auth-cover-signin', methods=['GET'])
+def auth-cover-signin():
+    return render_template('vertical copy/auth-cover-signin.html')
+
+@app.route('/auth-cover-signup', methods=['GET'])
+def auth-cover-signup():
+    return render_template('vertical copy/auth-cover-signup.html')
+
+@app.route('/icons-boxicons', methods=['GET'])
+def icons-boxicons():
+    return render_template('vertical copy/icons-boxicons.html')
+
+@app.route('/pricing-table', methods=['GET'])
+def pricing-table():
+    return render_template('vertical copy/pricing-table.html')
+
+@app.route('/component-buttons', methods=['GET'])
+def component-buttons():
+    return render_template('vertical copy/component-buttons.html')
+
+@app.route('/app-invoice', methods=['GET'])
+def app-invoice():
+    return render_template('vertical copy/app-invoice.html')
+
+@app.route('/ecommerce-orders', methods=['GET'])
+def ecommerce-orders():
+    return render_template('vertical copy/ecommerce-orders.html')
+
+@app.route('/charts-apex-chart', methods=['GET'])
+def charts-apex-chart():
+    return render_template('vertical copy/charts-apex-chart.html')
+
+@app.route('/faq', methods=['GET'])
+def faq():
+    return render_template('vertical copy/faq.html')
+
+@app.route('/map-google-maps', methods=['GET'])
+def map-google-maps():
+    return render_template('vertical copy/map-google-maps.html')
+
+@app.route('/errors-404-error', methods=['GET'])
+def errors-404-error():
+    return render_template('vertical copy/errors-404-error.html')
+
+@app.route('/form-wizard', methods=['GET'])
+def form-wizard():
+    return render_template('vertical copy/form-wizard.html')
+
+@app.route('/app-emailbox', methods=['GET'])
+def app-emailbox():
+    return render_template('vertical copy/app-emailbox.html')
+
+@app.route('/ecommerce-products-details', methods=['GET'])
+def ecommerce-products-details():
+    return render_template('vertical copy/ecommerce-products-details.html')
+
+@app.route('/form-text-editor', methods=['GET'])
+def form-text-editor():
+    return render_template('vertical copy/form-text-editor.html')
+
+@app.route('/component-accordions', methods=['GET'])
+def component-accordions():
+    return render_template('vertical copy/component-accordions.html')
+

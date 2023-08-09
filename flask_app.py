@@ -7,7 +7,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import time
 import databse.application_relation_manage as ap_relation
 import databse.comnet_manage as commentdb
-
+import databse.user_document as user_documentdb
 
 
 
@@ -54,6 +54,14 @@ def adduser():
         password_has= generate_password_hash(password, method='sha256')
         createdBy=session["user"][0]
 
+        pan_card=request.form.get('pan_card')
+        aadhar_card=request.form.get('adhaar_card')
+
+       
+
+
+
+
 
             
 
@@ -67,6 +75,8 @@ def adduser():
 
         user_id=create_user(full_name=full_name,email=email_address,password=password_has,role_id=role,date_of_birth=date_of_birth,address=address,phone_number=phone_number,createdBy=createdBy,branchBy=branchBy)
         
+        user_documentdb.create_user_document(user_id,pan_card,aadhar_card)
+
         file = request.files['user_photo']
         if(file != None and user_id!=None):
             filename = file.filename
@@ -173,6 +183,8 @@ def login():
             session['role'] = get_role(user[3])
             session['user'] = user
             session['image'] = get_user_image(user[0])
+            session['user_doc'] = user_documentdb.get_user_document_by_id(user[0])
+
 
 
             
@@ -276,6 +288,10 @@ def user_profile():
         address=request.form['address']
         date_of_birth=request.form['date_of_birth']
         user_profile_image=request.files['profile_photo']
+        adhhar_card=request.form['adhaar_card']
+        pan_card=request.form['pan_card']
+
+
         
         if(user_profile_image):
             filename = user_profile_image.filename
@@ -290,8 +306,10 @@ def user_profile():
 
 
         update_user(session['user'][0],full_name=full_name,phone_number=phone,address=address,date_of_birth=date_of_birth)
+        user_documentdb.update_or_create_user_document(session['user'][0],adhhar_card,pan_card)
         
         session['user']=get_user(session['user'][0])
+        session['user_doc'] = user_documentdb.get_user_document_by_id(session['user'][0])
 
         return redirect(url_for('user_profile'))
         
@@ -312,6 +330,9 @@ def user_edit(user_id):
         user_profile_image=request.files['profile_photo']
         role=request.form['chose_role']
         password=request.form['user_password']
+        adhar_card=request.form['adhaar_card']
+        pan_card=request.form['pan_card']
+
         
         if(user_profile_image):
             filename = user_profile_image.filename
@@ -327,6 +348,7 @@ def user_edit(user_id):
 
         update_user(session['user'][0],full_name=full_name,phone_number=phone,address=address,date_of_birth=date_of_birth)
         update_role(user_id,role)
+        user_documentdb.update_or_create_user_document(user_id,adhar_card,pan_card)
 
         if(password!=None):
             hashed_password = generate_password_hash(password, method='sha256')
@@ -338,15 +360,19 @@ def user_edit(user_id):
         role=get_role(user[3])
         image=get_user_image(user_id)
         roles=get_roles()
+        user_doc=user_documentdb.get_user_document_by_id(user_id)
 
 
-        return render_template("vertical/user_profile_edit.html",user=user,role=role,image=image,roles=roles,user_id=user_id)
+
+        return render_template("vertical/user_profile_edit.html",user=user,role=role,image=image,roles=roles,user_id=user_id,user_doc=user_doc)
         
     user=get_user(user_id)
     role=get_role(user[3])
     image=get_user_image(user_id)
     roles=get_roles()
-    return render_template("vertical/user_profile_edit.html",user=user,role=role,image=image,roles=roles,user_id=user_id)
+    user_doc=user_documentdb.get_user_document_by_id(user_id)
+
+    return render_template("vertical/user_profile_edit.html",user=user,role=role,image=image,roles=roles,user_id=user_id,user_doc=user_doc)
 
 @app.route('/logout')
 def logout():
@@ -380,7 +406,7 @@ def admin_users():
         users=get_branch_users_branchdBy(user_id)
 
 
-    final_users = [tuple(user) + (get_role(user[3])[1],get_user_image(user[0])) for user in users]
+    final_users = [tuple(user) + (get_role(user[3])[1],get_user_image(user[0],),user_documentdb.get_user_document_by_id(user[0])) for user in users]
     
     
     print(final_users)
