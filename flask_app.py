@@ -37,7 +37,7 @@ def home():
 @app.errorhandler(Exception)
 def handle_error(e):
     logging.exception("An error occurred: %s", str(e))
-    return render_template('error.html'), 500
+    return render_template('error.html',e=e), 500
 
 
 @app.route('/adduser',methods=['GET', 'POST'])
