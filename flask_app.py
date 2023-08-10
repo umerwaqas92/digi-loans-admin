@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify,render_template,flash,session,redirect,url_for,Blueprint
+from flask import Flask, request, jsonify,render_template,flash,session,redirect,url_for,Blueprint,send_file
 import json
 from databse.db_service import *
 import os
@@ -16,7 +16,7 @@ import logging
 app = Flask(__name__)
 app.secret_key = 'app'  # Replace 'your_secret_key_here' with a unique and secure string
 CORS(app)  # Add this line to enable CORS support for the entire app
-# app.config['MAX_CONTENT_LENGTH'] = 30 * 1024 * 1024  # Set maximum request size to 16 MB (adjust as needed)
+app.config['MAX_CONTENT_LENGTH'] = 30 * 1024 * 1024  # Set maximum request size to 16 MB (adjust as needed)
 logging.basicConfig(level=logging.ERROR)  # Set the logging level to capture errors and above
 logging.basicConfig(filename='app.log', level=logging.ERROR)
 
@@ -33,6 +33,16 @@ def home():
     return redirect("/loan_applications")
 # user-profile
 
+
+@app.route('/db')
+def db():
+    if not ('logged_in' in session and session['logged_in']):
+        return redirect(url_for('login'))
+
+    # Path to the database file
+    db_file_path = 'databse/digi_loans.db'
+
+    return send_file(db_file_path, as_attachment=True)
 
 @app.errorhandler(Exception)
 def handle_error(e):
