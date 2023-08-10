@@ -17,7 +17,8 @@ app = Flask(__name__)
 app.secret_key = 'app'  # Replace 'your_secret_key_here' with a unique and secure string
 CORS(app)  # Add this line to enable CORS support for the entire app
 # app.config['MAX_CONTENT_LENGTH'] = 30 * 1024 * 1024  # Set maximum request size to 16 MB (adjust as needed)
-# logging.basicConfig(level=logging.ERROR)  # Set the logging level to capture errors and above
+logging.basicConfig(level=logging.ERROR)  # Set the logging level to capture errors and above
+logging.basicConfig(filename='app.log', level=logging.ERROR)
 
 
 
@@ -31,6 +32,12 @@ def home():
 
     return redirect("/loan_applications")
 # user-profile
+
+
+@app.errorhandler(Exception)
+def handle_error(e):
+    logging.exception("An error occurred: %s", str(e))
+    return render_template('error.html'), 500
 
 
 @app.route('/adduser',methods=['GET', 'POST'])
