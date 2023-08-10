@@ -511,8 +511,8 @@ def edit_form(form_id):
 
             if form_image:
                 filename = form_image.filename
-                form_image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                form_image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+                form_image.save(os.path.join("static/uploads", filename))
+                form_image_path = os.path.join("static/uploads", filename)
 
             else:
 
@@ -774,7 +774,7 @@ def get_forms_list_api():
 
 
 if __name__ == '__main__':
-    app.config['UPLOAD_FOLDER'] = 'static/uploads/'
+    app.config['UPLOAD_FOLDER'] = 'static/uploads'
     
 
     app.run(debug=True)
