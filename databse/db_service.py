@@ -562,14 +562,14 @@ def get_users_super_admin():
         conn.close()
         return None
     
-def get_users_sub_admin():
+def get_users_sub_admin(user_id):
     conn = connect_db()
     cursor = conn.cursor()
 
     try:
         cursor.execute('''
-            SELECT * FROM Users where role_id >2
-        ''')
+            SELECT * FROM Users where role_id >2 and createdBy = ?
+        ''',(user_id,))
         users = cursor.fetchall()
         conn.close()
         # print(loan_applications)

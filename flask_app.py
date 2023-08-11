@@ -428,7 +428,16 @@ def admin_users():
     if(role_id==1):
         users = get_users_super_admin()
     elif (role_id==2):
-        users=get_users_sub_admin()
+        raw_users=get_users_sub_admin(user_id)
+        
+        users=[]
+        users.extend(raw_users)
+        for user in raw_users:
+            raw_sub_users=get_users_sub_admin(user[0])
+            users.extend(raw_sub_users)
+
+        
+
     elif (role_id==3):
         users=get_branch_users_branchdBy(user_id)
 
