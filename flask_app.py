@@ -134,8 +134,8 @@ def create_form_data():
 
     if form_image:
         filename = form_image.filename
-        form_image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        form_image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        form_image.save(os.path.join("static/uploads", filename))
+        form_image_path = os.path.join("static/uploads", filename)
 
     else:
         form_image_path = ""
