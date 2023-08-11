@@ -70,11 +70,14 @@ def update_user(user_id, full_name, date_of_birth, address, phone_number):
     cursor = conn.cursor()
 
     try:
+    
         cursor.execute('''
             UPDATE Users
             SET full_name = ?, date_of_birth = ?, address = ?, phone_number = ?
             WHERE user_id = ?
         ''', (full_name, date_of_birth, address, phone_number, user_id))
+
+        print("User updated successfully",user_id, " ", full_name, " ", date_of_birth, " ", address, " ", phone_number)
         conn.commit()
         conn.close()
         return True
@@ -163,14 +166,15 @@ def get_roles():
         conn.close()
         return None
 
-def update_role(role_id, role_name):
+def update_user_role(role_id, user_id):
     conn = connect_db()
     cursor = conn.cursor()
 
     try:
-        cursor.execute('UPDATE Roles SET role_name = ? WHERE role_id = ?', (role_name, role_id))
+        cursor.execute('UPDATE Users SET role_id = ? WHERE user_id = ?', (role_id, user_id))
         conn.commit()
         conn.close()
+        print("Role updated successfully",role_id, " ", user_id)
         return True
     except sqlite3.Error as e:
         print("Error updating role:", e)

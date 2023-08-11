@@ -354,8 +354,9 @@ def user_edit(user_id):
         adhar_card=request.form['adhaar_card']
         pan_card=request.form['pan_card']
 
-        
-        if(user_profile_image):
+        print("user_profile_image ", user_profile_image and user_profile_image.filename != '' and user_profile_image.content_length == 0)
+
+        if user_profile_image and user_profile_image.filename != '' and user_profile_image.content_length == 0:
             filename = user_profile_image.filename
             #random file name
             
@@ -367,9 +368,14 @@ def user_edit(user_id):
             print("file has been save!! ",file_path)
 
 
-        update_user(session['user'][0],full_name=full_name,phone_number=phone,address=address,date_of_birth=date_of_birth)
-        update_role(user_id,role)
-        user_documentdb.update_or_create_user_document(user_id,adhar_card,pan_card)
+        update_user(user_id,full_name=full_name,phone_number=phone,address=address,date_of_birth=date_of_birth)
+        
+        update_user_role(role_id=role,user_id=user_id)
+
+        try:
+             user_documentdb.update_or_create_user_document(user_id,adhar_card,pan_card)
+        except:
+            pass
 
         if(password!=None):
             hashed_password = generate_password_hash(password, method='sha256')

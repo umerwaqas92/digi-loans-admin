@@ -13,6 +13,11 @@
                 <div class="font-22 ms-auto"><i class="bx bx-dots-horizontal-rounded"></i></div>
             </div>
             <div class="ms-auto">
+                <div class="btn-group">
+                    <a href="{{url_for('adduser')}}" class="btn btn-primary">Add User</a>
+                   
+            </div>
+            <div class="ms-auto">
                 <label for="roleFilter" class="form-label">Filter by Role:</label>
                 <select id="roleFilter" class="form-select">
                     <option value="">All Roles</option>
@@ -45,7 +50,59 @@
                             <td>{{ user[1] }}</td>
                             <td>{{ user[8] }}</td>
                             <td>
-                                <!-- Your action buttons here -->
+                                <td>
+                                    {% if  session["user"][0]==user[0]  %}
+                                    <a type="button" class="btn btn-warning btn-sm radius-30 px-4" href="{{ url_for('user_profile') }}">Edit</a>
+            
+                                    {% endif %}
+            
+                                    {% if session["role"][0]==1 and session["user"][0]!=user[0]  %}
+            
+                                    <a type="button" class="btn btn-warning btn-sm radius-30 px-4" href="{{ url_for('user_edit', user_id=user[0]) }}">Edit</a>
+                                    {% endif %}
+                                    <button type="button" class="btn btn-primary btn-sm radius-30 px-4" data-bs-toggle="modal" data-bs-target="#exampleScrollableModal_{{ user[0] }}">View</button>
+                                    
+                                    <div class="modal fade" id="exampleScrollableModal_{{ user[0] }}" tabindex="-1" style="display: none;" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-scrollable">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">{{ user[4] }}</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                  
+                <div class="modal-body">
+                    {% if user[14] %}
+                    <img src="{{ url_for('static', filename=user[14][2]) }}" alt="Form Image" width="100">
+                    <br>
+                    <br>
+                {% endif %}
+                
+                    <p>Id: {{ user[0] }}</p>
+                   
+            
+                    <p>Email: {{ user[1] }}</p>
+                  
+                    <p>Name: {{ user[4] }}</p>
+                    <p>Birth Date: {{ user[5] }}</p>
+                    <p>Address: {{ user[6] }}</p>
+                    <p>Phone: {{ user[7] }}</p>
+                    <p>Created At: {{ user[8] }}</p>
+                  
+                    <p>Role: {{ user[13] }}</p>
+                    <p>ADHAAR CARD: {{ user[15][2] }}</p>
+                    <p>PAN CARD: {{ user[15][3] }}</p>
+            
+            
+                </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                             </td>
                         </tr>
                         {% endfor %}
