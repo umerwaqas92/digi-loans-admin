@@ -61,10 +61,15 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
+                                      
+                                        
                                         {% for field in application[4] %}
+                                        
                                         {% if field.field_type == 'file' %}
-                                            <p><strong>{{ field.field_label }}:</strong></p>
-                                            <img src="{{ field.value }}" alt="{{ field.field_label }}" width='300px'>
+                                           
+                                          
+                                            <a href="{{ field.value }}" download>Download {{ field.field_label }}</a><br>
+
                                         {% else %}
                                             <p><strong>{{ field.field_label }}:</strong> {{ field.value }}</p>
                                         {% endif %}

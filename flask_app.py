@@ -671,7 +671,6 @@ def get_products_data(categories):
 
 
 
-
 @app.route('/form/<int:form_id>', methods=['GET', 'POST'])
 def show_form(form_id):
     if request.method == 'POST':
@@ -715,6 +714,8 @@ def show_form(form_id):
             app_id= create_loan_application(1,form_id,form_id,form_values,"pending")
             
             dsa_user = get_user(dsa_id)
+            if(dsa_user==None):
+                return ("DSA code not found ",dsa_id)
             # print(dsa_user)
             branch_user = get_user(dsa_user[12])
             # print(branch_user)
@@ -756,6 +757,7 @@ def show_form(form_id):
             # if form_data[6] != None and form_data[2] != "":
             #    return redirect(form_data[6])
             # print(form_data[6])
+            
 
             return render_template('form_template.html', form_id=form_id, form_title=form_title, form_fields=form_fields,form_image=form_image,redirectUrl=form_data[6])
         else:
