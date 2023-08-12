@@ -1,5 +1,7 @@
 import sqlite3
 import json
+from werkzeug.security import check_password_hash
+
 # Connect to the SQLite database
 def connect_db():
     return sqlite3.connect('databse/digi_loans.db')
@@ -700,25 +702,44 @@ def delete_loan_application(application_id):
         conn.close()
         return False
 
-
 def login_user(email, password):
-    conn = connect_db()
-    cursor = conn.cursor()
-
+    conn = None
     try:
+        conn = connect_db()
+        cursor = conn.cursor()
+
         cursor.execute('SELECT * FROM Users WHERE email = ?', (email,))
         user = cursor.fetchone()
-        conn.close()
-        print("got user data ",user)
 
-        if user:
+        if user and check_password_hash(user[2], password):
             return user
         else:
             return None
     except sqlite3.Error as e:
-        print("Error during login:", e)
-        conn.close()
+        print("Database error:", e)
         return None
+    finally:
+        if conn:
+            conn.close()
+
+# def login_user(email, password):
+#     conn = connect_db()
+#     cursor = conn.cursor()
+
+#     try:
+#         cursor.execute('SELECT * FROM Users WHERE email = ?', (email,))
+#         user = cursor.fetchone()
+#         conn.close()
+#         print("got user data ",user)
+
+#         if user:
+#             return user
+#         else:
+#             return None
+#     except sqlite3.Error as e:
+        # print("Error during login:", e)
+        # conn.close()
+        # return None
 
 def get_forms_by_category(category_id):
     conn = connect_db()

@@ -21,11 +21,27 @@
                 <label for="roleFilter" class="form-label">Filter by Role:</label>
                 <select id="roleFilter" class="form-select">
                     <option value="">All Roles</option>
+                   
+                  
+                    
+                    {% if  session["role"][0]<3 %}
+
+                   
                     <option value="Super Admin">Super Admin</option>
                     <option value="Sub Admin">Sub Admin</option>
                     <option value="Branch">Branch</option>
                     <option value="DSA">DSA</option>
                     <option value="User">User</option>
+                    {% endif %}
+
+                    {% if  session["role"][0]==3 %}
+
+                   
+                 
+                    <option value="DSA">DSA</option>
+                    <option value="User">User</option>
+                    {% endif %}
+                   
                 </select>
             </div>
             <hr>
@@ -56,7 +72,7 @@
             
                                     {% endif %}
             
-                                    {% if session["role"][0]==1 and session["user"][0]!=user[0]  %}
+                                    {% if session["role"][0]<4 and session["user"][0]!=user[0]  %}
             
                                     <a type="button" class="btn btn-warning btn-sm radius-30 px-4" href="{{ url_for('user_edit', user_id=user[0]) }}">Edit</a>
                                     {% endif %}

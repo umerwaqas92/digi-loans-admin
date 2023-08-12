@@ -68,8 +68,12 @@ def adduser():
         full_name = request.form.get('full_name')
         phone_number = request.form.get('phone_num')
         email_address = request.form.get('email_address')
+        email_address=email_address.rstrip()
+
         address = request.form.get('address')
         password = request.form.get('password')
+        password=password.rstrip()
+
         role = request.form.get('chose_role')
         date_of_birth=request.form.get('date_of_birth')
         password_has= generate_password_hash(password, method='sha256')
@@ -117,6 +121,31 @@ def adduser():
        
         branches=get_branch_user()
         return render_template("add_user.html", roles=roles,branches=branches)
+
+@app.route('/change_password', methods=['POST', 'GET'])
+def change_password():
+    if not ( 'logged_in' in session and session['logged_in']):
+        return redirect("/login")
+
+
+    pass_has=session['user'][2]
+    if request.method == 'POST':
+        old_password = request.form.get('old_password')
+        new_password = request.form.get('new_password')
+        retype_password = request.form.get('retype_password')
+        if(check_password_hash(pass_has, old_password)):
+            if(new_password==retype_password):
+                hashed_password = generate_password_hash(new_password, method='sha256')
+                update_user_password(session['user'][0],hashed_password)
+                return redirect("/logout")
+            else:
+                return render_template("vertical/user_change_password.html",error="New password and retype password not match",user_id=session["user"][0],image=session['image'],user=session['user'],role=session['role'],user_doc=session['user_doc'])
+        else:
+            return render_template("vertical/user_change_password.html",error="Old password not match",user_id=session["user"][0],image=session['image'],user=session['user'],role=session['role'],user_doc=session['user_doc'])
+
+
+    return render_template("vertical/user_change_password.html",user_id=session["user"][0],image=session['image'],user=session['user'],role=session['role'],user_doc=session['user_doc'])
+
 
 @app.route('/create_form_data', methods=['POST'])
 def create_form_data():
@@ -178,27 +207,57 @@ def delete_form():
 
 
 
+# @app.route('/login', methods=['GET', 'POST'])
+# def login():
+#     if request.method == 'POST':
+#         email = request.form['inputEmailAddress']
+#         password = request.form['inputChoosePassword']
+#         password=password.stripe()
+#         email=email.stripe()
+#         remember_me = request.form.get('remember_me')  # Get the value of the "Remember Me" checkbox (if exists)
+#         # hashed_password = generate_password_hash(password, method='sha256')
+
+
+#         print(email)
+#         print(password)
+#         user=login_user(email=email,password=password)
+#         if(user==None):
+#             return render_template("vertical/auth-basic-signin.html",error="Invalid credentials")
+            
+#         check_pass=check_password_hash(user[2], password)
+#         print(check_pass)
+
+        
+#         if user!=None and check_pass:
+#             # flash("You are logged in as {}".format(email))
+#             session['logged_in'] = True
+#             session['user_email'] = email
+#             session['role'] = get_role(user[3])
+#             session['user'] = user
+#             session['image'] = get_user_image(user[0])
+#             session['user_doc'] = user_documentdb.get_user_document_by_id(user[0])
+
+
+
+            
+
+#             return redirect("/loan_applications")
+        
+#         else:
+#             # flash("Invalid credentials", "danger")
+#             return render_template("vertical/auth-basic-signin.html",error="Invalid credentials")
+#     else:  
+#         return render_template("vertical/auth-basic-signin.html",)
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        email = request.form['inputEmailAddress']
+        email = request.form['inputEmailAddress'].rstrip()
         password = request.form['inputChoosePassword']
-        remember_me = request.form.get('remember_me')  # Get the value of the "Remember Me" checkbox (if exists)
-        # hashed_password = generate_password_hash(password, method='sha256')
 
-
-        print(email)
-        print(password)
-        user=login_user(email=email,password=password)
-        if(user==None):
-            return render_template("vertical/auth-basic-signin.html",error="Invalid credentials")
-            
-        check_pass=check_password_hash(user[2], password)
-        print(check_pass)
-
+        user = login_user(email, password)
         
-        if user!=None and check_pass:
-            # flash("You are logged in as {}".format(email))
+        if user:
             session['logged_in'] = True
             session['user_email'] = email
             session['role'] = get_role(user[3])
@@ -206,17 +265,12 @@ def login():
             session['image'] = get_user_image(user[0])
             session['user_doc'] = user_documentdb.get_user_document_by_id(user[0])
 
-
-
-            
-
             return redirect("/loan_applications")
-        
         else:
-            # flash("Invalid credentials", "danger")
-            return render_template("vertical/auth-basic-signin.html",error="Invalid credentials")
-    else:  
-        return render_template("vertical/auth-basic-signin.html",)
+            error_message = "Invalid credentials"
+            return render_template("vertical/auth-basic-signin.html", error=error_message)
+    else:
+        return render_template("vertical/auth-basic-signin.html")
 
 @app.route('/forms_creator', methods=['GET', 'POST'])
 def create_form():
