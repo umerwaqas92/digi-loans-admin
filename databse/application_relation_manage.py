@@ -76,6 +76,7 @@ def read_all_ap_relations_by_user(user_id):
     try:
         cursor.execute("SELECT * FROM ap_relation WHERE user_id = ?", (user_id,))
         rows = cursor.fetchall()
+        print("All ap_relation records for User ID:", user_id)
         return rows
     except Exception as e:
         print("Error:", str(e))

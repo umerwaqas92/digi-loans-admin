@@ -323,7 +323,7 @@ def all_applications():
         )
         product_form_info = get_product_form(application[2])
         print(application[2])
-        print("product_form_info>>>>>>> ",product_form_info)
+        # print("product_form_info>>>>>>> ",product_form_info)
         if product_form_info is not None:
             applications[index] += (product_form_info[2],)
         else:
@@ -332,7 +332,7 @@ def all_applications():
     # print(product_form_info)
 
     final_applications = [tuple(_app) + (commentdb.get_ap_comments(_app[0]),) for _app in applications]
-    # print("final_applications ",len(final_applications[0]))
+    print("final_applications ",len(applications))
 
     
 
@@ -727,9 +727,9 @@ def show_form(form_id):
 
             if(app_id):
                 if(branch_user[11]!=None):
-                    ap_relation.create_ap_relation(dsa_user[0],branch_user[11])
+                    ap_relation.create_ap_relation(app_id,branch_user[11])
                 if(dsa_user[12]!=None):
-                    ap_relation.create_ap_relation(dsa_user[0],dsa_user[12])
+                    ap_relation.create_ap_relation(app_id,dsa_user[12])
 
             # print(form_values)
             
