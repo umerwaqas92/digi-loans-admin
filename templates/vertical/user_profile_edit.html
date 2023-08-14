@@ -119,8 +119,12 @@
 									</div>
 									<div class="col-sm-9 text-secondary">
 										<select class="form-select" id="chose_role" name="chose_role" required>
+											
 											{% for role in roles %}
+											
+												{% if role[0]>session["role"][0] %}
 												<option value="{{ role[0] }}" {% if role[0] == user[3] %}selected{% endif %}>{{ role[1] }}</option>
+												{% endif %}
 											{% endfor %}
 										</select>
 									</div>

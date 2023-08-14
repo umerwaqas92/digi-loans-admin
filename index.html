@@ -2,6 +2,13 @@
 <html>
 <head>
   <title>Internet Speed Test</title>
+  <script type="module">
+    import Chatbot from "https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js";
+    Chatbot.init({
+      chatflowid: "<chatflowid>",
+      apiHost: "http://localhost:3000",
+    });
+  </script>
   <style>
     body {
       font-family: Arial, sans-serif;

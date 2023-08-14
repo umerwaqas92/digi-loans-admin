@@ -30,6 +30,8 @@
             <thead class="table-light">
                 <tr>
                     <th>Application id</th>
+                  
+
                     <th>Loan name</th>
                     <th>Date</th>
                 
@@ -41,6 +43,8 @@
                 {%for application in applications %}
                 <tr>
                     <td>{{ application[0] }}</td>
+                  
+
                     <td>
                         {{ application[8] }}          
                     </td>
@@ -74,6 +78,7 @@
                                             <p><strong>{{ field.field_label }}:</strong> {{ field.value }}</p>
                                         {% endif %}
                                     {% endfor %}
+                                    <p>  <strong>DSA Code:</strong>  {{ application[1] }}</p>
                                        
                                  
                                                             <p><strong>CHange Status</strong></p>

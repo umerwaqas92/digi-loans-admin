@@ -711,7 +711,7 @@ def show_form(form_id):
                   pass 
 
           
-            app_id= create_loan_application(1,form_id,form_id,form_values,"pending")
+            app_id= create_loan_application(dsa_id,form_id,form_id,form_values,"pending")
             
             dsa_user = get_user(dsa_id)
             if(dsa_user==None):
@@ -726,8 +726,8 @@ def show_form(form_id):
             # sub_admin_user = get_sub_admin(branch_user[0])
 
             if(app_id):
-                # if(branch_user[11]!=None):
-                #     ap_relation.create_ap_relation(dsa_user,branch_user[11])
+                if(branch_user[11]!=None):
+                    ap_relation.create_ap_relation(dsa_user,branch_user[11])
                 if(dsa_user[12]!=None):
                     ap_relation.create_ap_relation(dsa_user,dsa_user[12])
 
@@ -757,7 +757,7 @@ def show_form(form_id):
             # if form_data[6] != None and form_data[2] != "":
             #    return redirect(form_data[6])
             # print(form_data[6])
-            
+
 
             return render_template('form_template.html', form_id=form_id, form_title=form_title, form_fields=form_fields,form_image=form_image,redirectUrl=form_data[6])
         else:
@@ -853,6 +853,22 @@ def get_forms_list_api():
 
     return jsonify(form_json)
 
+
+
+#api
+
+@app.route('/api/signup', methods=['POST'])
+def api_signup():
+    email = request.args.get('email', '')
+    password = request.args.get('password', '')
+    retyped_password = request.args.get('retyped_password', '')
+    full_name = request.args.get('full_name', '')
+    if(password!=retyped_password):
+        return jsonify({"error":"Passwords do not match"})
+
+    hash_password = generate_password_hash(password, method='sha256')
+
+    signup_user(email=email, password=hash_password,role_id=1, full_name=full_name,phone_number=None,date_of_birth=None,address="")
 
 if __name__ == '__main__':
     app.config['UPLOAD_FOLDER'] = 'static/uploads'
