@@ -727,9 +727,9 @@ def show_form(form_id):
 
             if(app_id):
                 if(branch_user[11]!=None):
-                    ap_relation.create_ap_relation(dsa_user,branch_user[11])
+                    ap_relation.create_ap_relation(dsa_user[0],branch_user[11])
                 if(dsa_user[12]!=None):
-                    ap_relation.create_ap_relation(dsa_user,dsa_user[12])
+                    ap_relation.create_ap_relation(dsa_user[0],dsa_user[12])
 
             # print(form_values)
             

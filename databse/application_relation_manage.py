@@ -7,6 +7,7 @@ def create_ap_relation(app_id, user_id):
     cursor = connection.cursor()
 
     try:
+        print("create_ap_relation record...", app_id, user_id)
         cursor.execute("INSERT INTO ap_relation (app_id, user_id) VALUES (?, ?)", (app_id, user_id))
         connection.commit()
         print("Record inserted successfully.")
