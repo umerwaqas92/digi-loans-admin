@@ -9,6 +9,11 @@
 
 <div class="page-wrapper">
 	<div class="page-content">
+        {% if session["role"][0]==1 %}
+        <div class="btn-group">
+            <a href="{{url_for('export_applications_data')}}" class="btn btn-primary">Export Applications Report</a>
+        </div>
+        {% endif %}
 <div class="card-body">
     {% if msg %}
     <div class="alert alert-primary border-0 bg-primary alert-dismissible fade show">

@@ -15,8 +15,14 @@
             <div class="ms-auto">
                 <div class="btn-group">
                     <a href="{{url_for('adduser')}}" class="btn btn-primary">Add User</a>
+                </div>
+                {% if session["role"][0]==1 %}
+                <div class="btn-group">
+                    <a href="{{url_for('export_user_data')}}" class="btn btn-primary">Export User Report</a>
+                </div>
+                {% endif %}
                    
-            </div>
+            </div><br>
             <div class="ms-auto">
                 <label for="roleFilter" class="form-label">Filter by Role:</label>
                 <select id="roleFilter" class="form-select">

@@ -9,6 +9,10 @@ import databse.application_relation_manage as ap_relation
 import databse.comnet_manage as commentdb
 import databse.user_document as user_documentdb
 import logging
+import openpyxl
+import datetime
+
+
 
 
 
@@ -854,6 +858,106 @@ def get_forms_list_api():
     return jsonify(form_json)
 
 
+
+@app.route('/export_applications_data', methods=['GET'])
+def export_applications_data():
+    applications = get_loan_applications(0)
+
+    if(applications == None or len(applications)==0):
+        return redirect("/loan_applications")
+    # Create an Excel workbook and add user data to a worksheet
+    wb = openpyxl.Workbook()
+    ws = wb.active
+
+    # Write header row
+
+    roles=get_roles()
+    header = (
+        "date", "dsa code", "dsa mobile", "dsa name","dsa email", "Loan name","Status"
+    )
+    ws.append(header)
+
+
+    apllications2=[]
+    for application in applications:
+        try:
+            user=get_user(application[1])
+            loan=get_loan_product(application[2])
+                                # "date",        "dsa code",   "dsa mobile", "dsa name","dsa email", "Loan name","Status"
+            apllications2.append((application[6],application[1],user[7],user[4],user[1],loan[1],application[5]))
+           
+        except Exception as e:
+            pass
+
+    print("apllications2 ---> ",len(apllications2))
+
+    # print("User ---> ",apllications2[0])
+    # final_users = [tuple(_app) + (commentdb.get_ap_comments(_app[0]),) for _app in user]
+
+
+    # Write user data rows
+    for application in apllications2:
+        # Convert the JSON string to a Python object
+
+        ws.append(application)
+
+    # Save the Excel file to the specified path
+    current_datetime = datetime.datetime.now()
+    formatted_datetime = current_datetime.strftime("%Y%m%d_%H%M%S")
+    file_name = f"application_data_{formatted_datetime}.xlsx"
+    file_path = os.path.join("static/report", file_name)
+
+
+    os.makedirs(os.path.dirname(file_path), exist_ok=True)
+    wb.save(file_path)
+    
+
+    return send_file(file_path, as_attachment=True)
+
+@app.route('/export_user_data', methods=['GET'])
+def export_user_data():
+    users = get_users_super_admin()
+
+    # Create an Excel workbook and add user data to a worksheet
+    wb = openpyxl.Workbook()
+    ws = wb.active
+
+    # Write header row
+
+    roles=get_roles()
+    header = (
+        "id", "email", "Role", "Name",  "Address",
+        "Phone number"
+    )
+    ws.append(header)
+
+    users2=[]
+    for user in users:
+        users2.append((user[0],user[1],roles[user[3]][1],user[4],user[6],user[7]))
+    # print("User ---> ",users[0])
+
+    print("User ---> ",users2[0])
+    # final_users = [tuple(_app) + (commentdb.get_ap_comments(_app[0]),) for _app in user]
+
+
+    # Write user data rows
+    for user in users2:
+        # Convert the JSON string to a Python object
+
+        ws.append(user)
+
+    # Save the Excel file to the specified path
+    current_datetime = datetime.datetime.now()
+    formatted_datetime = current_datetime.strftime("%Y%m%d_%H%M%S")
+    file_name = f"user_data_{formatted_datetime}.xlsx"
+    file_path = os.path.join("static/report", file_name)
+
+
+    os.makedirs(os.path.dirname(file_path), exist_ok=True)
+    wb.save(file_path)
+    
+
+    return send_file(file_path, as_attachment=True)
 
 #api
 
