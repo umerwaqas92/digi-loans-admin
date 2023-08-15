@@ -70,7 +70,7 @@ def adduser():
        roles = roles[session["role"][0]:4]
 
     else:
-        roles = roles[session["role"][0]:5]
+        roles = roles[session["role"][0]:4]
 
    
     if request.method == 'POST':
