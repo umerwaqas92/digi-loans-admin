@@ -82,6 +82,8 @@ def adduser():
 
         address = request.form.get('address')
         password = request.form.get('password')
+        retype_password = request.form.get('retype_password')
+
         password=password.rstrip()
 
         role = request.form.get('chose_role')
@@ -91,6 +93,14 @@ def adduser():
 
         pan_card=request.form.get('pan_card')
         aadhar_card=request.form.get('adhaar_card')
+
+        if(password!=retype_password):
+           return render_template("add_user.html", roles=roles,error="Passwords must be matched!! ")
+        # print(retype_password)
+        # print(password)
+
+
+            
 
        
 
