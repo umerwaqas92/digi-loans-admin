@@ -22,7 +22,7 @@ from routs.blueprints import about_bp
 app = Flask(__name__)
 app.secret_key = 'app'  # Replace 'your_secret_key_here' with a unique and secure string
 CORS(app)  # Add this line to enable CORS support for the entire app
-app.config['MAX_CONTENT_LENGTH'] = 30 * 1024 * 1024  # Set maximum request size to 16 MB (adjust as needed)
+app.config['MAX_CONTENT_LENGTH'] = 100 * 1024 * 1024  # Set maximum request size to 16 MB (adjust as needed)
 logging.basicConfig(level=logging.ERROR)  # Set the logging level to capture errors and above
 logging.basicConfig(filename='app.log', level=logging.ERROR)
 
