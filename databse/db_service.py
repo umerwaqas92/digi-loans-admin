@@ -566,7 +566,7 @@ def get_users_super_admin():
 
     try:
         cursor.execute('''
-            SELECT * FROM Users
+            SELECT * FROM Users ORDER BY created_time desc
         ''')
         users = cursor.fetchall()
         conn.close()
@@ -656,7 +656,7 @@ def get_loan_applications(admin_id):
 
     try:
         cursor.execute('''
-            SELECT * FROM LoanApplications
+            SELECT * FROM LoanApplications ORDER BY created_time desc LIMIT 100
         ''')
         loan_applications = cursor.fetchall()
         conn.close()
