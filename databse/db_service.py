@@ -25,6 +25,20 @@ def create_user_(email, password, role_id, full_name, date_of_birth, address, ph
         conn.close()
         return False
 
+def get_user_by_email(email):
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute('SELECT * FROM Users WHERE email = ?', (email,))
+        user = cursor.fetchone()
+        conn.close()
+        return user
+    except sqlite3.Error as e:
+        print("Error getting user:", e)
+        conn.close()
+        return None
+
 def get_user(user_id):
     conn = connect_db()
     cursor = conn.cursor()

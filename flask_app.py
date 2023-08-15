@@ -511,7 +511,7 @@ def admin_users():
     final_users = [tuple(user) + (get_role(user[3])[1],get_user_image(user[0],),user_documentdb.get_user_document_by_id(user[0]),disabledb.get_disabled_user(user[0])) for user in users]
     
     
-    print("final_users_Users--->",final_users[1])
+    # print("final_users_Users--->",final_users[1])
 
 
 
