@@ -1,3 +1,24 @@
+
+server {
+    listen 80;
+    server_name 31.220.17.183;
+
+    location / {
+        proxy_pass http://127.0.0.1:5000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+
+    location ^~ /phpmyadmin {
+        alias /usr/share/phpmyadmin;
+        index index.php;
+
+        location ~ ^/phpmyadmin/(.+\.php)$ {
+            alias /usr/share/phpmyadmin/$1;
+            include fastcgi_params;
+            fastcgi_pass unix:/run/php/php7.4-fpm.sock; # Adjust for your PHP v>
+            fastcgi_param SCRIPT_FILENAME $request_filename;
+        }
 pip install flask-cors
 
 

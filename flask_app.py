@@ -106,7 +106,7 @@ def adduser():
 
 
         user_id=create_user(full_name=full_name,email=email_address,password=password_has,role_id=role,date_of_birth=date_of_birth,address=address,phone_number=phone_number,createdBy=createdBy,branchBy=branchBy)
-        
+        update_user_password(user_id=user_id,password=password_has)
         user_documentdb.create_user_document(user_id,pan_card,aadhar_card)
 
         file = request.files['user_photo']
