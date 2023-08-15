@@ -63,9 +63,9 @@ def adduser():
     
     
     if(session["role"][0]==1):
-       roles= roles[session["role"][0]-1:4]
+       roles= roles[session["role"][0]-1:5]
     else:
-        roles = roles[session["role"][0]:4]
+        roles = roles[session["role"][0]:5]
 
    
     if request.method == 'POST':
