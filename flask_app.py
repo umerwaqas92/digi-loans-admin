@@ -66,6 +66,9 @@ def adduser():
     
     if(session["role"][0]==1):
        roles= roles[session["role"][0]-1:5]
+    elif(session["role"][0]==3):
+       roles = roles[session["role"][0]:4]
+
     else:
         roles = roles[session["role"][0]:5]
 
