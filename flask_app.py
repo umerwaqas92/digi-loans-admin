@@ -12,6 +12,7 @@ import logging
 import openpyxl
 import datetime
 import databse.disabled_manage as disabledb
+from routs.blueprints import about_bp
 
 
 
@@ -26,6 +27,7 @@ logging.basicConfig(level=logging.ERROR)  # Set the logging level to capture err
 logging.basicConfig(filename='app.log', level=logging.ERROR)
 
 
+app.register_blueprint(about_bp)
 
 
 msg=""
@@ -261,11 +263,13 @@ def login():
         password = request.form['inputChoosePassword']
 
         user = login_user(email, password)
-        if(disabledb.get_disabled_user(user_id=user[0])):
-            return render_template("vertical/auth-basic-signin.html", error="Your account has been disabled!!")
+
+
 
         
         if user:
+            if(disabledb.get_disabled_user(user_id=user[0])):
+                return render_template("vertical/auth-basic-signin.html", error="Your account has been disabled!!")
             session['logged_in'] = True
             session['user_email'] = email
             session['role'] = get_role(user[3])
@@ -983,18 +987,7 @@ def export_user_data():
 
 #api
 
-@app.route('/api/signup', methods=['POST'])
-def api_signup():
-    email = request.args.get('email', '')
-    password = request.args.get('password', '')
-    retyped_password = request.args.get('retyped_password', '')
-    full_name = request.args.get('full_name', '')
-    if(password!=retyped_password):
-        return jsonify({"error":"Passwords do not match"})
 
-    hash_password = generate_password_hash(password, method='sha256')
-
-    signup_user(email=email, password=hash_password,role_id=1, full_name=full_name,phone_number=None,date_of_birth=None,address="")
 
 if __name__ == '__main__':
     app.config['UPLOAD_FOLDER'] = 'static/uploads'
