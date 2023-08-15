@@ -18,9 +18,26 @@ def get_users():
 
 @about_bp.route('/api/get_branches', methods=['GET'])
 def get_branches():
-    users_branches=db.get_branch_user()
+    users_branches = db.get_branch_user()
     
-    return jsonify(users_branches)
+    # Assuming users_branches is a list of lists containing branch data
+    branches = []
+    for branch_data in users_branches:
+        branch = {
+            "id": branch_data[0],
+            "email": branch_data[1],
+            "password": branch_data[2],
+            "some_number": branch_data[3],
+            "name": branch_data[4],
+            "join_date": branch_data[5],
+            "location": branch_data[6],
+            "phone": branch_data[7],
+            "created_at": branch_data[8],
+            "updated_at": branch_data[9]
+        }
+        branches.append(branch)
+    
+    return jsonify(branches)
 
 
 @about_bp.route('/api/signup', methods=['POST'])
