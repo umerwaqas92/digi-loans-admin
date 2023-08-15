@@ -114,13 +114,31 @@
                     <p>Role: {{ user[13] }}</p>
                     <p>ADHAAR CARD: {{ user[15][2] }}</p>
                     <p>PAN CARD: {{ user[15][3] }}</p>
+                    <p>Disabled User: {{ user[16] }}</p>
+                    
             
             
                 </div>
                                                 </div>
                                                 <div class="modal-footer">
+                                                    {%if session["role"][0]==1%}
+                                               
+                                                    {% if user[16]==0 %}
+                                                  <a type="button" class="btn btn-warning btn-sm" href="{{ url_for('disabled_user', user_id=user[0]) }}">Disabled User</a>
+                                                  {% endif %}
+
+                                                  {% if user[16]==1 %}
+                                                  <a type="button" class="btn btn-primary btn-sm" href="{{ url_for('disabled_user', user_id=user[0]) }}">Enabled User</a>
+                                                  {% endif %}
+                                                  
+                                                
+                                                    
+
+                                                   
+                                                    {% endif %}
+
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                                  
                                                 </div>
                                             </div>
                                         </div>

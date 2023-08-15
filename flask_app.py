@@ -11,6 +11,7 @@ import databse.user_document as user_documentdb
 import logging
 import openpyxl
 import datetime
+import databse.disabled_manage as disabledb
 
 
 
@@ -260,6 +261,9 @@ def login():
         password = request.form['inputChoosePassword']
 
         user = login_user(email, password)
+        if(disabledb.get_disabled_user(user_id=user[0])):
+            return render_template("vertical/auth-basic-signin.html", error="Your account has been disabled!!")
+
         
         if user:
             session['logged_in'] = True
@@ -500,10 +504,10 @@ def admin_users():
         users=get_branch_users_branchdBy(user_id)
 
 
-    final_users = [tuple(user) + (get_role(user[3])[1],get_user_image(user[0],),user_documentdb.get_user_document_by_id(user[0])) for user in users]
+    final_users = [tuple(user) + (get_role(user[3])[1],get_user_image(user[0],),user_documentdb.get_user_document_by_id(user[0]),disabledb.get_disabled_user(user[0])) for user in users]
     
     
-    print(final_users)
+    print("final_users_Users--->",final_users[1])
 
 
 
@@ -858,9 +862,27 @@ def get_forms_list_api():
     return jsonify(form_json)
 
 
+@app.route('/disabled_user/<int:user_id>', methods=['GET'])
+def disabled_user(user_id):
+    prevoud_val=disabledb.get_disabled_user(user_id=user_id)
+    disabled=True
+    
+    if(prevoud_val!=None):
+        if(prevoud_val==1):
+            disabled=False
+        else:
+            disabled=True
+            
+    
+    disabledb.create_or_update_disabled_user(user_id=user_id,disabled=disabled)
+    
+    return redirect("/users")
+
+
 
 @app.route('/export_applications_data', methods=['GET'])
 def export_applications_data():
+    
     applications = get_loan_applications(0)
 
     if(applications == None or len(applications)==0):
@@ -873,7 +895,7 @@ def export_applications_data():
 
     roles=get_roles()
     header = (
-        "date", "dsa code", "dsa mobile", "dsa name","dsa email", "Loan name","Status"
+        "date", "dsa code", "dsa mobile", "dsa name", "Loan name","Status","CUSTOMER Name","CUSTOMER Mobile"
     )
     ws.append(header)
 
@@ -884,7 +906,7 @@ def export_applications_data():
             user=get_user(application[1])
             loan=get_loan_product(application[2])
                                 # "date",        "dsa code",   "dsa mobile", "dsa name","dsa email", "Loan name","Status"
-            apllications2.append((application[6],application[1],user[7],user[4],user[1],loan[1],application[5]))
+            apllications2.append((application[6],application[1],user[7],user[4],loan[1],application[5]))
            
         except Exception as e:
             pass
