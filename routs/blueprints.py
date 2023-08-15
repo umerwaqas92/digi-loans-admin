@@ -44,11 +44,14 @@ def get_branches():
 def api_signup():
     email = request.args.get('email', '')
     password = request.args.get('password', '')
-    retyped_password = request.args.get('retyped_password', '')
     full_name = request.args.get('full_name', '')
-    if(password!=retyped_password):
-        return jsonify({"error":"Passwords do not match"})
+    date_of_birth=request.args.get('date_of_birth', None)
+    address = request.args.get('address', '')
+    phone_num = request.args.get('phone_num', '')
+    branch=request.args.get('branch', None)
 
+    
     hash_password = generate_password_hash(password, method='sha256')
 
-    db.signup_user(email=email, password=hash_password,role_id=1, full_name=full_name,phone_number=None,date_of_birth=None,address="")
+    db.signup_user(email=email, password=hash_password,role_id=1, full_name=full_name,phone_number=phone_num,date_of_birth=date_of_birth,address=address)
+    # db.update_user(email=email, password=hash_password,role_id=1, full_name=full_name,phone_number=phone_num,date_of_birth=date_of_birth,address=address)
