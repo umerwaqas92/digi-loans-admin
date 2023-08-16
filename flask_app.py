@@ -359,7 +359,9 @@ def all_applications():
     final_applications = [tuple(_app) + (commentdb.get_ap_comments(_app[0]),) for _app in applications]
     print("final_applications ",len(applications))
 
-    
+
+    flash('This is a flash message!', 'info')  # 'info' is the category of the message
+
 
     return render_template("vertical/all-applocations.html",applications=final_applications,msg=msg,get_user=get_user)
 
@@ -415,6 +417,17 @@ def user_profile():
         
     
     return render_template("vertical/user_profile.html")
+
+
+@app.route('/user_view/<int:user_id>', methods=['GET', 'POST'])
+def user_view(user_id):
+    user=get_user(user_id)
+    role=get_role(user[3])
+    image=get_user_image(user_id)
+    roles=get_roles()
+    user_doc=user_documentdb.get_user_document_by_id(user_id)
+    return render_template("vertical/user_profile_other.html",user=user,role=role,image=image,roles=roles,user_id=user_id,user_doc=user_doc)
+
 
 
 @app.route('/user_edit/<int:user_id>', methods=['GET', 'POST'])
@@ -528,7 +541,7 @@ def admin_users():
 
 
 
-    return render_template("users_list.html",users=final_users)
+    return render_template("users_list.html",users=final_users,get_user=get_user)
 
 @app.route('/forms')
 def admin_forms():
