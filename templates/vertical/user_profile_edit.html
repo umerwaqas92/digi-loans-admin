@@ -129,6 +129,43 @@
 										</select>
 									</div>
 								</div>
+								{% if session["role"][0]==1 %}
+
+
+								<div class="row mb-3">
+									<div class="col-sm-3">
+										<h6 class="mb-0">Select Branch</h6>
+									</div>
+									
+									<div class="col-sm-9 text-secondary">
+										<select class="form-select" id="chose_branch" name="chose_branch">
+											
+											{% for branch in branches %}
+											
+												
+												<option value="{{ branch[0] }}" {% if branch[0] == user[12] %}selected{% endif %}>{{ branch[4] }}</option>
+												
+											{% endfor %}
+										</select>
+									</div>
+								</div>
+								<div class="row mb-3">
+									<div class="col-sm-3">
+										<h6 class="mb-0">Select Sub Admin</h6>
+									</div>
+									<div class="col-sm-9 text-secondary">
+										<select class="form-select" id="chose_subadmin" name="chose_subadmin">
+											
+											{% for subadmin in sub_admins %}
+											
+												
+												<option value="{{ subadmin[0] }}" {% if subadmin[0] == user[11] %}selected{% endif %}>{{ subadmin[4] }}</option>
+											
+											{% endfor %}
+										</select>
+									</div>
+								</div>
+								{% endif %}
 
 								
 								<div class="row mb-3">

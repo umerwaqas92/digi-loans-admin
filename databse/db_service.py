@@ -121,6 +121,44 @@ def update_user_password(user_id, password):
         conn.close()
         return False
     
+# createdBy"	INTEGER,
+# 	"branchBy"	INTEGER,
+
+def update_user_branch(user_id, branh_id):
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute('''
+            UPDATE Users
+            SET branchBy = ? WHERE user_id = ?
+        ''', (branh_id, user_id))
+        conn.commit()
+        conn.close()
+        return True
+    except sqlite3.Error as e:
+        print("Error updating user:", e)
+        conn.rollback()
+        conn.close()
+        return False
+    
+def update_user_sub_admin(user_id, subadmin):
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute('''
+            UPDATE Users
+            SET createdBy = ? WHERE user_id = ?
+        ''', (subadmin, user_id))
+        conn.commit()
+        conn.close()
+        return True
+    except sqlite3.Error as e:
+        print("Error updating user:", e)
+        conn.rollback()
+        conn.close()
+        return False
 
 
 def delete_user(user_id):
@@ -621,6 +659,25 @@ def get_branch_user():
     try:
         cursor.execute('''
             SELECT * FROM Users where role_id=3
+        ''')
+        users = cursor.fetchall()
+        conn.close()
+        # print(loan_applications)
+
+        return users
+    except sqlite3.Error as e:
+        print("Error getting loan application:", e)
+        conn.close()
+        return None
+
+
+def get_all_subadminds_user():
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute('''
+            SELECT * FROM Users where role_id=2
         ''')
         users = cursor.fetchall()
         conn.close()

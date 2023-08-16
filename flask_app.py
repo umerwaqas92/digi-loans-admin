@@ -445,8 +445,21 @@ def user_edit(user_id):
         password=request.form['user_password']
         adhar_card=request.form['adhaar_card']
         pan_card=request.form['pan_card']
+        chose_branch=request.form['chose_branch']
+        chose_subadmin=request.form['chose_subadmin']
 
-        print("user_profile_image ", user_profile_image and user_profile_image.filename != '' and user_profile_image.content_length == 0)
+
+        if(chose_branch):
+            update_user_branch(user_id=user_id,branh_id=chose_branch)
+        if(chose_subadmin):
+            update_user_sub_admin(user_id=user_id,subadmin=chose_subadmin)
+
+
+
+
+
+
+        # print("user_profile_image ", user_profile_image and user_profile_image.filename != '' and user_profile_image.content_length == 0)
 
         if user_profile_image and user_profile_image.filename != '' and user_profile_image.content_length == 0:
             filename = user_profile_image.filename
@@ -479,19 +492,25 @@ def user_edit(user_id):
         role=get_role(user[3])
         image=get_user_image(user_id)
         roles=get_roles()
+        branches=get_branch_user()
+        sub_admins=get_all_subadminds_user()
+
         user_doc=user_documentdb.get_user_document_by_id(user_id)
+        
 
 
 
-        return render_template("vertical/user_profile_edit.html",user=user,role=role,image=image,roles=roles,user_id=user_id,user_doc=user_doc)
+        return render_template("vertical/user_profile_edit.html",user=user,role=role,image=image,roles=roles,user_id=user_id,user_doc=user_doc,branches=branches,sub_admins=sub_admins)
         
     user=get_user(user_id)
     role=get_role(user[3])
     image=get_user_image(user_id)
     roles=get_roles()
     user_doc=user_documentdb.get_user_document_by_id(user_id)
+    branches=get_branch_user()
+    sub_admins=get_all_subadminds_user()
 
-    return render_template("vertical/user_profile_edit.html",user=user,role=role,image=image,roles=roles,user_id=user_id,user_doc=user_doc)
+    return render_template("vertical/user_profile_edit.html",user=user,role=role,image=image,roles=roles,user_id=user_id,user_doc=user_doc,branches=branches,sub_admins=sub_admins)
 
 @app.route('/logout')
 def logout():
