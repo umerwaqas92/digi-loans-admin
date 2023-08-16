@@ -69,7 +69,9 @@
                             <th>Name</th>
                             <th>Role</th>
                             <th>Email</th>
-                            <th>Branch By</th>
+                          
+                            {% if session["role"][0]==1 or session["role"][0]==2 %}   <th>Branch By</th>{% endif %}
+                         
 
                             <th>date</th>
                             <th>Action</th>
@@ -82,7 +84,9 @@
                             <td>{{ user[4] }}</td>
                             <td class="role-cell">{{ user[13] }}</td>
                             <td>{{ user[1] }}</td>
-                            <td><a href="user_view/{{  user[12]}}">{{ get_user(user[12])[4] }}</a>
+                            {% if session["role"][0]==1 or session["role"][0]==2 %}    <td><a href="user_view/{{  user[12]}}">{{ get_user(user[12])[4] }}</a>{% endif %}
+
+                           
                             </td>
                             <td>{{ user[8] }}</td>
 
