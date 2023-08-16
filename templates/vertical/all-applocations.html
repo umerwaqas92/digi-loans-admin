@@ -20,7 +20,15 @@
         <div class="text-white">{{ msg }}</div>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
-{% endif %}
+    
+{% endif %}<br>
+<div class="d-flex align-items-center mb-3">
+    <div class="input-group">
+        <span class="input-group-text">Search</span>
+        <input type="text" id="searchInput" class="form-control" placeholder="Search...">
+    </div>
+</div>
+
 
     <div class="d-flex align-items-center">
         <div>
@@ -38,6 +46,7 @@
                   
 
                     <th>Loan name</th>
+                    <th>Name</th>
                     <th>Date</th>
                 
                     <th>Status</th>
@@ -52,6 +61,9 @@
 
                     <td>
                         {{ application[8] }}          
+                    </td>
+                    <td>
+                        {{ get_user(application[1])[4] }}          
                     </td>
                 
                     <td>{{ application[6] }}</td>
@@ -83,7 +95,7 @@
                                             <p><strong>{{ field.field_label }}:</strong> {{ field.value }}</p>
                                         {% endif %}
                                     {% endfor %}
-                                    <p>  <strong>DSA Code:</strong>  {{ application[1] }}</p>
+                                    <p>  <strong>DSA Code:</strong>  {{ application[1]  }}</p>
                                        
                                  
                                                             <p><strong>CHange Status</strong></p>
@@ -150,6 +162,26 @@
 </div>
 </div>
 </div>
+<script>
+    const searchInput = document.getElementById('searchInput');
+    const tableRows = document.querySelectorAll('.table tbody tr');
+
+    searchInput.addEventListener('input', function() {
+        const searchTerm = searchInput.value.trim().toLowerCase();
+
+        tableRows.forEach(row => {
+            const applicationId = row.cells[0].textContent.trim().toLowerCase();
+            const loanName = row.cells[1].textContent.trim().toLowerCase();
+            const fieldValue = row.cells[2].textContent.trim().toLowerCase();
+
+            if (applicationId.includes(searchTerm) || loanName.includes(searchTerm) || fieldValue.includes(searchTerm)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    });
+</script>
 
 
 {% endblock %}

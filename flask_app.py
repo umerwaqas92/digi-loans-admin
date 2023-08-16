@@ -361,7 +361,7 @@ def all_applications():
 
     
 
-    return render_template("vertical/all-applocations.html",applications=final_applications,msg=msg,)
+    return render_template("vertical/all-applocations.html",applications=final_applications,msg=msg,get_user=get_user)
 
 # Function to fix the JSON data in the input string and convert it to a dictionary
 def fix_json_data(input_str):
