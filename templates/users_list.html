@@ -30,7 +30,7 @@
                    
                   
                     
-                    {% if  session["role"][0]<3 %}
+                    {% if  session["role"][0]==1 %}
 
                    
                     <option value="Super Admin">Super Admin</option>
@@ -38,6 +38,16 @@
                     <option value="Branch">Branch</option>
                     <option value="DSA">DSA</option>
                     <option value="User">User</option>
+                    {% endif %}
+
+
+                    {% if  session["role"][0]==2 %}
+
+                   
+                
+                    <option value="Branch">Branch</option>
+                    <option value="DSA">DSA</option>
+                 
                     {% endif %}
 
                     {% if  session["role"][0]==3 %}
