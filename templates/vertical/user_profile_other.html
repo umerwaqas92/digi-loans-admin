@@ -28,7 +28,7 @@
 							<div class="card-body">
 								<form action="{{ url_for('user_profile') }}" method="POST" enctype="multipart/form-data">
 								<div class="d-flex flex-column align-items-center text-center">
-									<img src="{{ url_for('static', filename=session['image'][2]) }}" alt="Admin" class="rounded-circle p-1 bg-primary" width="110">
+									<img src="{{ url_for('static', filename=image[2]) }}" alt="Admin" class="rounded-circle p-1 bg-primary" width="110">
 									<div class="mt-3">
 										<h4>{{user[4]}}</h4>
 										<p class="text-secondary mb-1">{{role[1]}}</p>
