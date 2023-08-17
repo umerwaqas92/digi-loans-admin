@@ -713,7 +713,7 @@ def get_loan_applications(admin_id):
 
     try:
         cursor.execute('''
-            SELECT * FROM LoanApplications ORDER BY created_time desc LIMIT 100
+            SELECT * FROM LoanApplications ORDER BY created_time desc
         ''')
         loan_applications = cursor.fetchall()
         conn.close()
