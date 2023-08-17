@@ -48,6 +48,13 @@
 			 </div>
 			<!--navigation-->
 			<ul class="metismenu" id="menu">
+				<li>
+					<a href="/" >
+						<div class="parent-icon"><i class='bx bx-home'></i>
+						</div>
+						<div class="menu-title">Dashbboard</div>
+					</a>
+				</li>
 				
 				<li>
 					<a href="{{ url_for('all_applications') }}" >
@@ -66,7 +73,7 @@
 					</a>
 				</li>
 				
-				
+				{% if session["role"][0]<4 %}
 				<li>
 					<a href="{{ url_for('admin_users') }}" >
 						<div class="parent-icon"><i class='bx bx-user'></i>
@@ -74,6 +81,7 @@
 						<div class="menu-title">Users</div>
 					</a>
 				</li>
+				{% endif %}
 				
 
 				<li>

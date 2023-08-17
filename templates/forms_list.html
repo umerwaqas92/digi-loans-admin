@@ -96,8 +96,14 @@
                         <a type="button" class="btn btn-warning btn-sm radius-30 px-4" href="{{ url_for('edit_form', form_id=form[0]) }}">Edit</a>
 
                      {% endif %}
-                        
-                        <a type="button" class="btn btn-primary btn-sm radius-30 px-4" href="{{ url_for('show_form', form_id=form[0]) }}">Open</a>
+
+                     {% if session["role"][0]>3 %}
+                     <a type="button" class="btn btn-primary btn-sm radius-30 px-4" href="{{ url_for('show_form', form_id=form[0]) }}?user_id={{session['user'][0]}}">Open</a>
+                     {%else%}
+                     <a type="button" class="btn btn-primary btn-sm radius-30 px-4" href="{{ url_for('show_form', form_id=form[0]) }}">Open</a>
+
+                     {% endif %}
+                    
                        
 
                         

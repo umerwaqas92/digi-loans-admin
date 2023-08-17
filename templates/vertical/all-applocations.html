@@ -102,7 +102,11 @@
                                  
                                                             <p><strong>CHange Status</strong></p>
                                                             <form method="POST" action="{{ url_for('update_loan_status') }}">
+                                                              
                                                                 <input type="hidden" name="application_id" value="{{ application[0] }}">
+                                                            
+                                                                
+
                                                                 <br>
                                                                 <strong>Comments</strong><br>
                                                                 {% for comment in application[9] %}
@@ -110,9 +114,9 @@
                                                                 <small>{{ comment[5] }}</small> <br>
                                                                 {% endfor %}
                                                                 <br>
-                                                               
+                                                                {% if session["role"][0]<4 %}
                                                                 <textarea name="comment" placeholder="Add your comment" cols="50"></textarea>
-
+                                                                {% endif %}
 
 
 
@@ -121,9 +125,10 @@
 
                                                             
 
-                                                            
+                                                                {% if session["role"][0]<4 %}
+                                                                
                                                                 <div>
-                                                                    <select id="rmAssignedDropdown" name="rmAssignedDropdown">
+                                                                    <select id="rmAssignedDropdown" name="rmAssignedDropdown" >
                                                                         <option value="" disabled>Select an option</option>
                                                                         <option value="file_pre_login_pending" {% if application[5] == 'file_pre_login_pending' %}selected{% endif %}>File Pre Login Pending</option>
                                                                         <option value="file_logged_in" {% if application[5] == 'file_logged_in' %}selected{% endif %}>File logged in</option>
@@ -137,6 +142,7 @@
                                                             
                                                                 <br>
                                                                 <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Update status</button>
+                                                                {% endif %}
                                                               
                                                             </form>
                                                             
@@ -160,20 +166,7 @@
                 
             </tbody>
         </table><br>
-        <nav aria-label="Page navigation example">
-            <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="javascript:;">Previous</a>
-                </li>
-                <li class="page-item"><a class="page-link" href="javascript:;javascript:;">1</a>
-                </li>
-                <li class="page-item"><a class="page-link" href="javascript:;">2</a>
-                </li>
-                <li class="page-item"><a class="page-link" href="javascript:;">3</a>
-                </li>
-                <li class="page-item"><a class="page-link" href="javascript:;">Next</a>
-                </li>
-            </ul>
-        </nav>
+        
     </div>
 </div>
 </div>

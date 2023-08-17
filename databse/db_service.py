@@ -597,6 +597,63 @@ def update_application_status(application_id,new_status):
     conn.close()
 
 
+def get_all_users():
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute('''
+                SELECT * FROM Users WHERE role_id = 5 ORDER BY created_time DESC
+            ''')
+
+        users = cursor.fetchall()
+        conn.close()
+        # print(loan_applications)
+
+        return users
+    except sqlite3.Error as e:
+        print("Error getting loan application:", e)
+        conn.close()
+        return None
+
+def get_all_dsa():
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute('''
+                SELECT * FROM Users WHERE role_id = 4 ORDER BY created_time DESC
+            ''')
+
+        users = cursor.fetchall()
+        conn.close()
+        # print(loan_applications)
+
+        return users
+    except sqlite3.Error as e:
+        print("Error getting loan application:", e)
+        conn.close()
+        return None
+
+
+def get_all_sub_admins():
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute('''
+                SELECT * FROM Users WHERE role_id = 2 ORDER BY created_time DESC
+            ''')
+
+        users = cursor.fetchall()
+        conn.close()
+        # print(loan_applications)
+
+        return users
+    except sqlite3.Error as e:
+        print("Error getting loan application:", e)
+        conn.close()
+        return None
 
 def get_users_super_admin():
     conn = connect_db()
@@ -706,6 +763,64 @@ def getCategories():
         print("Error getting  categories:", e)
         conn.close()
         return None    
+
+
+def get_loan_applications_for_user(user_id):
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute('''
+    SELECT * FROM LoanApplications WHERE user_id=? ORDER BY created_time DESC
+        ''', (user_id,))
+
+        loan_applications = cursor.fetchall()
+        conn.close()
+
+
+        return loan_applications
+    except sqlite3.Error as e:
+        print("Error getting loan application:", e)
+        conn.close()
+        return None
+    
+
+
+def get_loan_applications_pending():
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute('''
+            SELECT * FROM LoanApplications WHERE status = 'pending' ORDER BY created_time DESC
+        ''')
+        loan_applications = cursor.fetchall()
+        conn.close()
+
+        return loan_applications
+    except sqlite3.Error as e:
+        print("Error getting loan application:", e)
+        conn.close()
+        return None
+    
+def get_loan_applications10(admin_id):
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute('''
+            SELECT * FROM LoanApplications ORDER BY created_time desc limit 5
+        ''')
+        loan_applications = cursor.fetchall()
+        conn.close()
+        # print(loan_applications)
+
+        return loan_applications
+    except sqlite3.Error as e:
+        print("Error getting loan application:", e)
+        conn.close()
+        return None
+
 
 def get_loan_applications(admin_id):
     conn = connect_db()

@@ -37,7 +37,21 @@ def home():
     if not ( 'logged_in' in session and session['logged_in']):
         return redirect(url_for('login'))
 
-    return redirect("/loan_applications")
+    total_branhes_count=len(get_branch_user())
+    total_sub_admin_count=len(get_all_sub_admins())
+    total_dsa_count=len(get_all_dsa())
+    total_users_count=len(get_all_users())
+
+
+
+
+    total_pending_applications=len(get_loan_applications_pending())
+
+
+
+
+
+    return render_template("vertical/widgets.html",total_users_count=total_users_count,total_pending_applications=total_pending_applications,total_branhes_count=total_branhes_count,total_sub_admin_count=total_sub_admin_count,total_dsa_count=total_dsa_count)
 # user-profile
 
 
@@ -325,6 +339,10 @@ def all_applications():
     
     if(session["role"][0]==1):
         applications=get_loan_applications(1)
+    elif (session["role"][0]>3):
+        applications=get_loan_applications_for_user(user_id=session["user"][0])
+
+
     else:
         if(apps_relations != None):
             for app in apps_relations:
@@ -815,8 +833,10 @@ def show_form(form_id):
             #    return redirect(form_data[6])
             # print(form_data[6])
 
+            user_id=request.args.get('user_id', type=int)
 
-            return render_template('form_template.html', form_id=form_id, form_title=form_title, form_fields=form_fields,form_image=form_image,redirectUrl=form_data[6])
+
+            return render_template('form_template.html', form_id=form_id, form_title=form_title, form_fields=form_fields,form_image=form_image,redirectUrl=form_data[6],user_id=user_id)
         else:
             return "Form not found."
 
