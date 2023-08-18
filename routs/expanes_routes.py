@@ -8,7 +8,8 @@ expanes_routes = Blueprint('expanes_routes', __name__)
 @expanes_routes.route('/expenses')
 def expenses():
     categories=expanes_manage.get_all_categories()
-    expanes_list=expanes_manage.get_all_expenses()
+    user_id=session['user'][0]
+    expanes_list=expanes_manage.get_all_expenses(user_id)
     
     return render_template("expanes.html",categories=categories,expanes_list=expanes_list)
 

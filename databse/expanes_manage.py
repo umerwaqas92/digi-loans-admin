@@ -84,14 +84,14 @@ def delete_expense(expense_id):
             connection.close()
 
 # Get all operation for Expenses
-def get_all_expenses():
+def get_all_expenses(user_id):
     try:
         connection = connect_db()
         cursor = connection.cursor()
 
         cursor.execute("""
-            SELECT * FROM Expenses ORDER BY createdAt DESC
-        """)
+            SELECT * FROM Expenses WHERE user_id=? ORDER BY createdAt DESC
+        """, (user_id,))
 
         expenses = cursor.fetchall()
         return expenses
