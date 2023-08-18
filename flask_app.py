@@ -13,6 +13,7 @@ import openpyxl
 import datetime
 import databse.disabled_manage as disabledb
 from routs.blueprints import about_bp
+from routs.expanes_routes import expanes_routes
 
 
 
@@ -26,8 +27,14 @@ app.config['MAX_CONTENT_LENGTH'] = 100 * 1024 * 1024  # Set maximum request size
 logging.basicConfig(level=logging.ERROR)  # Set the logging level to capture errors and above
 logging.basicConfig(filename='app.log', level=logging.ERROR)
 
+# db_expanies.init_app(app)  # Initialize SQLAlchemy with the Flask app
+
+
+
 
 app.register_blueprint(about_bp)
+app.register_blueprint(expanes_routes)
+
 
 
 msg=""
@@ -1056,6 +1063,6 @@ def export_user_data():
 
 if __name__ == '__main__':
     app.config['UPLOAD_FOLDER'] = 'static/uploads'
-    
-
-    app.run(debug=True)
+    with app.app_context():
+            # db_expanies.create_all()  # Create the database tables
+            app.run(debug=True)
