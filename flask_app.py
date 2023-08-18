@@ -841,6 +841,8 @@ def show_form(form_id):
             # print(form_data[6])
 
             user_id=request.args.get('user_id', type=int)
+            if(user_id==None):
+                user_id=""
 
 
             return render_template('form_template.html', form_id=form_id, form_title=form_title, form_fields=form_fields,form_image=form_image,redirectUrl=form_data[6],user_id=user_id)
