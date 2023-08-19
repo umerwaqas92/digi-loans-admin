@@ -375,7 +375,7 @@ def all_applications():
             
         )
         product_form_info = get_product_form(application[2])
-        print(application[2])
+        # print(application[2])
         # print("product_form_info>>>>>>> ",product_form_info)
         if product_form_info is not None:
             applications[index] += (product_form_info[2],)
@@ -385,7 +385,7 @@ def all_applications():
     # print(product_form_info)
 
     final_applications = [tuple(_app) + (commentdb.get_ap_comments(_app[0]),) for _app in applications]
-    print("final_applications ",len(applications))
+    # print("final_applications ",len(applications))
 
 
     flash('This is a flash message!', 'info')  # 'info' is the category of the message
