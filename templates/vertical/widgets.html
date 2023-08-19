@@ -29,8 +29,14 @@
 				
 				<h6 class="mb-0 text-uppercase">Dashbboard</h6>
 				<hr/>
+				
+				
+				
 				<div class="row row-cols-1 row-cols-md-2 row-cols-xl-4">
+					{% if session["role"][0]==1 %}
 					<div class="col">
+				
+
 						<div class="card radius-10 bg-primary bg-gradient">
 							<div class="card-body">
 								<div class="d-flex align-items-center">
@@ -44,6 +50,8 @@
 							</div>
 						</div>
 					</div>
+					{% endif %}
+					{% if session["role"][0]<3 %}
 					<div class="col">
 						<div class="card radius-10 bg-danger bg-gradient">
 							<div class="card-body">
@@ -58,6 +66,9 @@
 							</div>
 						</div>
 					</div>
+					{% endif %}
+					{% if session["role"][0]<=3 %}
+
 					<div class="col">
 						<div class="card radius-10 bg-warning bg-gradient">
 							<div class="card-body">
@@ -72,6 +83,7 @@
 							</div>
 						</div>
 					</div>
+				
 					<div class="col">
 						<div class="card radius-10 bg-success bg-gradient">
 							<div class="card-body">
@@ -86,6 +98,7 @@
 							</div>
 						</div>
 					</div>
+					{% endif %}
 					<div class="col">
 						<div class="card radius-10 bg-warning bg-gradient">
 							<div class="card-body">

@@ -46,22 +46,75 @@ msg=""
 def dashboard():
     if not ( 'logged_in' in session and session['logged_in']):
         return redirect(url_for('login'))
+    total_branhes_count=0
+    total_sub_admin_count=0
+    total_dsa_count=0
+    total_users_count=0
+    total_pending_applications=0
 
-    total_branhes_count=len(get_branch_user())
-    total_sub_admin_count=len(get_all_sub_admins())
-    total_dsa_count=len(get_all_dsa())
-    total_users_count=len(get_all_users())
+    if(session["role"][0]==1):
+        total_branhes_count=len(get_branch_user())
+        total_sub_admin_count=len(get_all_sub_admins())
+        total_dsa_count=len(get_all_dsa())
+        total_users_count=len(get_all_users())
+        total_pending_applications=len(get_loan_applications_pending())
+
+    if(session["role"][0]==2):
+        total_branheses=get_branch_userByUserId(session["user"][0])
+        total_dsas=get_all_dsa_byUser(user_id=session["user"][0])
+        total_users=[]
+        total_users.extend(total_dsas)
+        
 
 
 
 
-    total_pending_applications=len(get_loan_applications_pending())
+        total_branhes_count=len(total_branheses)
+
+        total_dsa_count=len(total_dsas)
+        total_users_count=len(get_all_usersbyUserId(user_id=session["user"][0]))
+        total_pending_applications=len(get_loan_applications_pending())
+
+
+    if(session["role"][0]==3):
+        total_branhes_count=len(get_branch_userByUserId(session["user"][0]))
+        dsa_users=get_all_dsa_byUserforBranh(user_id=session["user"][0])
+        total_dsa_count=len(dsa_users)
+        # for dsa in dsa_users:
+          
+        #     total_pending_applications+=len(get_loan_applications_for_user(user_id=dsa[0]))
+
+        total_users_count=len(get_all_usersbyUserId(user_id=session["user"][0]))
+        # total_pending_applications=len(get_loan_applications_pending())
+
+
+    applications=[]#get_loan_applications(1)
+
+    apps_relations=ap_relation.read_all_ap_relations_by_user(user_id=session["user"][0])
+    
+    if(session["role"][0]==1):
+        applications=get_loan_applications_pending(1)
+    elif (session["role"][0]>3):
+        applications=get_loan_applications_for_userPending(user_id=session["user"][0])
+
+
+    else:
+        if(apps_relations != None):
+            for app in apps_relations:
+                print(app[1])
+                applcation=get_loan_application(app[1])
+                if(applcation[5]=="pending"):
+                    applications.append(applcation)
+
+        # Convert the JSON string to a Python object
+   
+   
 
 
 
 
 
-    return render_template("vertical/widgets.html",total_users_count=total_users_count,total_pending_applications=total_pending_applications,total_branhes_count=total_branhes_count,total_sub_admin_count=total_sub_admin_count,total_dsa_count=total_dsa_count)
+    return render_template("vertical/widgets.html",total_users_count=total_users_count,total_pending_applications=len(applications),total_branhes_count=total_branhes_count,total_sub_admin_count=total_sub_admin_count,total_dsa_count=total_dsa_count)
 # user-profile
 
 
@@ -473,14 +526,15 @@ def user_edit(user_id):
         password=request.form['user_password']
         adhar_card=request.form['adhaar_card']
         pan_card=request.form['pan_card']
-        chose_branch=request.form['chose_branch']
-        chose_subadmin=request.form['chose_subadmin']
+        if(session["role"][0]==1):
+            chose_branch=request.form['chose_branch']
+            chose_subadmin=request.form['chose_subadmin']
 
 
-        if(chose_branch):
-            update_user_branch(user_id=user_id,branh_id=chose_branch)
-        if(chose_subadmin):
-            update_user_sub_admin(user_id=user_id,subadmin=chose_subadmin)
+            if(chose_branch):
+                update_user_branch(user_id=user_id,branh_id=chose_branch)
+            if(chose_subadmin):
+                update_user_sub_admin(user_id=user_id,subadmin=chose_subadmin)
 
 
 
@@ -623,7 +677,7 @@ def update_loan_status():
     commentdb.create_ap_comment(app_id=application_id,user_id=session["role"][0],comment=comment,status=status)
 
 
-    return redirect("/loan_applications")
+    return redirect("/dashboard/loan_applications")
 
 
 @app.route('/signup', methods=['GET', 'POST'])

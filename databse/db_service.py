@@ -625,6 +625,26 @@ def update_application_status(application_id,new_status):
     conn.close()
 
 
+def get_all_usersbyUserId(user_id):
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute('''
+        SELECT * FROM Users WHERE role_id = 5 AND createdBy = ? ORDER BY created_time DESC
+    ''', (user_id,))
+
+
+        users = cursor.fetchall()
+        conn.close()
+        # print(loan_applications)
+
+        return users
+    except sqlite3.Error as e:
+        print("Error getting loan application:", e)
+        conn.close()
+        return None
+
 def get_all_users():
     conn = connect_db()
     cursor = conn.cursor()
@@ -633,6 +653,48 @@ def get_all_users():
         cursor.execute('''
                 SELECT * FROM Users WHERE role_id = 5 ORDER BY created_time DESC
             ''')
+
+        users = cursor.fetchall()
+        conn.close()
+        # print(loan_applications)
+
+        return users
+    except sqlite3.Error as e:
+        print("Error getting loan application:", e)
+        conn.close()
+        return None
+
+def get_all_dsa_byUserforBranh(user_id):
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute('''
+                SELECT * FROM Users WHERE role_id = 4 AND branchBy = ? ORDER BY created_time DESC;
+
+            ''',(user_id,))
+
+        users = cursor.fetchall()
+        conn.close()
+        # print(loan_applications)
+
+        return users
+    except sqlite3.Error as e:
+        print("Error getting loan application:", e)
+        conn.close()
+        return None
+
+
+
+def get_all_dsa_byUser(user_id):
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute('''
+                SELECT * FROM Users WHERE role_id = 4 AND createdBy = ? ORDER BY created_time DESC;
+
+            ''',(user_id,))
 
         users = cursor.fetchall()
         conn.close()
@@ -737,6 +799,27 @@ def get_branch_users_branchdBy(branch_id):
         conn.close()
         return None
         
+
+
+def get_branch_userByUserId(user_id):
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute('''
+            SELECT * FROM Users where role_id=3 and createdBy = ?
+        ''',(user_id,))
+        users = cursor.fetchall()
+        conn.close()
+        # print(loan_applications)
+
+        return users
+    except sqlite3.Error as e:
+        print("Error getting loan application:", e)
+        conn.close()
+        return None 
+    
+
 def get_branch_user():
     conn = connect_db()
     cursor = conn.cursor()
@@ -831,8 +914,43 @@ def get_loan_applications_for_user(user_id):
         return None
     
 
+def get_loan_applications_for_userPending(user_id):
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute('''
+    SELECT * FROM LoanApplications WHERE user_id=? AND status='pending' ORDER BY created_time DESC
+        ''', (user_id,))
+
+        loan_applications = cursor.fetchall()
+        conn.close()
+
+
+        return loan_applications
+    except sqlite3.Error as e:
+        print("Error getting loan application:", e)
+        conn.close()
+        return None
 
 def get_loan_applications_pending():
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute('''
+            SELECT * FROM LoanApplications WHERE status = 'pending' ORDER BY created_time DESC
+        ''')
+        loan_applications = cursor.fetchall()
+        conn.close()
+
+        return loan_applications
+    except sqlite3.Error as e:
+        print("Error getting loan application:", e)
+        conn.close()
+        return None
+
+def get_loan_applications_pendingbyUserID(user_id):
     conn = connect_db()
     cursor = conn.cursor()
 
