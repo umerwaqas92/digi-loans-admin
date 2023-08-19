@@ -1,0 +1,49 @@
+{% extends 'website/base2.html' %}
+
+
+
+{% block title %} Contact us - {{ super() }}{% endblock %}
+
+
+{% block content %}
+
+
+<div class="bg-white section-space40">
+    <div class="container">
+        <div class="row">
+            <div class="offset-xl-2 col-xl-8 offset-md-2 col-md-8 offset-md-2 col-md-8 col-sm-12 col-12">
+                <div class="mb40 text-center section-title">
+                    <!-- section title start-->
+                    <h1>Instant Personal Loans</h1>
+
+                </div>
+                <!-- /.section title start-->
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 pt-3">
+                <div class="bg-white pinside40 number-block outline mb30 bg-boxshadow">
+                    <div class="circle"><img src="{{ url_for('static', filename='website/images/icons/axis.jpeg') }}" /></div>
+
+                    <h3 class="number-title mb-1">Axis Bank Manager List</h3>
+                    </a>
+                    <br />
+                    <a class="btn btn-secondary btn-sm text-white"
+                    <a class="btn btn-secondary btn-sm text-white" href="{{ url_for('website_route.axisbankmanager') }}" >Explore</a>
+
+
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 pt-3">
+                <div class="bg-white pinside40 number-block outline mb30 bg-boxshadow">
+                    <div class="circle"><img src="{{ url_for('static', filename='website/images/icons/adityabirla.png') }}" /></div>
+
+                    <h3 class="number-title mb-1">Aditya Birla Manager List</h3>
+                    </a>
+                    <br />
+                    <a class="btn btn-secondary btn-sm text-white" href="{{ url_for('website_route.adityabirla') }}" >Explore</a>
+                </div>
+            </div>
+
+{%endblock %}

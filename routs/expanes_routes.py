@@ -5,7 +5,7 @@ import databse.expanes_manage as expanes_manage
 expanes_routes = Blueprint('expanes_routes', __name__)
 
 
-@expanes_routes.route('/expenses')
+@expanes_routes.route('/dashboard/expenses')
 def expenses():
     categories=expanes_manage.get_all_categories()
     user_id=session['user'][0]
@@ -14,7 +14,7 @@ def expenses():
     return render_template("expanes.html",categories=categories,expanes_list=expanes_list)
 
 
-@expanes_routes.route('/expenses/add',methods=['POST'])
+@expanes_routes.route('/dashboard/expenses/add',methods=['POST'])
 def expenses_add():
     expanes_title=request.form.get('expanes_title')
     expanes_amount=request.form.get('expanes_amount')
@@ -26,7 +26,7 @@ def expenses_add():
     
     return redirect('/expenses')
 
-@expanes_routes.route('/expenses_remove_item',methods=['POST'])
+@expanes_routes.route('/dashboard/expenses_remove_item',methods=['POST'])
 def expenses_remove_item():
    
     expane_id=request.form.get('expanes_id')
@@ -35,7 +35,7 @@ def expenses_remove_item():
     
     return redirect('/expenses')
 
-@expanes_routes.route('/expenses_update_item',methods=['POST'])
+@expanes_routes.route('/dashboard/expenses_update_item',methods=['POST'])
 def expenses_update_item():
    
     expane_id=request.form.get('expanes_id')

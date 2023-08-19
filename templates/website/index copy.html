@@ -1,0 +1,298 @@
+{% extends 'base_website.html' %}
+
+
+
+{% block title %}Add user - {{ super() }}{% endblock %}
+
+
+{% block content %}
+
+<div class="lead-hero-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12 pb-4">
+                <!-- hero-caption -->
+                <div class="lead-hero-caption mb-1">
+                    <h1 class="lead-hero-title">Get Personal Loan</h1>
+                    <p>Digi-Loans Company, you can borrow up to Rs. 50 lakhs, with flexible repayment tenures up to
+                        120 months, at affordable interest rates starting from 7%. Our online process for instant
+                        personal loan application ensures that you can get the financial support you need within
+                        minutes from the comfort and safety of your home.</p>
+                    <!-- <p class="lead mb0 text-white">Apply For<br><strong class="text-white"><i class="fa fa-rupee"></i> 1,00000 to <i class="fa fa-rupee"></i> 50,00,000</strong></p> -->
+                </div>
+
+                <div class="lead-hero-title pt-0 mt-2">
+                    <a class="btn btn-secondary btn-sm" href="#eli">Check Elegibility</a> <a href="form.html"
+                        class="btn btn-secondary btn-sm">APPLY NOW</a>
+                </div>
+                <!-- /.hero-caption -->
+            </div>
+            <div class="offset-xl-1 col-xl-6 offset-lg-1 col-lg-6 col-md-12 col-sm-12 col-12">
+                <div class="lead-calculator pinside30">
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb10">
+                            <h2 class="text-white mb20">Get a Loan Today</h2>
+                            <div class="slider">
+                                <h4 class="text-white">Loan Amount</h4>
+                                <div id="pricipal-slide"></div>
+                                <div class="pt-1">
+                                    <h6 id="pricipal" class="text-white"></h6>
+                                </div>
+                            </div>
+                            <div class="slider">
+                                <h4 class="text-white">Loan Months</h4>
+                                <div id="totalyear-slide"></div>
+                                <div class="pt-1">
+                                    <h6 id="totalyear" class="text-white"></h6>
+                                </div>
+                            </div>
+                            <div class="slider">
+                                <h4 class="text-white">Interest Rate</h4>
+                                <div id="intrest-slide"></div>
+                                <div class="pt-1">
+                                    <h6 id="intrest" class="text-white"></h6>
+                                    <span class="percentage-text">%</span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
+                            <div class="single-total">
+                                <h5 class="lead-cal-small-text">Loan EMI</h5>
+                                <h4 class="text-white emi-price" id="emi">0</h4>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                            <div class="single-total">
+                                <h5 class="lead-cal-small-text">Total Interest Payable</h5>
+                                <h4 class="text-white" id="tbl_emi">0</h4>
+                            </div>
+                        </div>
+                        <div class="col-xl-5 col-lg-5 col-md-6 col-sm-12 col-12">
+                            <div class="single-total">
+                                <h5 class="lead-cal-small-text">Total Payment (Pri + Int)</h5>
+                                <h4 class="text-white" id="tbl_la">0</h4>
+                            </div>
+                        </div>
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 text-right">
+                            <a href="loan-apply.php" class="btn btn-secondary btn-sm">APPLY For Loan Processing</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.hero-wrapper -->
+
+<div class="bg-white section-space40">
+    <div class="container">
+        <div class="row">
+            <div class="offset-xl-2 col-xl-8 offset-md-2 col-md-8 offset-md-2 col-md-8 col-sm-12 col-12">
+                <div class="mb40 text-center section-title">
+                    <!-- section title start-->
+                    <h1>Fast &amp; Easy Application Process.</h1>
+              
+                </div>
+                <!-- /.section title start-->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 pt-3">
+                <div class="bg-white pinside40 number-block outline mb30 bg-boxshadow">
+                   
+                    <h3 class="number-title mb-1">Choose Loan Amount</h3>
+                    <p>First a for Check Your eligibility for loans, submit your some documents.</p>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 pt-3">
+                <div class="bg-white pinside40 number-block outline mb30 bg-boxshadow">
+                    
+                    <h3 class="number-title mb-1">Approved Your Loan</h3>
+                    <p>we will check your documents,verify then approve.</p>
+                </div>
+            </div>
+           
+
+            <div class="col-xl-6 col-lg-6 col-12 pt-3">
+                <div class="bg-white pinside40 number-block outline mb30 bg-boxshadow">
+                    
+                    <h3 class="number-title mb-1">Get Loan Amount</h3>
+                    <p>After getting approved get your loan application </p>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+
+
+<!-- content start -->
+<div class="container mt-5">
+    <div class="row" id="eli">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <div class="wrapper-content wrapper-content23 bg-white p-2 p-lg-5">
+                <div class="loan-eligibility-block">
+                    <div class="row">
+                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                            <h2 class="mb20 c-center">Check Your eligibility for loans.</h2>
+
+                            <form name="formval2" class="form-horizontal loan-eligibility-form">
+                                <div class="form-group">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                        <label for="loan" class="control-label">Personal Loan Required:</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">₹</span>
+                                            </div>
+                                            <input type="number" class="form-control input-sm" min="100000"
+                                                max="200000" id="loan" name="pr_amt2"
+                                                placeholder="Enter Loan Amount">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                        <label for="income" class="control-label">Net income per month</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">₹</span>
+                                            </div>
+                                            <input type="number" class="form-control" id="income" name="NetIncome"
+                                                placeholder="Excluding LTA and Medical allowances">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                        <label for="commitments" class="control-label">Existing loan
+                                            commitments</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">₹</span>
+                                            </div>
+                                            <input type="number" class="form-control" id="commitments" name="ExLoan"
+                                                placeholder="(per month)">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                        <label for="tenure" class="control-label">Loan Tenure</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Y</span>
+                                            </div>
+                                            <input type="number" class="form-control" id="tenure" name="period2"
+                                                placeholder="(in years)">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                        <label for="rateofinterest" class="control-label">Rate of Interest</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">%</span>
+                                            </div>
+                                            <input type="number" class="form-control" id="rateofinterest" value="7"
+                                                name="int_rate2">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                        <button type="button" class="btn btn-secondary" onclick="eligiable()">Check
+                                            Eligibility</button>
+                                        <button type="reset" class="btn btn-primary">Reset All</button>
+                                    </div>
+                                </div>
+
+                            </form>
+
+                        </div>
+                        <div class="col-lg-6">
+                            <h2 class="mb40 c-center">How much loan you are eligible for?</h2>
+                            <div class="loan-eligibility-info">
+                                <form name="formval3" class>
+                                    <div class="form-group">
+                                        <output class="col-lg-12 col-sm-12 col-md-12 col-12 eligibility-text"
+                                            name="field13">
+                                        </output>
+                                        <output class="col-lg-12 col-sm-12 col-md-12 col-12 eligibility-amount"
+                                            name="field11"></output>
+                                    </div>
+                                    <div class="form-group">
+                                        <output class="col-lg-12 col-sm-12 col-md-12 col-12 eligibility-text"
+                                            name="field12"></output>
+
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.content end -->
+
+<div class="container-fluid cta pt-5 pb-3">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="section-title mb30">
+                    <h1 class="text-center text-white">Features of Loan</h1>
+                    <h3 class="text-center text-white"> All loans are not created equal, personal loan has become a
+                        great option for people to use.</h3>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                <div class="feature-icon mb30 c-center">
+                    <div class="icon"><i class="icon-clock icon-default icon-2x"></i></div>
+                    <h3 class="text-white">Medical Emergencies</h3>
+                    <p class="text-white">Lack of financial assistance can limit your ability to access quality
+                        healthcare. Avail a personal loan at the earliest by furnishing the required documents.</p>
+                </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                <div class="feature-icon mb30 c-center">
+                    <div class="icon"><i class="icon-light-bulb-1 icon-default icon-2x"></i></div>
+                    <h3 class="text-white">Used Cars</h3>
+                    <p class="text-white">Realize your dream of owning a used car by opting for a personal loan at
+                        flexible rates of interest.</p>
+                </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                <div class="feature-icon mb30 c-center">
+                    <div class="icon"><i class="icon-settings-6 icon-default icon-2x"></i></div>
+                    <h3 class="text-white">Higher Education</h3>
+                    <p class="text-white">Give wings to your dreams of higher education by availing of a personal
+                        loan to meet all your educational requirements right from course fees, travelling expenses,
+                        hostel fees etc. </p>
+                </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                <div class="feature-icon mb30 c-center">
+                    <div class="icon"><i class="icon-money icon-default icon-2x"></i></div>
+                    <h3 class="text-white">Wedding Expenses</h3>
+                    <p class="text-white">You can take a personal loan to cover the expenses for your dream wedding.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+
+{% endblock %}

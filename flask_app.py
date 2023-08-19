@@ -14,6 +14,7 @@ import datetime
 import databse.disabled_manage as disabledb
 from routs.blueprints import about_bp
 from routs.expanes_routes import expanes_routes
+from routs.website_route import website_route
 
 
 
@@ -34,13 +35,15 @@ logging.basicConfig(filename='app.log', level=logging.ERROR)
 
 app.register_blueprint(about_bp)
 app.register_blueprint(expanes_routes)
+app.register_blueprint(website_route)
+
 
 
 
 msg=""
 # Home route
-@app.route('/')
-def home():
+@app.route('/dashboard')
+def dashboard():
     if not ( 'logged_in' in session and session['logged_in']):
         return redirect(url_for('login'))
 
@@ -78,7 +81,7 @@ def handle_error(e):
     return render_template('error.html',e=e), 500
 
 
-@app.route('/adduser',methods=['GET', 'POST'])
+@app.route('/dashboard/adduser',methods=['GET', 'POST'])
 def adduser():
     if not ( 'logged_in' in session and session['logged_in']):
         return redirect(url_for('login'))
@@ -163,7 +166,7 @@ def adduser():
         branches=get_branch_user()
         return render_template("add_user.html", roles=roles,branches=branches)
 
-@app.route('/change_password', methods=['POST', 'GET'])
+@app.route('/dashboard/change_password', methods=['POST', 'GET'])
 def change_password():
     if not ( 'logged_in' in session and session['logged_in']):
         return redirect("/login")
@@ -334,7 +337,7 @@ def create_form():
 
     return render_template("forms_creator.html",productsCategories=productsCategories)
 
-@app.route('/loan_applications')
+@app.route('/dashboard/loan_applications')
 def all_applications():
     if not ( 'logged_in' in session and session['logged_in']):
         return redirect(url_for('login'))
@@ -404,7 +407,7 @@ def fix_json_data(input_str):
 def user_chat():
     return render_template("vertical/app-chat-box.html")
 
-@app.route('/user_profile', methods=['GET', 'POST'])
+@app.route('/dashboard/user_profile', methods=['GET', 'POST'])
 def user_profile():
     if(session['logged_in']==False):
         return redirect(url_for('login'))
@@ -444,7 +447,7 @@ def user_profile():
     return render_template("vertical/user_profile.html")
 
 
-@app.route('/user_view/<int:user_id>', methods=['GET', 'POST'])
+@app.route('/dashboard/user_view/<int:user_id>', methods=['GET', 'POST'])
 def user_view(user_id):
     user=get_user(user_id)
     role=get_role(user[3])
@@ -455,7 +458,7 @@ def user_view(user_id):
 
 
 
-@app.route('/user_edit/<int:user_id>', methods=['GET', 'POST'])
+@app.route('/dashboard/user_edit/<int:user_id>', methods=['GET', 'POST'])
 def user_edit(user_id):
     if(session['logged_in']==False):
         return redirect(url_for('login'))
@@ -555,7 +558,7 @@ def get_application_data(application_id):
     return jsonify(application)
 
 
-@app.route('/users')
+@app.route('/dashboard/users')
 def admin_users():
     user_id=session["user"][0]
     role_id=session["role"][0]
@@ -587,7 +590,7 @@ def admin_users():
 
     return render_template("users_list.html",users=final_users,get_user=get_user)
 
-@app.route('/forms')
+@app.route('/dashboard/forms')
 def admin_forms():
     forms=get_forms()
     print(forms)
@@ -597,12 +600,14 @@ def admin_forms():
 
 
 # Route to handle form submission
-@app.route('/updateLoanStatus', methods=['POST'])
+@app.route('/dashboard/updateLoanStatus', methods=['POST'])
 def update_loan_status():
     # Get the value selected from the dropdown
     status = request.form.get('rmAssignedDropdown')
     application_id = request.form.get('application_id')
     comment=request.form.get('comment')
+
+
 
 
 
@@ -652,7 +657,7 @@ def signup():
 
 
 
-@app.route('/edit-form/<int:form_id>', methods=['GET', 'POST'])
+@app.route('/dashboard/edit-form/<int:form_id>', methods=['GET', 'POST'])
 def edit_form(form_id):
 
     if request.method == 'POST':

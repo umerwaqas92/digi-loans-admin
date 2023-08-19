@@ -1,0 +1,440 @@
+{% extends 'website/base2.html' %}
+
+
+
+{% block title %} Contact us - {{ super() }}{% endblock %}
+
+
+{% block content %}
+
+<div class="bg-white section-space40">
+    <div class="container">
+        <div class="row">
+            <div class="offset-xl-2 col-xl-8 offset-md-2 col-md-8 offset-md-2 col-md-8 col-sm-12 col-12">
+                <div class="mb40 text-center section-title">
+                    <!-- section title start-->
+                    <h1>Fast &amp; Easy Application Process.</h1>
+                    <p>Suspendisse aliquet varius nunc atcibus lacus sit amet coed portaeri sque mami luctus viveed congue lobortis faucibus.</p>
+                </div>
+                <!-- /.section title start-->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 pt-3">
+                <div class="bg-white pinside40 number-block outline mb30 bg-boxshadow">
+                    <div class="circle"><span class="number">1</span></div>
+                    <h3 class="number-title mb-1">Choose Loan Amount</h3>
+                    <p>First a for Check Your eligibility for loans, submit your some documents.</p>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 pt-3">
+                <div class="bg-white pinside40 number-block outline mb30 bg-boxshadow">
+                    <div class="circle"><span class="number">2</span></div>
+                    <h3 class="number-title mb-1">Approved Your Loan</h3>
+                    <p>Borrow loan is check your documents verify after approved.</p>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 pt-3">
+                <div class="bg-white pinside40 number-block outline mb30 bg-boxshadow">
+                    <div class="circle"><span class="number">3</span></div>
+                    <h3 class="number-title mb-1">Get LD Card</h3>
+                    <p>After approved loan then get Ld Card, you have to activate.</p>
+                </div>
+            </div>
+
+            <div class="col-xl-6 col-lg-6 col-12 pt-3">
+                <div class="bg-white pinside40 number-block outline mb30 bg-boxshadow">
+                    <div class="circle"><span class="number">4</span></div>
+                    <h3 class="number-title mb-1">Activate Card</h3>
+                    <p>After get Ld Card, but you have to pay something, activation charge 3500 Rupees you have to pay.</p>
+                </div>
+            </div>
+
+            <div class="col-xl-6 col-lg-6 col-12 pt-3">
+                <div class="bg-white pinside40 number-block outline mb30 bg-boxshadow">
+                    <div class="circle"><span class="number">5</span></div>
+                    <h3 class="number-title mb-1">Get Loan Amount</h3>
+                    <p>After your LD card is activate and Your loan amount will be transferred to you under 24 hours.</p>
+                </div>
+            </div>
+
+           
+        </div>
+        
+    </div>
+</div>
+
+
+
+<!-- content start -->
+<div class="container mt-5">
+    <div class="row" id="eli">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <div class="wrapper-content wrapper-content23 bg-white p-2 p-lg-5">
+                <div class="loan-eligibility-block">
+                    <div class="row">
+                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                            <h2 class="mb20 c-center">Check Your eligibility for loans.</h2>
+                          
+                                <form name="formval2" class="form-horizontal loan-eligibility-form">
+                                    <div class="form-group">
+                                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                            <label for="loan" class="control-label">Personal Loan Required:</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">₹</span>
+                                                </div>
+                                                <input type="number" class="form-control input-sm" min="100000" max="200000" id="loan" name="pr_amt2" placeholder="Enter Loan Amount">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                            <label for="income" class="control-label">Net income per month</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">₹</span>
+                                                </div>
+                                                <input type="number" class="form-control" id="income" name="NetIncome" placeholder="Excluding LTA and Medical allowances">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                            <label for="commitments" class="control-label">Existing loan commitments</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">₹</span>
+                                                </div>
+                                                <input type="number" class="form-control" id="commitments" name="ExLoan" placeholder="(per month)">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                            <label for="tenure" class="control-label">Loan Tenure</label>
+                                              <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Y</span>
+                                                </div>
+                                            <input type="number" class="form-control" id="tenure" name="period2" placeholder="(in years)">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                            <label for="rateofinterest" class="control-label">Rate of Interest</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">%</span>
+                                                </div>
+                                                <input type="number" class="form-control" id="rateofinterest" value="7" name="int_rate2">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                            <button type="button" class="btn btn-secondary" onclick="eligiable()">Check Eligibility</button>
+                                            <button type="reset" class="btn btn-primary">Reset All</button>
+                                        </div>
+                                    </div>
+                         
+                            </form>
+                        
+                        </div>
+                        <div class="col-lg-6">
+                            <h2 class="mb40 c-center">How much loan you are eligible for?</h2>
+                            <div class="loan-eligibility-info">
+                                <form name="formval3" class>
+                                    <div class="form-group">
+                                        <output class="col-lg-12 col-sm-12 col-md-12 col-12 eligibility-text" name="field13">
+                                        </output>
+                                        <output class="col-lg-12 col-sm-12 col-md-12 col-12 eligibility-amount" name="field11"></output>
+                                    </div>
+                                    <div class="form-group">
+                                        <output class="col-lg-12 col-sm-12 col-md-12 col-12 eligibility-text" name="field12"></output>
+                                        
+                                    </div>
+                                    
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.content end -->
+
+<div class="container-fluid cta pt-5 pb-3">
+    <div class="container">
+                
+                            <div class="row">
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                    <div class="section-title mb30">
+                                        <h1 class="text-center text-white">Features of Personal Loan</h1>
+                                        <h3 class="text-center text-white"> All loans are not created equal, personal loan has become a great option for people to use.</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                                    <div class="feature-icon mb30 c-center">
+                                        <div class="icon"><i class="icon-clock icon-default icon-2x"></i></div>
+                                        <h3 class="text-white">Medical Emergencies</h3>
+                                        <p class="text-white">Lack of financial assistance can limit your ability to access quality healthcare. Avail a personal loan at the earliest by furnishing the required documents.</p>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                                    <div class="feature-icon mb30 c-center">
+                                        <div class="icon"><i class="icon-light-bulb-1 icon-default icon-2x"></i></div>
+                                        <h3 class="text-white">Used Cars</h3>
+                                        <p class="text-white">Realize your dream of owning a used car by opting for a personal loan at flexible rates of interest.</p>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                                    <div class="feature-icon mb30 c-center">
+                                        <div class="icon"><i class="icon-settings-6 icon-default icon-2x"></i></div>
+                                        <h3 class="text-white">Higher Education</h3>
+                                        <p class="text-white">Give wings to your dreams of higher education by availing of a personal loan to meet all your educational requirements right from course fees, travelling expenses, hostel fees etc. </p>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                                    <div class="feature-icon mb30 c-center">
+                                        <div class="icon"><i class="icon-money icon-default icon-2x"></i></div>
+                                        <h3 class="text-white">Wedding Expenses</h3>
+                                        <p class="text-white">You can take a personal loan to cover the expenses for your dream wedding.</p>
+                                    </div>
+                                </div>
+                            </div>
+           
+   
+</div>
+        
+</div>			
+
+<div class="bg-white section-space60">
+ 
+
+
+       
+
+        
+
+
+            
+
+                        
+</div>
+
+<!-- counters -->
+<div class="bg-gradient pt-5 pb-5">
+    <div class="container text-center">
+        <div class="row">
+            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
+                <!-- counter-block -->
+                <div class="counter-block">
+                    <div class="counter" data-count="10000000">0</div><span class="counter-small-text">+</span>
+                    <p class="text-white"><strong>Customer </strong></p>
+                </div>
+                <!--/.counter-block -->
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
+                <!-- counter-block -->
+                <div class="counter-block">
+                    <div class="counter" data-count="200">0</div><span class="counter-small-text">K</span>
+                    <p class="text-white text-center"><strong>Application received
+                         </strong></p>
+                    <!-- /.counter-block -->
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
+                <!-- counter-block -->
+                <div class="counter-block">
+                    <div class="counter" data-count="180">0</div><span class="counter-small-text">K</span>
+                    <p class="text-white"><strong>Approved Loan </strong></p>
+                </div>
+                <!-- /.counter-block -->
+            </div>
+            
+             <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
+                <!-- counter-block -->
+                <div class="counter-block">
+                    <div class="counter" data-count="92%">0</div><span class="counter-small-text">%</span>
+                    <p class="text-white"><strong>Customer satisfied </strong></p>
+                </div>
+                <!-- /.counter-block -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.counters -->
+
+<!-- about-section -->
+<div class="bg-light pt-4 pb-4">
+    <div class="container">
+       
+        <!-- about-description  -->
+        <div class="row">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                <div class="mb40">
+                     <h1>About Us</h1>
+                    <p class="justify">DIGI-LOANS is India's largest loan distributor, It’s a B2B & B2C Loan processing  platform .The company was established in Dec 2017 and is based in Kolkata,  India & 3 Zonal office with 172 Branch in Pan India . We use to create Loan  portfolios for the financial institutions.
+At DIGI-LOANS , we believe in completely digital processes, and we have earned  a unique place in the industry by providing our partners with unique financial  products and features designed exclusively by us in collaboration with financial  institutions. We are the first in the industry to introduce instant payout options  on disbursement validation for our partners. </p>
+                </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                <div class="mb40">
+                     <h1>Need Documents For Laon</h1>
+                        <p>1. Adhar Card</p>
+                        <p>2. PAN Card</p>
+                        <p>3. Bank Passbook</p>
+                        <p>4. Passport Size Photo</p>
+                </div>
+            </div>
+        </div>
+        <!-- /.about-description  -->
+        <!-- about-features  -->
+        <div class="row c-center">
+            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                <div class="mb30">
+                    <div class="mb20"><img src="{{ url_for('static', filename='website/images/rDrXY6HOcQOq.png') }}" alt="Borrow - Loan Company Responsive Website Templates"></div>
+                    <h3>Fast, Free and Flexible</h3>
+                </div>
+            </div>
+            <!-- /.about-features  -->
+            <!-- about-features  -->
+            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                <div class="mb30">
+                    <div class="mb20"><img src="{{ url_for('static', filename='website/images/G5Y659twl50t.png') }}" alt="Borrow - Loan Company Responsive Website Templates"></div>
+                    <h3>Reach Us 24/7</h3>
+                </div>
+            </div>
+            <!--/.about-features  -->
+            <!-- about-features  -->
+            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                <div class="mb30">
+                    <div class="mb20"><img src="{{ url_for('static', filename='website/images/EzSjYGO1Cv0y.png') }}" alt="Borrow - Loan Company Responsive Website Templates"></div>
+                    <h3>100% Safe and Secure</h3>
+                </div>
+            </div>
+            <!-- /.about-features  -->
+        </div>
+    </div>
+</div>
+<!-- /.about-section -->
+
+<div class="pt-5 pb-5 bg-gradient call-to-action" id="con">
+    <div class="container">
+        <div class="row">
+            <div class="offset-xl-2 col-xl-8 offset-md-2 col-md-8 offset-md-2 col-md-8 col-sm-12 col-12">
+                <div class="section-title mb30 text-center">
+                    <!-- section title start-->
+                    <h1 class="text-white">Just take minute for your loan</h1>
+                    <p class="text-white">Fill up the form below and loan executive would get in touch with you</p>
+                </div>
+                <!-- /.section title start-->
+            </div>
+        </div>
+        <div class="row">
+            <div class="offset-xl-2 col-xl-8 offset-md-2 col-md-8 offset-md-2 col-md-8 col-sm-12 col-12">
+                <div class="students-request-form">
+                    <form action="submitted.html" method="post" enctype="multipart/form-data">
+                        <div class="row">
+                            @csrf 
+                            <!-- Text input-->
+                            <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                                <label class="control-label sr-only" for="name">Name</label>
+                                <input id="name" name="name" type="text" placeholder="Name" class="form-control border-0 input-md" required>
+                            </div>
+                            <!-- Text input-->
+                            <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                                <label class="control-label sr-only" for="email">E-Mail</label>
+                                <input id="email" name="email" type="email" placeholder="E-mail" class="form-control border-0 input-md" required>
+                            </div>
+                            <!-- Text input-->
+                            <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                                <label class="control-label sr-only" for="phone">Phone</label>
+                                <input id="phone" name="phone" type="number" placeholder="Phone" class="form-control border-0 input-md" required>
+                            </div>
+                            <!-- Select Basic -->
+                            <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                                <label class="control-label sr-only" for="city">Monthly Income</label>
+                                <input id="phone" name="income" type="number" placeholder="Monthly Income" class="form-control border-0 input-md" required>
+
+                            </div>
+                           
+                            
+                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 form-group">
+                                <div class="slide-ranger">
+
+                                    <label for="amount" class="control-label sr-only">Loan Amount</label>
+                                    <input type="number" name="loanamount" class="form-control border-0" placeholder="Loan Amount">
+                                </div>
+                            </div>
+                            
+                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 form-group">
+                                <div class="slide-ranger">
+
+                                    <label for="amount" class="control-label sr-only">Year</label>
+                                    <input type="number" name="year" class="form-control border-0" placeholder="How many Year for loan">
+                                </div>
+                            </div>
+                            <!-- Button -->
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 form-group">
+                                <button type="submit" class="btn btn-secondary btn-block">Send A Request</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+  <div class="pt-5 pb-4 bg-white">
+    <div class="container">
+        <div class="row">
+            <div class="offset-xl-2 col-xl-8 offset-md-2 col-md-8 offset-md-2 col-md-8 col-sm-12 col-12">
+                <div class="mb30 text-center section-title">
+                    <!-- section title-->
+                    <h1>We are Here to Help You</h1>
+                    <p>Our mission is to deliver reliable, latest news and opinions.</p>
+                </div>
+                <!-- /.section title-->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                <div class="bg-white bg-boxshadow pinside20 outline text-center mb30">
+                    <div class="mb35"><i class="icon-calendar-3 icon-2x icon-default"></i></div>
+                    <h2 class="capital-title">Apply For Loan</h2>
+                    <p class="pb-0 mb-4">Looking to Personal Loan? then apply for loan now.</p>
+                    <a href="{{ url_for('website_route.contact') }}" class="btn-link">Inquery Now</a>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                <div class="bg-white bg-boxshadow pinside20 outline text-center mb30">
+                    <div class="mb35"><i class="icon-phone-call icon-2x icon-default"></i></div>
+                    <h2 class="capital-title">Call us at </h2>
+                     <p class="pb-0 mb-2">Any query for loans? then Call us bellow number.</p>
+                    <h1 class="text-big"><i class="fa fa-phone"></i> <a href="tel:1234567890">+91 3346035310</a></h1>
+                   
+              
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                <div class="bg-white bg-boxshadow outline text-center mb30">
+                    
+                   <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14879.650990262477!2d72.78930176977536!3d21.195624799999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be04dd357e80b5f%3A0x59dbe0e7bc9ce4c4!2sSilver%20Spring%20Compleax!5e0!3m2!1sen!2sin!4v1620476334655!5m2!1sen!2sin" width="100%" height="250" style="border:0;" allowfullscreen loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--footer.php-->
+
+{%endblock %}

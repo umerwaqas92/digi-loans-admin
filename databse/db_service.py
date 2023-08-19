@@ -374,6 +374,34 @@ def get_loan_product(product_id):
         print("Error getting loan product:", e)
         conn.close()
         return None
+    
+def get_all_loan_products():
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute('SELECT * FROM LoanProducts')
+        loan_products = cursor.fetchall()
+        conn.close()
+        return loan_products
+    except sqlite3.Error as e:
+        print("Error getting loan product:", e)
+        conn.close()
+        return None
+
+def get_all_loan_products_byCategory(category):
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute('SELECT * FROM LoanProducts where productsCategory = ?',(category,))
+        loan_products = cursor.fetchall()
+        conn.close()
+        return loan_products
+    except sqlite3.Error as e:
+        print("Error getting loan product:", e)
+        conn.close()
+        return None
 
 def update_loan_product(product_id, product_name, product_image, zone_id, productsCategory):
     conn = connect_db()
@@ -755,6 +783,24 @@ def getCategories():
             SELECT * FROM ProductCategory
         ''')
         categories = cursor.fetchall()
+        conn.close()
+        # print(loan_applications)
+
+        return categories
+    except sqlite3.Error as e:
+        print("Error getting  categories:", e)
+        conn.close()
+        return None    
+
+def getCategoryByID(id):
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute('''
+            SELECT * FROM ProductCategory where category_id = ?
+        ''',(id,))
+        categories = cursor.fetchone()
         conn.close()
         # print(loan_applications)
 

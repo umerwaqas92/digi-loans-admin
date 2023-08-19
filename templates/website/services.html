@@ -1,0 +1,80 @@
+{% extends 'website/base2.html' %}
+
+
+
+{% block title %}Services - {{ super() }}{% endblock %}
+
+
+{% block content %}
+	
+	    <div class="bg-white section-space40">
+        <div class="container">
+            <div class="row">
+                <div class="offset-xl-2 col-xl-8 offset-md-2 col-md-8 offset-md-2 col-md-8 col-sm-12 col-12">
+                    <div class="mb40 text-center section-title">
+                        <!-- section title start-->
+
+                        {% if category %}
+                        {% if category[0]==1 or category[0]==8 %}
+                        <h1>Instant Business Loans</h1>
+                        
+                        {% else %}
+                        <h1>{{category[1]}}</h1>
+                        {% endif %}
+                        
+                       
+                        
+                        {% else %}
+                        <h1>Instant Business Loans</h1>
+
+                        {% endif %}
+
+                    </div>
+                    <!-- /.section title start-->
+                </div>
+            </div>
+            <div class="row">
+
+            {% for form in forms %}
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 pt-3">
+                <div class="bg-white pinside40 number-block outline mb30 bg-boxshadow">
+                    <div class="circle"><img src="{{ url_for('static', filename=form.image) }}" /></div>
+                    <h3 class="number-title mb-1">{{form.name}} </h3>
+                   <br/>
+                  {% if form.is_category!=true %}
+                  <a class="btn btn-secondary btn-sm text-white" href="{{ url_for('show_form', form_id=form.id) }}">Apply Now</a>
+
+                  {% else %}
+                  <a class="btn btn-secondary btn-sm text-white" href="/services?category={{form.id}}">Explore</a>
+
+                  {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+                
+            
+         
+             
+    
+
+
+
+  <!-- content start -->
+    
+    <!-- /.content end -->
+	
+{% endblock %}
+
+            
+
+
+                
+
+                            
+    </div>
+   
+
+
+	
+	 
+

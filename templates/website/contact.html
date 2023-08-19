@@ -1,0 +1,107 @@
+{% extends 'website/base2.html' %}
+
+
+
+{% block title %} Contact us - {{ super() }}{% endblock %}
+
+
+{% block content %}
+
+<div class="pt-5 pb-5 bg-gradient call-to-action" id="con">
+    <div class="container">
+        <div class="row">
+            <div class="offset-xl-2 col-xl-8 offset-md-2 col-md-8 offset-md-2 col-md-8 col-sm-12 col-12">
+                <div class="section-title mb30 text-center">
+                    <!-- section title start-->
+                    <h1 class="text-white">Contact us</h1>
+                    <p class="text-white"></p>
+                </div>
+                <!-- /.section title start-->
+            </div>
+        </div>
+        <div class="row">
+            <div class="offset-xl-2 col-xl-8 offset-md-2 col-md-8 offset-md-2 col-md-8 col-sm-12 col-12">
+                <div class="students-request-form">
+                    <form action=”mailto:biswasabir658@gmail.com” method="post" enctype="text/plain">
+                        <div class="row">
+
+                            <!-- Text input-->
+                            <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                                <label class="control-label sr-only" for="name">Name</label>
+                                <input id="name" name="name" type="text" placeholder="Name" class="form-control border-0 input-md" required>
+                            </div>
+                            <!-- Text input-->
+                            <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                                <label class="control-label sr-only" for="email">E-Mail</label>
+                                <input id="email" name="email" type="email" placeholder="E-mail" class="form-control border-0 input-md" required>
+                            </div>
+                            <!-- Text input-->
+                            <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                                <label class="control-label sr-only" for="phone">Phone</label>
+                                <input id="phone" name="phone" type="number" placeholder="Phone" class="form-control border-0 input-md" required>
+                            </div>
+                            <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                                <label class="control-label sr-only" for="message">message</label>
+                                <input id="email" name="message" type="message" placeholder="message" class="form-control border-0 input-md" required>
+                            </div>
+                           
+
+                            <!-- Select Basic -->
+                            <!-- Button -->
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 form-group">
+                                <button type="submit" class="btn btn-secondary btn-block" value="Send">Contact</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+  <div class="pt-5 pb-4 bg-white">
+    <div class="container">
+        <div class="row">
+            <div class="offset-xl-2 col-xl-8 offset-md-2 col-md-8 offset-md-2 col-md-8 col-sm-12 col-12">
+                <div class="mb30 text-center section-title">
+                    <!-- section title-->
+                    <h1>We are Here to Help You</h1>
+                    <p>Our mission is to deliver reliable, latest news and opinions.</p>
+                </div>
+                <!-- /.section title-->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                <div class="bg-white bg-boxshadow pinside20 outline text-center mb30">
+                    <div class="mb35"><i class="icon-calendar-3 icon-2x icon-default"></i></div>
+                    <h2 class="capital-title">Apply For Loan</h2>
+                    <p class="pb-0 mb-4">Looking to Personal Loan? then apply for loan now.</p>
+                    <a href="form.html  " class="btn-link">Inquery Now</a>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                <div class="bg-white bg-boxshadow pinside20 outline text-center mb30">
+                    <div class="mb35"><i class="icon-phone-call icon-2x icon-default"></i></div>
+                    <h2 class="capital-title">Call us at </h2>
+                     <p class="pb-0 mb-2">Any query for loans? then Call us bellow number.</p>
+                    <h1 class="text-big"><i class="fa fa-phone"></i> <a href="tel:1234567890">+91 3346035310</a></h1>
+                   
+              
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                <div class="bg-white bg-boxshadow outline text-center mb30">
+                    
+                   <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14879.650990262477!2d72.78930176977536!3d21.195624799999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be04dd357e80b5f%3A0x59dbe0e7bc9ce4c4!2sSilver%20Spring%20Compleax!5e0!3m2!1sen!2sin!4v1620476334655!5m2!1sen!2sin" width="100%" height="250" style="border:0;" allowfullscreen loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

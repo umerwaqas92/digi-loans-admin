@@ -1,0 +1,81 @@
+{% extends 'website/base2.html' %}
+
+
+
+{% block title %} Lenders - {{ super() }}{% endblock %}
+
+
+{% block content %}
+
+
+<div class="bg-white section-space40">
+    <div class="container">
+        <div class="row">
+            <div class="offset-xl-2 col-xl-8 offset-md-2 col-md-8 offset-md-2 col-md-8 col-sm-12 col-12">
+                <div class="mb40 text-center section-title">
+                    <!-- section title start-->
+                    <h1>DIGI-LOANS LENDERS WITH CODE</h1>
+
+                </div>
+                <!-- /.section title start-->
+            </div>
+        </div>
+        <embed src="{{ url_for('static', filename='website/images/lenders.pdf') }}" width="100%" height="2000px" />
+        
+
+            <!-- /.tiny-footer-section -->
+            <!-- back to top icon -->
+            <a href="#0" class="cd-top" title="Go to top">Top</a>
+            <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+            <script src="{{ url_for('static', filename='website/js/ZlILGggiu5sl.js') }}"></script>
+            <!-- Include all compiled plugins (below), or include individual files as needed -->
+            <script src="{{ url_for('static', filename='website/js/b6amAplTfJ3h.js') }}"></script>
+            <!-- Back to top script -->
+            <script src="{{ url_for('static', filename='website/js/hrMbzifwBnL6.js') }}"></script>
+            <script src="{{ url_for('static', filename='website/js/NvdLIwEJiTJU.js') }}"></script>
+            <script src="{{ url_for('static', filename='website/js/LfAcpe16As2g.js') }}"></script>
+            
+            <script src="{{ url_for('static', filename='website/js/48uvjDTKvk4r.js') }}"></script>
+            
+            <script src="{{ url_for('static', filename='website/js/OKkagqm9X9Hs.js') }}"></script>
+            <script src="{{ url_for('static', filename='website/js/G9VTAPyedOJY.js') }}"></script>
+            <script src="{{ url_for('static', filename='website/js/aEBZUDNYQDyi.js') }}"></script>
+            
+            <script>
+                // <![CDATA[  <-- For SVG support
+                if ('WebSocket' in window) {
+                    (function () {
+                        function refreshCSS() {
+                            var sheets = [].slice.call(document.getElementsByTagName("link"));
+                            var head = document.getElementsByTagName("head")[0];
+                            for (var i = 0; i < sheets.length; ++i) {
+                                var elem = sheets[i];
+                                var parent = elem.parentElement || head;
+                                parent.removeChild(elem);
+                                var rel = elem.rel;
+                                if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+                                    var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+                                    elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+                                }
+                                parent.appendChild(elem);
+                            }
+                        }
+                        var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+                        var address = protocol + window.location.host + window.location.pathname + '/ws';
+                        var socket = new WebSocket(address);
+                        socket.onmessage = function (msg) {
+                            if (msg.data == 'reload') window.location.reload();
+                            else if (msg.data == 'refreshcss') refreshCSS();
+                        };
+                        if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+                            console.log('Live reload enabled.');
+                            sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+                        }
+                    })();
+                }
+                else {
+                    console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+                }
+                // ]]>
+            </script>
+{% endblock %}

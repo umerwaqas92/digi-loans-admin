@@ -1,12 +1,13 @@
 from flask import Blueprint,request,jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 import databse.db_service as db
+import databse.disabled_manage as disabled_managedb
+import databse.comnet_manage as comnet_managedb
+import databse.user_document as user_document
+import os
+import time
 
 about_bp = Blueprint('api', __name__)
-
-@about_bp.route('/about')
-def about():
-    return 'This is the about page.'
 
 
 @about_bp.route('/api/get_users', methods=['GET'])
@@ -55,7 +56,124 @@ def api_signup():
 
     user=db.get_user_by_email(email=email)
     if(user!=None):
-        return jsonify({"Error":"Email already used!!"})
+        return jsonify({"status":False,"data":None,"code":400,"message":"Email already used!!"})
+    else:
+        db.create_user(email=email, password=hash_password,role_id=1, full_name=full_name,phone_number=phone_num,date_of_birth=date_of_birth,address=address,branchBy=branch)
+        return jsonify({"status":True,"data":None,"code":200,"message":"User created successfully"})
 
-    db.create_user(email=email, password=hash_password,role_id=1, full_name=full_name,phone_number=phone_num,date_of_birth=date_of_birth,address=address,branchBy=branch)
     # db.update_user(email=email, password=hash_password,role_id=1, full_name=full_name,phone_number=phone_num,date_of_birth=date_of_birth,address=address)
+
+
+
+@about_bp.route('/api/profile_image_update', methods=['POST'])
+def api_profile_image_update():
+    user_id = request.args.get('user_id', '')
+
+    file=request.files['image']
+    user_profile_image=file.read()
+    #save to staticstatic/uploads/user_profile/20230807-154903.jpg
+    filename = user_profile_image.filename
+
+            
+    file_name=time.strftime("%Y%m%d-%H%M%S")+"."+filename.split(".")[-1]
+    file_path = os.path.join("static/uploads/user_profile", file_name)
+    user_profile_image.save(file_path)
+    db.update_user_image(user_id,file_path.replace("static/",""))
+
+    return jsonify({"status":True,"data":None,"code":200,"message":"Image updated successfully"})
+
+@about_bp.route('/api/login', methods=['POST'])
+def api_login():
+    data = request.json
+    email = data.get('email', '')
+    password = data.get('password', '')
+    print("Got email and pass: ",email,password)
+    user=db.get_user(email=email)
+    is_blocked_user=disabled_managedb.get_disabled_user(user_id=user[0])
+    if(is_blocked_user==1):
+        return jsonify({"status":False,"data":None,"code":400,"message":"User is blocked!!"})
+    if(user!=None):
+        if check_password_hash(user[2], password):
+            data={
+               "user":{ "id": user[0],
+                "email": user[1],
+                "password": user[2],
+                "role_id": user[3],
+                "full_name": user[4],
+                "phone_number": user[5],
+                "date_of_birth": user[6],
+                "address": user[7],
+                "branchBy": user[8],
+                "created_at": user[9],
+                "updated_at": user[10]}
+            }
+
+            return jsonify({"status":True,"data":None,"code":200,"message":"User login successfully",'data':data})
+        else:
+            return jsonify({"status":False,"data":None,"code":400,"message":"Email or password is wrong!!"})
+    else:
+        return jsonify({"status":False,"data":None,"code":400,"message":"Email or password is wrong!!"})
+    
+@about_bp.route('/api/get_user_applications', methods=['GET'])
+def get_user_applications():
+    user_id = request.args.get('user_id', '')
+    applications = db.get_loan_applications_for_user(user_id=user_id)
+    print("user id", user_id)
+    
+    final_data = []
+    for application in applications:
+        rawcomments=comnet_managedb.get_ap_comments (application[0])
+        comments=[]
+        for comment in rawcomments:
+            comments.append({
+                "id": comment[0],
+                "application_id": comment[1],
+                "user_id": comment[2],
+                "comment": comment[3],
+                "created_at": comment[4],
+                "updated_at": comment[5]
+            })
+
+        data = {
+        
+           "applications":{ "id": application[0],
+            "user_id": application[1],
+            "title": db.get_loan_product(application[2])[1],
+            "description": application[3],
+            "status": application[4],
+            "created_at": application[5],
+            "updated_at": application[6]},
+            "comments":comments
+        }
+        final_data.append(data)
+    
+    return jsonify(final_data)
+
+
+@about_bp.route('/api/user', methods=['GET'])
+def api_user():
+    user_id = request.args.get('user_id', '')
+    user=db.get_user(user_id=user_id)
+    adah_doc=user_document.get_user_document_by_id(user_id=user_id)
+   
+    if(user!=None):
+        data={
+           "user":{ 
+               
+               "id": user[0],
+            "email": user[1],
+            "role_id": user[3],
+            "full_name": user[4],
+            "phone_number": user[7],
+            "date_of_birth": user[5],
+            "address": user[6],
+            "branchBy": user[11],
+            "created_by": user[12],
+            "created_at": user[9],
+            "adhahar_doc":adah_doc,
+            "updated_at": user[10]}
+        }
+
+        return jsonify({"status":True,"data":None,"code":200,"message":"",'data':data})
+    else:
+        return jsonify({"status":False,"data":None,"code":400,"message":"User not found!!"})
