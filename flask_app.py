@@ -93,7 +93,7 @@ def dashboard():
     apps_relations=ap_relation.read_all_ap_relations_by_user(user_id=session["user"][0])
     
     if(session["role"][0]==1):
-        applications=get_loan_applications_pending(1)
+        applications=get_loan_applications_pending()
     elif (session["role"][0]>3):
         applications=get_loan_applications_for_userPending(user_id=session["user"][0])
 
