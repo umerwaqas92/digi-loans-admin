@@ -244,7 +244,7 @@ def delete_form():
     form_id = int(request.form['form_id'])
     delete_product_form(form_id)
     delete_loan_product(product_id=form_id)
-    return redirect("/forms")
+    return redirect("/dashboard/forms")
 
 
 
@@ -314,7 +314,7 @@ def login():
             session['image'] = get_user_image(user[0])
             session['user_doc'] = user_documentdb.get_user_document_by_id(user[0])
 
-            return redirect("/loan_applications")
+            return redirect("/dashboard/loan_applications")
         else:
             error_message = "Invalid credentials"
             return render_template("vertical/auth-basic-signin.html", error=error_message)
@@ -441,7 +441,7 @@ def user_profile():
         session['user']=get_user(session['user'][0])
         session['user_doc'] = user_documentdb.get_user_document_by_id(session['user'][0])
 
-        return redirect(url_for('user_profile'))
+        return redirect(url_for('/dashboard/user_profile'))
         
     
     return render_template("vertical/user_profile.html")
@@ -644,7 +644,7 @@ def signup():
             session['logged_in'] = True
             session['user_email'] = email
 
-            return redirect("/loan_applications")
+            return redirect("/dashboard/loan_applications")
         except Exception as e:
             print(e)
             return render_template("vertical/auth-basic-signup.html",error=e)
@@ -707,7 +707,7 @@ def edit_form(form_id):
 
 
 
-            return redirect("/forms")
+            return redirect("/dashboard/forms")
         
         
     else:
@@ -959,7 +959,7 @@ def disabled_user(user_id):
     
     disabledb.create_or_update_disabled_user(user_id=user_id,disabled=disabled)
     
-    return redirect("/users")
+    return redirect("/dashboard/users")
 
 
 
@@ -969,7 +969,7 @@ def export_applications_data():
     applications = get_loan_applications(0)
 
     if(applications == None or len(applications)==0):
-        return redirect("/loan_applications")
+        return redirect("/dashboard/loan_applications")
     # Create an Excel workbook and add user data to a worksheet
     wb = openpyxl.Workbook()
     ws = wb.active
