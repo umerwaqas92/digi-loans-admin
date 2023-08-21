@@ -1191,12 +1191,12 @@ def signup_user(email, password, role_id, full_name, date_of_birth, address, pho
         return "Something went wrong try again!"
     
 
-
-def create_user(email, password, role_id, full_name, date_of_birth, address, phone_number,createdBy,branchBy):
+def create_user(email, password, role_id, full_name, date_of_birth, address, phone_number, createdBy, branchBy):
     conn = connect_db()
-    cursor = conn.cursor()
 
     try:
+        cursor = conn.cursor()
+
         cursor.execute('SELECT * FROM Users WHERE email = ?', (email,))
         existing_user = cursor.fetchone()
 
@@ -1205,14 +1205,14 @@ def create_user(email, password, role_id, full_name, date_of_birth, address, pho
             return None
 
         cursor.execute('''
-            INSERT INTO Users (email, password, role_id, full_name, date_of_birth, address, phone_number,createdBy,branchBy)
-            VALUES (?, ?, ?, ?, ?, ?, ?,?,?)
-        ''', (email, password, role_id, full_name, date_of_birth, address, phone_number,createdBy,branchBy))
+            INSERT INTO Users (email, password, role_id, full_name, date_of_birth, address, phone_number, createdBy, branchBy)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ''', (email, password, role_id, full_name, date_of_birth, address, phone_number, createdBy, branchBy))
     
         conn.commit()
+        last_row_id = cursor.lastrowid
         conn.close()
-        return cursor.lastrowid
-        
+        return last_row_id
       
     except sqlite3.Error as e:
         print("Error during signup:", e)
