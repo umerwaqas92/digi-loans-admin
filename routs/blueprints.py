@@ -100,41 +100,45 @@ def api_profile_image_update():
 
     return jsonify({"status":True,"data":None,"code":200,"message":"Image updated successfully"})
 
+
 @about_bp.route('/api/login', methods=['POST'])
 def api_login():
-    data = request.json
-    if not data:
-        return jsonify({"status": False, "code": 400, "message": "Malformed request"})
+    try:
+        data = request.json
+        if not data:
+            return jsonify({"status": False, "code": 400, "message": "Malformed request"})
 
-    email = data.get('email', '')
-    password = data.get('password', '')
-    print("Got email and pass: ", email, password)
+        email = data.get('email', '')
+        password = data.get('password', '')
+        print("Got email and pass: ", email, password)
 
-    user = db.get_user(email=email)
-    if user is None:
-        return jsonify({"status": False, "code": 400, "message": "Email or password is wrong!!"})
+        user = db.get_user(email=email)
+        if user is None:
+            return jsonify({"status": False, "code": 400, "message": "Email or password is wrong!!"})
 
-    is_blocked_user = disabled_managedb.get_disabled_user(user_id=user[0])
-    if is_blocked_user == 1:
-        return jsonify({"status": False, "code": 400, "message": "User is blocked!!"})
+        is_blocked_user = disabled_managedb.get_disabled_user(user_id=user[0])
+        if is_blocked_user == 1:
+            return jsonify({"status": False, "code": 400, "message": "User is blocked!!"})
 
-    if check_password_hash(user[2], password):
-        user_data = {
-            "id": user[0],
-            "email": user[1],
-            "role_id": user[3],
-            "full_name": user[4],
-            "phone_number": user[5],
-            "date_of_birth": user[6],
-            "address": user[7],
-            "branchBy": user[8],
-            "created_at": user[9],
-            "updated_at": user[10]
-        }
+        if check_password_hash(user[2], password):
+            user_data = {
+                "id": user[0],
+                "email": user[1],
+                "role_id": user[3],
+                "full_name": user[4],
+                "phone_number": user[5],
+                "date_of_birth": user[6],
+                "address": user[7],
+                "branchBy": user[8],
+                "created_at": user[9],
+                "updated_at": user[10]
+            }
 
-        return jsonify({"status": True, "code": 200, "message": "User login successfully", "data": user_data})
-    else:
-        return jsonify({"status": False, "code": 400, "message": "Email or password is wrong!!"})
+            return jsonify({"status": True, "code": 200, "message": "User login successfully", "data": user_data})
+        else:
+            return jsonify({"status": False, "code": 400, "message": "Email or password is wrong!!"})
+    except Exception as e:
+        return jsonify({"status": False, "code": 500, "message": "An error occurred", "error": str(e)})
 
 
 
