@@ -126,12 +126,12 @@ def api_login():
                 "email": user[1],
                 "role_id": user[3],
                 "full_name": user[4],
-                "phone_number": user[5],
-                "date_of_birth": user[6],
-                "address": user[7],
-                "branchBy": user[8],
-                "created_at": user[9],
-                "updated_at": user[10]
+                "phone_number": user[7],
+                "date_of_birth": user[5],
+                "address": user[6],
+                "branchBy": user[12],
+                "created_at": user[8],
+                "updated_at": user[9]
             }
 
             return jsonify({"status": True, "code": 200, "message": "User login successfully", "user": user_data})
