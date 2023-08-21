@@ -158,8 +158,9 @@ def get_user_applications():
                 "application_id": comment[1],
                 "user_id": comment[2],
                 "comment": comment[3],
-                "created_at": comment[4],
-                "updated_at": comment[5]
+                "status": comment[4],
+                "created_at": comment[5],
+                
             })
 
         data = {
