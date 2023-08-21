@@ -66,7 +66,7 @@ def api_signup():
             user=db.get_all_usersbyUserId(user_id=user_id)
             user_json={
                  
-               "user":{ "id": user[0],
+               "id": user[0],
                 "email": user[1],
                 "password": user[2],
                 "role_id": user[3],
@@ -76,7 +76,7 @@ def api_signup():
                 "address": user[7],
                 "branchBy": user[8],
                 "created_at": user[9],
-                "updated_at": user[10]}
+                "updated_at": user[10]
           
             }
             return jsonify({"status": True, "data": None, "code": 200, "message": "User created successfully","user":user_json})
