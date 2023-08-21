@@ -62,7 +62,7 @@ def api_signup():
         return jsonify({"status": False, "data": None, "code": 400, "message": "Email already used!!"})
     else:
         try:
-            db.create_user(email=email, password=hash_password, role_id=1, full_name=full_name, phone_number=phone_num, date_of_birth=date_of_birth, address=address, branchBy=branch)
+            db.create_user(email=email, password=hash_password, role_id=4, full_name=full_name, phone_number=phone_num, date_of_birth=date_of_birth, address=address, branchBy=branch,createdBy=None)
             return jsonify({"status": True, "data": None, "code": 200, "message": "User created successfully"})
         except Exception as e:
             return jsonify({"status": False, "data": None, "code": 500, "message": "Failed to create user: " + str(e)})
