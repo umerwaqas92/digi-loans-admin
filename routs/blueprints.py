@@ -6,6 +6,8 @@ import databse.comnet_manage as comnet_managedb
 import databse.user_document as user_document
 import os
 import time
+from databse.models import User
+import json
 
 about_bp = Blueprint('api', __name__)
 
@@ -43,27 +45,27 @@ def get_branches():
 
 @about_bp.route('/api/signup', methods=['POST'])
 def api_signup():
-    email = request.args.get('email', '')
-    password = request.args.get('password', '')
-    full_name = request.args.get('full_name', '')
-    date_of_birth=request.args.get('date_of_birth', None)
-    address = request.args.get('address', '')
-    phone_num = request.args.get('phone_num', '')
-    branch=request.args.get('branch', None)
+    data = request.json  # Use request.json for POST requests
 
-    
+    email = data.get('email', '')
+    password = data.get('password', '')
+    full_name = data.get('full_name', '')
+    date_of_birth = data.get('date_of_birth', None)
+    address = data.get('address', '')
+    phone_num = data.get('phone_num', '')
+    branch = data.get('branch', None)
+
     hash_password = generate_password_hash(password, method='sha256')
 
-    user=db.get_user_by_email(email=email)
-    if(user!=None):
-        return jsonify({"status":False,"data":None,"code":400,"message":"Email already used!!"})
+    user = db.get_user_by_email(email=email)
+    if user is not None:
+        return jsonify({"status": False, "data": None, "code": 400, "message": "Email already used!!"})
     else:
-        db.create_user(email=email, password=hash_password,role_id=1, full_name=full_name,phone_number=phone_num,date_of_birth=date_of_birth,address=address,branchBy=branch)
-        return jsonify({"status":True,"data":None,"code":200,"message":"User created successfully"})
-
-    # db.update_user(email=email, password=hash_password,role_id=1, full_name=full_name,phone_number=phone_num,date_of_birth=date_of_birth,address=address)
-
-
+        try:
+            db.create_user(email=email, password=hash_password, role_id=1, full_name=full_name, phone_number=phone_num, date_of_birth=date_of_birth, address=address, branchBy=branch)
+            return jsonify({"status": True, "data": None, "code": 200, "message": "User created successfully"})
+        except Exception as e:
+            return jsonify({"status": False, "data": None, "code": 500, "message": "Failed to create user: " + str(e)})
 
 @about_bp.route('/api/profile_image_update', methods=['POST'])
 def api_profile_image_update():
@@ -157,23 +159,8 @@ def api_user():
     adah_doc=user_document.get_user_document_by_id(user_id=user_id)
    
     if(user!=None):
-        data={
-           "user":{ 
-               
-               "id": user[0],
-            "email": user[1],
-            "role_id": user[3],
-            "full_name": user[4],
-            "phone_number": user[7],
-            "date_of_birth": user[5],
-            "address": user[6],
-            "branchBy": user[11],
-            "created_by": user[12],
-            "created_at": user[9],
-            "adhahar_doc":adah_doc,
-            "updated_at": user[10]}
-        }
-
-        return jsonify({"status":True,"data":None,"code":200,"message":"",'data':data})
+        user=User(user_id=user[0],email=user[1],password=user[2],role_id=user[3],full_name=user[4],phone_number=user[5],date_of_birth=user[6],address=user[7],branch_by=user[8],created_time=user[9],updated_time=user[10])
+        usejosn=json.dumps(user.__dict__)
+        return jsonify({"status":True,"data":None,"code":200,"message":"",'data':usejosn})
     else:
         return jsonify({"status":False,"data":None,"code":400,"message":"User not found!!"})
