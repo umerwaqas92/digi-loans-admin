@@ -134,7 +134,7 @@ def api_login():
                 "updated_at": user[10]
             }
 
-            return jsonify({"status": True, "code": 200, "message": "User login successfully", "data": user_data})
+            return jsonify({"status": True, "code": 200, "message": "User login successfully", "user": user_data})
         else:
             return jsonify({"status": False, "code": 400, "message": "Email or password is wrong!!"})
     except Exception as e:
