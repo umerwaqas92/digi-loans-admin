@@ -25,7 +25,7 @@
             <input type="hidden" name="redirectUrl" value="{{redirectUrl}}">
             <label for="dsa_id">DSA Code</label>
 
-            <input  id="dsa_id" name="dsa_id" class="form-control" value="{{user_id}}" {% if user_id %} type="hidden" {% {% else %} %}type="text" {% endif %}  required>
+            <input id="dsa_id" name="dsa_id" class="form-control" value="{{ user_id }}" {% if user_id %} type="hidden" {% else %} type="text" {% endif %} required>
 
 
 
