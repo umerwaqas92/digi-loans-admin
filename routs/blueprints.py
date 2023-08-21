@@ -72,6 +72,8 @@ def api_signup():
                 adhar_card=""
                 pan_card=""
 
+            
+
             user_data = {
                 "id": user[0],
                 "email": user[1],
@@ -83,7 +85,7 @@ def api_signup():
                 "branchBy": user[12],
                 "created_at": user[8],
                 "updated_at": user[9],
-                "profile_image":db.get_user_image(user[2]),
+                "profile_image":"",
                 "adhar_card": adhar_card,
                 "pan_card":pan_card,
             }
