@@ -121,6 +121,7 @@ def api_login():
             return jsonify({"status": False, "code": 400, "message": "User is blocked!!"})
 
         if check_password_hash(user[2], password):
+            doc=user_document.get_user_document_by_id(user_id=user[0])
             user_data = {
                 "id": user[0],
                 "email": user[1],
@@ -131,7 +132,10 @@ def api_login():
                 "address": user[6],
                 "branchBy": user[12],
                 "created_at": user[8],
-                "updated_at": user[9]
+                "updated_at": user[9],
+                "profile_image":db.get_user_image(user[2]),
+                "adhar_card":doc[2],
+                "pan_card":doc[3],
             }
 
             return jsonify({"status": True, "code": 200, "message": "User login successfully", "user": user_data})
