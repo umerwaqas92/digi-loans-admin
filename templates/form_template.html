@@ -23,7 +23,9 @@
         <form action="/form/{{ form_id }}" method="post" enctype="multipart/form-data" class="m-4">
           
             <input type="hidden" name="redirectUrl" value="{{redirectUrl}}">
-            <label for="dsa_id">DSA Code</label>
+            
+           
+            {% if user_id==None %}  <label for="dsa_id">DSA Code</label>  {% endif %}
 
             <input id="dsa_id" name="dsa_id" class="form-control" value="{{ user_id }}" {% if user_id %} type="hidden" {% else %} type="text" {% endif %} required>
 
