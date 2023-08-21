@@ -64,7 +64,7 @@ def api_signup():
         try:
             user_id=db.create_user(email=email, password=hash_password, role_id=4, full_name=full_name, phone_number=phone_num, date_of_birth=date_of_birth, address=address, branchBy=branch,createdBy=None)
             user=db.get_user(user_id=user_id)
-            doc=user_document.get_user_document_by_id(user_id=user[0])
+            doc=user_document.get_user_document_by_id(user_id=user_id)
             user_data = {
                 "id": user[0],
                 "email": user[1],
