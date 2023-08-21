@@ -63,7 +63,7 @@ def api_signup():
     else:
         try:
             user_id=db.create_user(email=email, password=hash_password, role_id=4, full_name=full_name, phone_number=phone_num, date_of_birth=date_of_birth, address=address, branchBy=branch,createdBy=None)
-            user=db.get_all_usersbyUserId(user_id=user_id)
+            user=db.get_user(user_id=user_id)
             user_json={
                  
                "id": user[0],
