@@ -164,13 +164,14 @@ def get_user_applications():
 
         data = {
         
-           "applications":{ "id": application[0],
+           "applications":{ 
+            "id": application[0],
             "user_id": application[1],
             "title": db.get_loan_product(application[2])[1],
             "description": application[3],
-            "status": application[4],
-            "created_at": application[5],
-            "updated_at": application[6]},
+            "status": application[5],
+            "created_at": application[6],
+            "updated_at": application[7]},
             "comments":comments
         }
         final_data.append(data)
