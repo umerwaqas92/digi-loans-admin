@@ -65,6 +65,13 @@ def api_signup():
             user_id=db.create_user(email=email, password=hash_password, role_id=4, full_name=full_name, phone_number=phone_num, date_of_birth=date_of_birth, address=address, branchBy=branch,createdBy=None)
             user=db.get_user(user_id=user_id)
             doc=user_document.get_user_document_by_id(user_id=user_id)
+            if(doc==None):
+                adhar_card=doc[2]
+                pan_card=doc[3]
+            else:
+                adhar_card=""
+                pan_card=""
+
             user_data = {
                 "id": user[0],
                 "email": user[1],
@@ -77,8 +84,8 @@ def api_signup():
                 "created_at": user[8],
                 "updated_at": user[9],
                 "profile_image":db.get_user_image(user[2]),
-                "adhar_card":doc[2],
-                "pan_card":doc[3],
+                "adhar_card": adhar_card,
+                "pan_card":pan_card,
             }
             return jsonify({"status": True, "data": None, "code": 200, "message": "User created successfully","user":user_data})
         except Exception as e:
