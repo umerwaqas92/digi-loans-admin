@@ -1212,6 +1212,8 @@ def create_user(email, password, role_id, full_name, date_of_birth, address, pho
         conn.commit()
         conn.close()
         return cursor.lastrowid
+        
+      
     except sqlite3.Error as e:
         print("Error during signup:", e)
         conn.rollback()
