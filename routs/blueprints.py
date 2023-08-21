@@ -112,7 +112,7 @@ def api_login():
         password = data.get('password', '')
         print("Got email and pass: ", email, password)
 
-        user = db.get_user(email=email)
+        user = db.get_user_by_email(email=email)
         if user is None:
             return jsonify({"status": False, "code": 400, "message": "Email or password is wrong!!"})
 
