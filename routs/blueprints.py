@@ -194,8 +194,24 @@ def api_user():
     adah_doc=user_document.get_user_document_by_id(user_id=user_id)
    
     if(user!=None):
-        user=User(user_id=user[0],email=user[1],password=user[2],role_id=user[3],full_name=user[4],phone_number=user[5],date_of_birth=user[6],address=user[7],branch_by=user[8],created_time=user[9],updated_time=user[10])
-        usejosn=json.dumps(user.__dict__)
-        return jsonify({"status":True,"data":None,"code":200,"message":"",'data':usejosn})
+        user_data = {
+                "id": user[0],
+                "email": user[1],
+                "role_id": user[3],
+                "full_name": user[4],
+                "phone_number": user[7],
+                "date_of_birth": user[5],
+                "address": user[6],
+                "branchBy": user[12],
+                "created_at": user[8],
+                "updated_at": user[9],
+                "profile_image":db.get_user_image(user[2]),
+                "adhar_card": adah_doc[2] if adah_doc is not None else "",
+                "pan_card": adah_doc[3] if adah_doc is not None else "",
+            }
+
+        return jsonify({"status": True, "code": 200, "message": "User login successfully", "user": user_data})
+
+       
     else:
         return jsonify({"status":False,"data":None,"code":400,"message":"User not found!!"})
