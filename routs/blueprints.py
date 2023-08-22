@@ -86,22 +86,43 @@ def api_signup():
         except Exception as e:
             return jsonify({"status": False, "data": None, "code": 500, "message": "Failed to create user: " + str(e)})
 
+
+
+
+
 @about_bp.route('/api/profile_image_update', methods=['POST'])
 def api_profile_image_update():
-    user_id = request.args.get('user_id', '')
+    try:
+        user_id = request.form.get('user_id', '')  # Retrieve from form data
 
-    file=request.files['image']
-    user_profile_image=file.read()
-    #save to staticstatic/uploads/user_profile/20230807-154903.jpg
-    filename = user_profile_image.filename
+        if user_id == "":
+            return jsonify({"status": False, "code": 400, "message": "User not found"})
 
-            
-    file_name=time.strftime("%Y%m%d-%H%M%S")+"."+filename.split(".")[-1]
-    file_path = os.path.join("static/uploads/user_profile", file_name)
-    user_profile_image.save(file_path)
-    db.update_user_image(user_id,file_path.replace("static/",""))
+        if 'image' not in request.files:
+            return jsonify({"status": False, "code": 400, "message": "No image provided"})
 
-    return jsonify({"status":True,"data":None,"code":200,"message":"Image updated successfully"})
+        file = request.files['image']
+
+        if file.filename == '':
+            return jsonify({"status": False, "code": 400, "message": "No selected file"})
+
+        user_profile_image = file.read()
+
+        # Extract filename
+        filename = os.path.basename(file.filename)
+        file_name = time.strftime("%Y%m%d-%H%M%S") + "." + filename.split(".")[-1]
+        file_path = os.path.join("static/uploads/user_profile", file_name)
+
+        # Save image
+        with open(file_path, "wb") as f:
+            f.write(user_profile_image)
+
+        db.update_user_image(user_id, file_path.replace("static/", ""))
+
+        return jsonify({"status": True, "data": None, "code": 200, "message": "Image updated successfully"})
+    except Exception as e:
+        return jsonify({"status": False, "data": None, "code": 500, "message": "An error occurred", "error": str(e)})
+
 
 
 @about_bp.route('/api/login', methods=['POST'])
@@ -241,3 +262,35 @@ def api_user():
        
     else:
         return jsonify({"status":False,"data":None,"code":400,"message":"User not found!!"})
+    
+
+
+@about_bp.route('/api/profile_update', methods=['POST'])
+def api_profile_update():
+    try:
+        data = request.json
+        if not data:
+            return jsonify({"status": False, "code": 400, "message": "Malformed request"})
+
+        user_id = data.get('user_id', '')
+        adhar_card = data.get('adhar_card', '')
+        pan_card = data.get('pan_card', '')
+        full_name = data.get('full_name', '')
+        address = data.get('address', '')
+        phone_number = data.get('phone_number', '')
+        date_of_birth = data.get('date_of_birth', '')
+
+        user = db.get_user(user_id=user_id)
+        if user is None:
+            return jsonify({"status": False, "code": 400, "message": "User not found"})
+
+        # Update user document (adhar card and pan card)
+        user_document.update_or_create_user_document(user_id=user_id, adhar_card=adhar_card, pan_card=pan_card)
+
+        # Update user profile information
+        db.update_user(user_id=user_id, full_name=full_name, address=address,
+                               phone_number=phone_number, date_of_birth=date_of_birth)
+
+        return jsonify({"status": True, "code": 200, "message": "Profile updated successfully"})
+    except Exception as e:
+        return jsonify({"status": False, "code": 500, "message": "An error occurred", "error": str(e)})

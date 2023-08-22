@@ -568,15 +568,17 @@ def add_user_image(user_id, user_image):
 def update_user_image(user_id, user_image):
     conn = connect_db()
     cursor = conn.cursor()
+    print("trying to update image for ",user_id," : ",user_image)
 
     try:
         cursor.execute('UPDATE UserProfile SET image = ? WHERE user_id = ?', (user_image, user_id))
 
         conn.commit()
         conn.close()
+        print("updated image for ",user_id," : ",user_image)
         return True
     except sqlite3.Error as e:
-        print("Error add_user_image :", e)
+        print("Error update :", e)
         conn.rollback()
         conn.close()
         return False
@@ -586,16 +588,16 @@ def imageUploaderUpdate(user_id, user_image):
     # Check if the user image already exists
 
     existing_image = get_user_image(user_id)
-    print("got image result for existing_image",existing_image)
+    # print("got image result for existing_image",existing_image)
     # add_user_image(user_id, user_image)
     
     if existing_image!=None:
         # If image exists, update it
-        print("got image result for image exists")
+        # print("got image result for image exists")
         
         return update_user_image(user_id, user_image)
     else:
-        print("got image result for image does not exists")
+        # print("got image result for image does not exists")
         # If image does not exist, add it
         return add_user_image(user_id, user_image)
 
