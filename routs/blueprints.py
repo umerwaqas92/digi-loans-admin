@@ -125,6 +125,18 @@ def api_login():
 
         if check_password_hash(user[2], password):
             doc=user_document.get_user_document_by_id(user_id=user[0])
+            adhar_card=""
+            pan_card=""
+            if(doc!=None):
+                adhar_card=doc[2]
+                pan_card=doc[3]
+
+            profile_image=db.get_user_image(user[2])
+            if(profile_image==None):
+                profile_image=""
+            else:
+                profile_image=profile_image[2]
+
             user_data = {
                 "id": user[0],
                 "email": user[1],
@@ -136,9 +148,9 @@ def api_login():
                 "branchBy": user[12],
                 "created_at": user[8],
                 "updated_at": user[9],
-                "profile_image":db.get_user_image(user[2]),
-                "adhar_card":doc[2],
-                "pan_card":doc[3],
+                "profile_image":profile_image,
+                "adhar_card":adhar_card,
+                "pan_card":pan_card,
             }
 
             return jsonify({"status": True, "code": 200, "message": "User login successfully", "user": user_data})
