@@ -4,7 +4,7 @@ import databse.db_service as db
 
 
 
-def create_token(user_id, expiration_minutes=30):
+def create_token(user_id, expiration_minutes=60*24*360):
     expiration = datetime.datetime.utcnow() + datetime.timedelta(minutes=expiration_minutes)
     token = jwt.encode({'user_id': user_id, 'exp': expiration}, db.SECRET_KEY, algorithm='HS256')
     return token
