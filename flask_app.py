@@ -546,11 +546,12 @@ def user_edit(user_id):
         if user_profile_image and user_profile_image.filename != '' and user_profile_image.content_length == 0:
             filename = user_profile_image.filename
             #random file name
+            print("file has been found")
             
             file_name=time.strftime("%Y%m%d-%H%M%S")+"."+filename.split(".")[-1]
             file_path = os.path.join("static/uploads/user_profile", file_name)
             user_profile_image.save(file_path)
-            update_user_image(user_id,file_path.replace("static/",""))
+            imageUploaderUpdate(user_id,file_path.replace("static/",""))
            
             print("file has been save!! ",file_path)
 
@@ -564,7 +565,7 @@ def user_edit(user_id):
         except:
             pass
 
-        if(password!=None):
+        if(password is not None and password.strip() != ""):
             hashed_password = generate_password_hash(password, method='sha256')
             update_user_password(user_id,hashed_password)
         

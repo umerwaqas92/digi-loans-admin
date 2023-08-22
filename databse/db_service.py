@@ -552,6 +552,7 @@ def get_user_image(user_id):
 def add_user_image(user_id, user_image):
     conn = connect_db()
     cursor = conn.cursor()
+    print("adding image for ",user_id," : ",user_image)
 
     try:
         cursor.execute('Insert INTO UserProfile (user_id, image) VALUES (?, ?)', (user_id,user_image))
@@ -579,6 +580,24 @@ def update_user_image(user_id, user_image):
         conn.rollback()
         conn.close()
         return False
+    
+
+def imageUploaderUpdate(user_id, user_image):
+    # Check if the user image already exists
+
+    existing_image = get_user_image(user_id)
+    print("got image result for existing_image",existing_image)
+    # add_user_image(user_id, user_image)
+    
+    if existing_image!=None:
+        # If image exists, update it
+        print("got image result for image exists")
+        
+        return update_user_image(user_id, user_image)
+    else:
+        print("got image result for image does not exists")
+        # If image does not exist, add it
+        return add_user_image(user_id, user_image)
 
 # LoanApplications Table CRUD operations
 def create_loan_application(user_id, product_id, form_id, application_data, status):
