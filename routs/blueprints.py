@@ -131,12 +131,13 @@ def api_login():
                 adhar_card=doc[2]
                 pan_card=doc[3]
 
-            profile_image=db.get_user_image(user[2])
+            profile_image=db.get_user_image(user[0])
+            print("profile_image",profile_image)
             if(profile_image==None):
                 profile_image=""
             else:
                 profile_image=profile_image[2]
-
+            
             user_data = {
                 "id": user[0],
                 "email": user[1],
@@ -206,22 +207,35 @@ def api_user():
     adah_doc=user_document.get_user_document_by_id(user_id=user_id)
    
     if(user!=None):
-        user_data = {
-                "id": user[0],
-                "email": user[1],
-                "role_id": user[3],
-                "full_name": user[4],
-                "phone_number": user[7],
-                "date_of_birth": user[5],
-                "address": user[6],
-                "branchBy": user[12],
-                "created_at": user[8],
-                "updated_at": user[9],
-                "profile_image":db.get_user_image(user[2]),
-                "adhar_card": adah_doc[2] if adah_doc is not None else "",
-                "pan_card": adah_doc[3] if adah_doc is not None else "",
-            }
+        doc=user_document.get_user_document_by_id(user_id=user[0])
+        adhar_card=""
+        pan_card=""
+        if(doc!=None):
+            adhar_card=doc[2]
+            pan_card=doc[3]
 
+        profile_image=db.get_user_image(user[0])
+        print("profile_image",profile_image)
+        if(profile_image==None):
+            profile_image=""
+        else:
+            profile_image=profile_image[2]
+        
+        user_data = {
+            "id": user[0],
+            "email": user[1],
+            "role_id": user[3],
+            "full_name": user[4],
+            "phone_number": user[7],
+            "date_of_birth": user[5],
+            "address": user[6],
+            "branchBy": user[12],
+            "created_at": user[8],
+            "updated_at": user[9],
+            "profile_image":profile_image,
+            "adhar_card":adhar_card,
+            "pan_card":pan_card,
+        }
         return jsonify({"status": True, "code": 200, "message": "User login successfully", "user": user_data})
 
        
