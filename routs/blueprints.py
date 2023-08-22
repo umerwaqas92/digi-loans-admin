@@ -104,33 +104,44 @@ def api_signup():
 @about_bp.route('/api/profile_image_update', methods=['POST'])
 def api_profile_image_update():
     try:
-        user_id = request.form.get('user_id', '')  # Retrieve from form data
+        token = request.headers.get('Authorization', '').replace('Bearer ', '')
 
-        if user_id == "":
-            return jsonify({"status": False, "code": 400, "message": "User not found"})
+        if not token:
+            return jsonify({"status": False, "code": 401, "message": "Token not provided"})
 
-        if 'image' not in request.files:
-            return jsonify({"status": False, "code": 400, "message": "No image provided"})
+        try:
+            payload = jwt.decode(token, db.SECRET_KEY, algorithms=['HS256'])
+            user_id = payload.get('user_id', '')
 
-        file = request.files['image']
+            if user_id:
+                if 'image' not in request.files:
+                    return jsonify({"status": False, "code": 400, "message": "No image provided"})
 
-        if file.filename == '':
-            return jsonify({"status": False, "code": 400, "message": "No selected file"})
+                file = request.files['image']
 
-        user_profile_image = file.read()
+                if file.filename == '':
+                    return jsonify({"status": False, "code": 400, "message": "No selected file"})
 
-        # Extract filename
-        filename = os.path.basename(file.filename)
-        file_name = time.strftime("%Y%m%d-%H%M%S") + "." + filename.split(".")[-1]
-        file_path = os.path.join("static/uploads/user_profile", file_name)
+                user_profile_image = file.read()
 
-        # Save image
-        with open(file_path, "wb") as f:
-            f.write(user_profile_image)
+                # Extract filename
+                filename = os.path.basename(file.filename)
+                file_name = time.strftime("%Y%m%d-%H%M%S") + "." + filename.split(".")[-1]
+                file_path = os.path.join("static/uploads/user_profile", file_name)
 
-        db.update_user_image(user_id, file_path.replace("static/", ""))
+                # Save image
+                with open(file_path, "wb") as f:
+                    f.write(user_profile_image)
 
-        return jsonify({"status": True, "data": None, "code": 200, "message": "Image updated successfully"})
+                db.update_user_image(user_id, file_path.replace("static/", ""))
+
+                return jsonify({"status": True, "data": None, "code": 200, "message": "Image updated successfully"})
+            else:
+                return jsonify({"status": False, "code": 401, "message": "Invalid token"})
+        except jwt.ExpiredSignatureError:
+            return jsonify({"status": False, "code": 401, "message": "Token has expired"})
+        except jwt.InvalidTokenError:
+            return jsonify({"status": False, "code": 401, "message": "Invalid token"})
     except Exception as e:
         return jsonify({"status": False, "data": None, "code": 500, "message": "An error occurred", "error": str(e)})
 
