@@ -2,6 +2,8 @@ import sqlite3
 import json
 from werkzeug.security import check_password_hash
 
+
+SECRET_KEY="com.digiloans.app.secret.key"
 # Connect to the SQLite database
 def connect_db():
     return sqlite3.connect('databse/digi_loans.db')

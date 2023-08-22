@@ -97,6 +97,36 @@
             {% endfor %}
             <button type="submit" class="btn btn-primary btn-block">Apply Now</button>
         </form>
+        <script>
+            document.getElementById("application-form").addEventListener("submit", function(event) {
+                var submitButton = document.getElementById("apply-button");
+                
+                if (submitButton.disabled) {
+                    // If the button is already disabled, prevent the form submission
+                    event.preventDefault();
+                } else {
+                    // Disable the button to prevent double submission
+                    submitButton.disabled = true;
+                    
+                    // You can also add additional logic here to handle form submission using AJAX or other methods
+                    // For demonstration purposes, let's simulate a delay before re-enabling the button
+                    
+                    setTimeout(function() {
+                        // Re-enable the button after a delay (e.g., after form submission is complete)
+                        submitButton.disabled = false;
+                    }, 3000); // Re-enable the button after a 3-second delay
+                }
+            });
+            </script>
+            
+            </body>
+            </html>
+            
+            
+            
+            
+            
+            
     </div>
 </body>
 </html>
