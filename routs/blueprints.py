@@ -10,6 +10,7 @@ from databse.models import User
 import json
 import databse.tokken_manage as tokkendb
 import jwt
+import databse.manage_refral as refraldb
 
 about_bp = Blueprint('api', __name__)
 
@@ -56,6 +57,8 @@ def api_signup():
     address = data.get('address', '')
     phone_num = data.get('phone_num', '')
     branch = data.get('branch', None)
+    refral_code = data.get('refral_code', None)
+
 
     hash_password = generate_password_hash(password, method='sha256')
 
@@ -65,6 +68,10 @@ def api_signup():
     else:
         try:
             user_id=db.create_user(email=email, password=hash_password, role_id=4, full_name=full_name, phone_number=phone_num, date_of_birth=date_of_birth, address=address, branchBy=branch,createdBy=None)
+            
+            if(refral_code!=None):
+                refraldb.create_referral_user(user_id=user_id,referral_user_id=refral_code)
+                # print("refral_user",refral_user)
             try:
                 tokken=tokkendb.create_token(user_id=user_id)
                 print("tokken",tokken)

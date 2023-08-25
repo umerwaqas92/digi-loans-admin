@@ -15,6 +15,7 @@ import databse.disabled_manage as disabledb
 from routs.blueprints import about_bp
 from routs.expanes_routes import expanes_routes
 from routs.website_route import website_route
+from app.firebase import send_notification_to_user
 
 
 
@@ -664,10 +665,6 @@ def update_loan_status():
 
 
 
-
-
-
-
     print(f"Selected status: {status}")
     print(f"Selected status: {application_id}")
 
@@ -676,6 +673,12 @@ def update_loan_status():
     
     update_application_status(application_id, status)
     commentdb.create_ap_comment(app_id=application_id,user_id=session["role"][0],comment=comment,status=status)
+
+    application=get_loan_application(application_id)
+    dsa=get_user(application[1])
+    topic="user_"+dsa[1].replace("@","").replace(".","")
+
+    send_notification_to_user( topic_name=topic,notification_title="Application Status has been updated",notification_body=f"Your application #{application_id} status has been changed to {status} ")
 
 
     return redirect("/dashboard/loan_applications")
