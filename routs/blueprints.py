@@ -252,7 +252,7 @@ def get_user_applications():
                             "id": application[0],
                             "user_id": application[1],
                             "title": db.get_loan_product(application[2])[1],
-                            "description": application[3],
+                            "description": application[4],
                             "status": application[5],
                             "created_at": application[6],
                             "updated_at": application[7]
